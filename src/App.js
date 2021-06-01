@@ -12,12 +12,12 @@ function App() {
 
         <Sidebar />
       
-        <div class="content-wrapper">
-          <div class="content-header">
+        <div className="content-wrapper">
+          <div className="content-header">
 
           </div>
 
-          <section class="content">
+          <section className="content">
 
           </section>
         </div>
