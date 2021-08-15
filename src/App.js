@@ -22,7 +22,7 @@ const options = {
 function App() {
   return (
     <Router>
-      <div className="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+      <div className="dark-mode sidebar-mini">
         <div className="wrapper">
           <Navbar />
 
