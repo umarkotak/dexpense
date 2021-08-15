@@ -10,7 +10,6 @@ import PageLogin from "./components/pages/PageLogin"
 import PageSignUp from "./components/pages/PageSignUp"
 
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -18,6 +17,25 @@ const options = {
   offset: '70px 10px 10px 10px',
   transition: transitions.FADE
 }
+const AlertTemplate = ({ style, options, message, close }) => (
+  <div
+    className={`toast ${options.type === 'info' || options.type === 'success' ? "bg-success" : "bg-maroon"} fade show`}
+    style={style}
+  >
+    <div class="toast-header">
+      <strong class="mr-auto">
+        {options.type === 'info' && 'Info'}
+        {options.type === 'success' && 'Success'}
+        {options.type === 'error' && 'Error'}
+      </strong>
+      <small>notice</small>
+      <button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close" onClick={close}><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="toast-body">
+      {message}
+    </div>
+  </div>
+)
 
 function App() {
   return (

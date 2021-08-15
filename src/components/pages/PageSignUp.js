@@ -20,7 +20,12 @@ function PageSignUp() {
     const response = await dexpenseApi.AccountRegister(signUpParams)
     const status = response.status
     const body = await response.json()
-    alert.show('Oh look, an alert!')
+
+    if (status == 200) {
+      alert.info('Sign up success!')
+    } else {
+      alert.error(`There is some error: ${body.error}`)
+    }
   }
   
   return (
