@@ -3,19 +3,24 @@ import {Link} from "react-router-dom"
 
 function Sidebar() {
 
-  var activeName = "Alexander Pierce"
+  var activeName = "Guest"
 
   return (
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         <Link to="/" className="brand-link">
-          <span className="brand-text font-weight-light"><i className="fas fa-wallet"></i> DEXPENSE</span>
+          <img src="/logo192.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: ".8"}} />
+          {/* <i className="fas fa-wallet brand-image img-circle elevation-3"></i> */}
+          <span className="brand-text font-weight-light"><b>DEX</b>PENSE</span>
         </Link>
 
         <div className="sidebar">
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div className="image">
+              <img src="/default_avatar.png" className="img-circle elevation-2" alt="User Image" />
+            </div>
             <div className="info">
-              <a href="#" className="d-block"><b>Hello,</b> {activeName}</a>
+              <a href="#" className="d-block">Hello, <b>{activeName}</b> !</a>
             </div>
           </div>
 
