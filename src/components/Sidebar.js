@@ -34,10 +34,10 @@ function Sidebar() {
         <div className="sidebar">
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
-              <img src="/default_avatar.png" className="img-circle elevation-2" alt="User Image" />
+              <img src="/default_avatar.png" className="img-circle elevation-2" alt="User" />
             </div>
             <div className="info">
-              <a href="#" className="d-block">Hello, <b>{activeName}</b> !</a>
+              <a href="/#" className="d-block">Hello, <b>{activeName}</b> !</a>
             </div>
           </div>
 

@@ -12,7 +12,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(params)
     })
@@ -24,7 +24,20 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async TransactionsCreate(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json',
+        'Authorization': token
       },
       body: JSON.stringify(params)
     })

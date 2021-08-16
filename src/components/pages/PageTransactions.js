@@ -13,7 +13,7 @@ function PageTransactions() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><a href="#">Transactions</a></li>
+                  <li className="breadcrumb-item active"><a href="/#">Transactions</a></li>
                 </ol>
               </div>
             </div>
@@ -25,9 +25,9 @@ function PageTransactions() {
             <div className="col-12">
               <div className="card card-primary card-outline">
                 <div className="card-header">
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-primary btn-xs" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
+                  <div className="card-tools">
+                    <button type="button" className="btn btn-primary btn-xs" data-card-widget="collapse">
+                      <i className="fas fa-minus"></i>
                     </button>
                   </div>
                 </div>
@@ -42,7 +42,7 @@ function PageTransactions() {
 
       <Link
         to="/transactions/create"
-        class="bg-primary"
+        className="bg-primary"
         style={{
           position:"fixed",
           width:"50px",
@@ -55,7 +55,7 @@ function PageTransactions() {
           boxShadow:" 2px 2px 2px #999"
         }}
       >
-        <i class="fa fa-plus my-float" style={{marginTop:"17px"}}></i>
+        <i className="fa fa-plus my-float" style={{marginTop:"17px"}}></i>
       </Link>
     </div>
   )

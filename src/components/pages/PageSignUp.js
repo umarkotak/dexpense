@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {useHistory} from "react-router-dom"
-import { useAlert } from 'react-alert'
+import {useAlert} from 'react-alert'
 
 import dexpenseApi from "../apis/DexpenseApi"
 
@@ -25,7 +25,7 @@ function PageSignUp() {
       const status = response.status
       const body = await response.json()
 
-      if (status == 200) {
+      if (status === 200) {
         alert.info("Sign up success!")
         history.push("/login")
       } else {
@@ -47,7 +47,7 @@ function PageSignUp() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><a href="#">sign up</a></li>
+                  <li className="breadcrumb-item active"><a href="/#">sign up</a></li>
                 </ol>
               </div>
             </div>
@@ -57,7 +57,7 @@ function PageSignUp() {
         <section className="content">
           <div className="card card-outline card-primary">
             <div className="card-header text-center">
-              <a href="" className="h1"><b>DEX</b>PENSE</a>
+              <a href="/#" className="h1"><b>DEX</b>PENSE</a>
             </div>
 
             <div className="card-body">
