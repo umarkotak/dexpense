@@ -4,12 +4,23 @@ import {Link, useHistory} from "react-router-dom"
 function Sidebar() {
   const history = useHistory()
   useEffect(() => {
-    history.listen(() => setDexpenseSessionToken(localStorage.getItem("DEXPENSE_SESSION_TOKEN")))
+    history.listen(() => {
+      setDexpenseSessionToken(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
+      setSideBarItems(RefreshSideBarItems())
+    })
   }, [history])
 
   const [dexpenseSessionToken, setDexpenseSessionToken] = useState(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
+  const [sideBarItems, setSideBarItems] = useState(RefreshSideBarItems())
 
   var activeName = localStorage.getItem("DEXPENSE_SESSION_USERNAME") || "Guest"
+
+  function RefreshSideBarItems() {
+    let tempSideBarItems = {}
+    if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
+    else if (window.location.pathname === "/dashboard") { tempSideBarItems.dashboard = "active" }
+    return tempSideBarItems
+  }
 
   return (
     <div>
@@ -49,7 +60,10 @@ function Sidebar() {
     return(
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li className="nav-item">
-          <Link to="/" className="nav-link"><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
+          <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/dashboard" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon fas fa-columns"></i> <p>Dashboard</p></Link>
         </li>
       </ul>
     )

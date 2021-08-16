@@ -1,5 +1,6 @@
 import React from "react"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 
 import Navbar from "./components/Navbar"
 import Sidebar from "./components/Sidebar"
@@ -8,8 +9,7 @@ import Footer from "./components/Footer"
 import PageHome from "./components/pages/PageHome"
 import PageLogin from "./components/pages/PageLogin"
 import PageSignUp from "./components/pages/PageSignUp"
-
-import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import PageDashboard from "./components/pages/PageDashboard"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -51,6 +51,7 @@ function App() {
               <Route path="/" exact component={PageHome} />
               <Route path="/login" exact component={PageLogin} />
               <Route path="/sign_up" exact component={PageSignUp} />
+              <Route path="/dashboard" exact component={PageDashboard} />
             </Switch>
           </AlertProvider>
 
