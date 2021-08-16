@@ -1,15 +1,18 @@
-import React from "react"
-import {Link} from "react-router-dom"
-import {useHistory} from "react-router-dom"
+import React, {useState, useEffect} from "react"
+import {Link, useHistory} from "react-router-dom"
 
 function Navbar() {
   const history = useHistory()
+  useEffect(() => {
+    history.listen(() => setDexpenseSessionToken(localStorage.getItem("DEXPENSE_SESSION_TOKEN")))
+  }, [history])
+
+  const [dexpenseSessionToken, setDexpenseSessionToken] = useState(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
 
   function handleLogout() {
     localStorage.removeItem("DEXPENSE_SESSION_TOKEN")
     localStorage.removeItem("DEXPENSE_SESSION_USERNAME")
     history.push("/")
-    window.location.reload()
   }
 
   return (
@@ -27,7 +30,7 @@ function Navbar() {
   )
 
   function NavItems() {
-    if (localStorage.getItem("DEXPENSE_SESSION_TOKEN")) {
+    if (dexpenseSessionToken) {
       return OnLoggedIn()
     } else {
       return OnPublic()

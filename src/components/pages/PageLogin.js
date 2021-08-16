@@ -30,7 +30,6 @@ function PageLogin() {
         localStorage.setItem("DEXPENSE_SESSION_TOKEN", body.data.session)
         localStorage.setItem("DEXPENSE_SESSION_USERNAME", body.data.username)
         history.push("/")
-        window.location.reload()
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
