@@ -1,23 +1,34 @@
 class DexpenseApi {
   constructor() {
-    this.DexpenseApiHost = "http://localhost:4000"
+    if (window.location.protocol === "https:") {
+      this.DexpenseApiHost = "https://dexpense-api.herokuapp.com"
+    } else {
+      this.DexpenseApiHost = "http://localhost:4000"
+    }
   }
 
   async AccountRegister(params) {
-    try {
-      var uri = `${this.DexpenseApiHost}/api/v1/accounts/register`
-      const response = await fetch(uri, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(params)
-      })
-      return response
+    var uri = `${this.DexpenseApiHost}/api/v1/accounts/register`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
 
-    } catch (e) {
-      alert(e.message);
-    }
+  async AccountLogin(params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/accounts/login`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params)
+    })
+    return response
   }
 }
 

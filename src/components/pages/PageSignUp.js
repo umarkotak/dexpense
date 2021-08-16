@@ -1,9 +1,12 @@
 import React, {useState} from "react"
-import dexpenseApi from "../apis/DexpenseApi"
+import {useHistory} from "react-router-dom"
 import { useAlert } from 'react-alert'
+
+import dexpenseApi from "../apis/DexpenseApi"
 
 function PageSignUp() {
   const alert = useAlert()
+  const history = useHistory()
 
   const [signUpParams, setSignUpParams] = useState({
     "username": "",
@@ -17,17 +20,22 @@ function PageSignUp() {
   }
 
   async function submitSignUp() {
-    const response = await dexpenseApi.AccountRegister(signUpParams)
-    const status = response.status
-    const body = await response.json()
+    try {
+      const response = await dexpenseApi.AccountRegister(signUpParams)
+      const status = response.status
+      const body = await response.json()
 
-    if (status == 200) {
-      alert.info('Sign up success!')
-    } else {
-      alert.error(`There is some error: ${body.error}`)
+      if (status == 200) {
+        alert.info("Sign up success!")
+        history.push("/login")
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
     }
   }
-  
+
   return (
     <div>
       <div className="content-wrapper">

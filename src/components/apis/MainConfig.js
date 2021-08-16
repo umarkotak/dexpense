@@ -1,5 +1,6 @@
 class MainConfig {
-  
+  constructor() {
+  }
 }
 
 const mainConfig = new MainConfig()

@@ -22,16 +22,16 @@ const AlertTemplate = ({ style, options, message, close }) => (
     className={`toast ${options.type === 'info' || options.type === 'success' ? "bg-success" : "bg-maroon"} fade show`}
     style={style}
   >
-    <div class="toast-header">
-      <strong class="mr-auto">
+    <div className="toast-header">
+      <strong className="mr-auto">
         {options.type === 'info' && 'Info'}
         {options.type === 'success' && 'Success'}
         {options.type === 'error' && 'Error'}
       </strong>
       <small>notice</small>
-      <button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close" onClick={close}><span aria-hidden="true">×</span></button>
+      <button data-dismiss="toast" type="button" className="ml-2 mb-1 close" aria-label="Close" onClick={close}><span aria-hidden="true">×</span></button>
     </div>
-    <div class="toast-body">
+    <div className="toast-body">
       {message}
     </div>
   </div>
@@ -45,7 +45,7 @@ function App() {
           <Navbar />
 
           <Sidebar />
-        
+
           <AlertProvider template={AlertTemplate} {...options}>
             <Switch>
               <Route path="/" exact component={PageHome} />

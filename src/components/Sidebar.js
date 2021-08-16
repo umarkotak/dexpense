@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 
 function Sidebar() {
 
-  var activeName = "Guest"
+  var activeName = localStorage.getItem("DEXPENSE_SESSION_USERNAME") || "Guest"
 
   return (
     <div>
