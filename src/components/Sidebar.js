@@ -19,6 +19,7 @@ function Sidebar() {
     let tempSideBarItems = {}
     if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
     else if (window.location.pathname === "/dashboard") { tempSideBarItems.dashboard = "active" }
+    else if (window.location.pathname === "/transactions") { tempSideBarItems.transactions = "active" }
     return tempSideBarItems
   }
 
@@ -64,6 +65,9 @@ function Sidebar() {
         </li>
         <li className="nav-item">
           <Link to="/dashboard" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon fas fa-columns"></i> <p>Dashboard</p></Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/transactions" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon fas fa-hand-holding-usd"></i> <p>Transactions</p></Link>
         </li>
       </ul>
     )

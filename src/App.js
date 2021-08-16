@@ -10,6 +10,8 @@ import PageHome from "./components/pages/PageHome"
 import PageLogin from "./components/pages/PageLogin"
 import PageSignUp from "./components/pages/PageSignUp"
 import PageDashboard from "./components/pages/PageDashboard"
+import PageTransactions from "./components/pages/PageTransactions"
+import PageTransactionsCreate from "./components/pages/PageTransactionsCreate"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -52,6 +54,8 @@ function App() {
               <Route path="/login" exact component={PageLogin} />
               <Route path="/sign_up" exact component={PageSignUp} />
               <Route path="/dashboard" exact component={PageDashboard} />
+              <Route path="/transactions" exact component={PageTransactions} />
+              <Route path="/transactions/create" exact component={PageTransactionsCreate} />
             </Switch>
           </AlertProvider>
 
