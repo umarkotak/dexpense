@@ -3,6 +3,7 @@ import {useHistory, Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 
 import dexpenseApi from "../apis/DexpenseApi"
+import utils from "../helper/Utils"
 
 var qs = require('qs')
 function query_offset() {
@@ -122,17 +123,17 @@ function PageTransactions() {
                       {transactions.map((val, k) => (
                         <tr key={val.id}>
                           <td>{val.id}</td>
-                          <td>{val.account_id}</td>
-                          <td>{val.group_wallet_id}</td>
+                          <td>{val.account.username}</td>
+                          <td>{val.group_wallet.name}</td>
                           <td>{val.category}</td>
                           <td>{val.amount}</td>
-                          <td>{val.direction_type}</td>
-                          <td>{val.transaction_at}</td>
+                          <td>{DirectionBuilder(val.direction_type)}</td>
+                          <td><button className="btn btn-default btn-xs">{utils.FormatDateTime(val.transaction_at)}</button></td>
                           <td>{val.name}</td>
                           <td>{val.description}</td>
                           <td>{val.note}</td>
-                          <td>{val.created_at}</td>
-                          <td>action</td>
+                          <td><button className="btn btn-default btn-xs">{utils.FormatDateTime(val.created_at)}</button></td>
+                          <td>{TransactionActionBuilder(val.id)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -163,6 +164,23 @@ function PageTransactions() {
       </Link>
     </div>
   )
+
+  function DirectionBuilder(directionType) {
+    if (directionType === "outcome") {
+      return(<button className="btn btn-xs btn-danger" disabled>pengeluaran</button>)
+    } else {
+      return(<button className="btn btn-xs btn-success" disabled>pemasukan</button>)
+    }
+  }
+
+  function TransactionActionBuilder(transactionId) {
+    return(
+      <div>
+        <button className="btn btn-xs btn-primary mr-1">edit</button>
+        <button className="btn btn-xs btn-danger">delete</button>
+      </div>
+    )
+  }
 }
 
 export default PageTransactions
