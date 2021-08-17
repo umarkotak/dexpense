@@ -24,6 +24,12 @@ function Navbar() {
   const [dexpenseSessionToken, setDexpenseSessionToken] = useState(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
   const [groups, setGroups] = useState([])
   const [groupsActive, setGroupsActive] = useState({"id": "", "name": "N/A"})
+  useEffect(() => {
+    if (localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")) {
+      handleSelectActiveGroups(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groups])
 
   function handleLogout() {
     localStorage.removeItem("DEXPENSE_SESSION_TOKEN")
@@ -39,6 +45,7 @@ function Navbar() {
     if (localStorage.getItem("DEXPENSE_SESSION_GROUPS")) {
       var tempGroups = JSON.parse(localStorage.getItem("DEXPENSE_SESSION_GROUPS"))
       setGroups(tempGroups)
+      return
     }
     try {
       const response = await dexpenseApi.AccountProfile(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {})
@@ -70,7 +77,7 @@ function Navbar() {
       <nav className="main-header navbar navbar-expand navbar-dark">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <Link className="nav-link" data-widget="pushmenu" role="button"><i className="fas fa-bars"></i></Link>
+            <Link to="#" className="nav-link" data-widget="pushmenu" role="button"><i className="fas fa-bars"></i></Link>
           </li>
         </ul>
 

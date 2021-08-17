@@ -13,6 +13,7 @@ import PageDashboard from "./components/pages/PageDashboard"
 import PageTransactions from "./components/pages/PageTransactions"
 import PageTransactionsCreate from "./components/pages/PageTransactionsCreate"
 import PageGroups from "./components/pages/PageGroups"
+import PageGroupsCreate from "./components/pages/PageGroupsCreate"
 import PageNotFound from "./components/pages/PageNotFound"
 
 const options = {
@@ -60,6 +61,7 @@ function App() {
               <Route path="/transactions" exact component={PageTransactions} />
               <Route path="/transactions/create" exact component={PageTransactionsCreate} />
               <Route path="/groups" exact component={PageGroups} />
+              <Route path="/groups/create" exact component={PageGroupsCreate} />
               <Route path="/" component={PageNotFound} />
             </Switch>
 

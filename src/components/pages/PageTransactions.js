@@ -9,6 +9,9 @@ var qs = require('qs')
 function query_offset() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).offset
 }
+function query_limit() {
+  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).limit
+}
 
 function PageTransactions() {
   const history = useHistory()
@@ -22,7 +25,7 @@ function PageTransactions() {
   const [transactions, setTransactions] = useState([])
   
   const [queryParams, setQueryParams] = useState({
-    limit: 10,
+    limit: parseInt(query_limit()) || 10,
     offset: parseInt(query_offset()) || 0,
     group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
   })
@@ -73,33 +76,29 @@ function PageTransactions() {
                   </div>
                 </div>
                 
-                <div>
-
-                </div>
-
                 <div className="clearfix mt-2">
                   <ul className="pagination pagination-sm m-0 float-right">
-                    <li className="page-item">
+                    <li className="page-item mr-2">
                       <button
-                        className="btn btn-primary mr-2"
+                        className="btn btn-sm btn-primary"
                         onClick={() => {history.push(`/transactions?offset=${queryParams.offset - queryParams.limit}`); window.location.reload()}}
                         disabled={queryParams.offset < queryParams.limit}
                       >
-                        «
+                        <i className="fa fa-arrow-circle-left"></i>
                       </button>
                     </li>
-                    <li className="page-item">
+                    <li className="page-item mr-2">
                       <button
-                        className="btn btn-primary mr-2"
+                        className="btn btn-sm btn-primary"
                         onClick={() => {history.push(`/transactions?offset=${queryParams.offset + queryParams.limit}`); window.location.reload()}}
                       >
-                        »
+                        <i className="fa fa-arrow-circle-right"></i>
                       </button>
                     </li>
                   </ul>
                 </div>
 
-                <hr />
+                <hr className="my-2" />
 
                 <div className="overflow-auto">
                   <table className="table table-bordered">

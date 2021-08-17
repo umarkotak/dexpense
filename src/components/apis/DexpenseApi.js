@@ -79,6 +79,19 @@ class DexpenseApi {
     })
     return response
   }
+
+  async GroupsCreate(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/groups`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
 }
 
 const dexpenseApi = new DexpenseApi()
