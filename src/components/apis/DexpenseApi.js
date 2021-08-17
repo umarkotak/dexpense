@@ -31,6 +31,18 @@ class DexpenseApi {
     return response
   }
 
+  async AccountProfile(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/accounts/profile`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    return response
+  }
+
   async TransactionsCreate(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/transactions`
     const response = await fetch(uri, {
@@ -40,6 +52,18 @@ class DexpenseApi {
         'Authorization': token
       },
       body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async GroupsShow(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
     })
     return response
   }

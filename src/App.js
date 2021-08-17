@@ -44,11 +44,11 @@ function App() {
     <Router>
       <div className="dark-mode sidebar-mini">
         <div className="wrapper">
-          <Navbar />
-
-          <Sidebar />
-
           <AlertProvider template={AlertTemplate} {...options}>
+            <Navbar />
+
+            <Sidebar />
+
             <Switch>
               <Route path="/" exact component={PageHome} />
               <Route path="/login" exact component={PageLogin} />
@@ -57,9 +57,9 @@ function App() {
               <Route path="/transactions" exact component={PageTransactions} />
               <Route path="/transactions/create" exact component={PageTransactionsCreate} />
             </Switch>
-          </AlertProvider>
 
-          <Footer />
+            <Footer />
+          </AlertProvider>
         </div>
       </div>
     </Router>

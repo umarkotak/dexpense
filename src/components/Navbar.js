@@ -1,18 +1,64 @@
 import React, {useState, useEffect} from "react"
 import {Link, useHistory} from "react-router-dom"
+import {useAlert} from 'react-alert'
+
+import dexpenseApi from "./apis/DexpenseApi"
 
 function Navbar() {
+  const alert = useAlert()
   const history = useHistory()
+
   useEffect(() => {
-    history.listen(() => setDexpenseSessionToken(localStorage.getItem("DEXPENSE_SESSION_TOKEN")))
+    refreshGroups()
+    handleSelectActiveGroups(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  useEffect(() => {
+    history.listen(() => {
+      setDexpenseSessionToken(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
+      refreshGroups()
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history])
 
   const [dexpenseSessionToken, setDexpenseSessionToken] = useState(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
+  const [groups, setGroups] = useState(JSON.parse(localStorage.getItem("DEXPENSE_SESSION_GROUPS")) || [])
+  const [groupsActive, setGroupsActive] = useState({"id": "", "name": "N/A"})
 
   function handleLogout() {
     localStorage.removeItem("DEXPENSE_SESSION_TOKEN")
     localStorage.removeItem("DEXPENSE_SESSION_USERNAME")
+    localStorage.removeItem("DEXPENSE_SESSION_GROUPS")
+    localStorage.removeItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")
     history.push("/")
+  }
+
+  async function refreshGroups() {
+    if (groups.length > 0) { return }
+    if (!localStorage.getItem("DEXPENSE_SESSION_TOKEN")) { return }
+    if (localStorage.getItem("DEXPENSE_SESSION_GROUPS")) { return }
+    try {
+      const response = await dexpenseApi.AccountProfile(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {})
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        setGroups(body.data.groups)
+        setGroupsActive({"id": body.data.groups[0].id, "name": body.data.groups[0].name})
+        localStorage.setItem("DEXPENSE_SESSION_GROUPS", JSON.stringify(body.data.groups))
+        localStorage.setItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID", body.data.groups[0].id)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
+  function handleSelectActiveGroups(id) {
+    localStorage.setItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID", id)
+    var tempGroup = groups.find((obj) => { return parseInt(obj.id) === parseInt(id) })
+    setGroupsActive({"id": id, "name": tempGroup.name})
   }
 
   return (
@@ -45,27 +91,24 @@ function Navbar() {
         </li>
 
         <li className="nav-item dropdown show" id="nav-items-2">
-          <a className="btn btn-primary mr-2" data-toggle="dropdown" href="/#" aria-expanded="false" id="nav-items-2-1">default</a>
+          <a className="btn btn-primary mr-2" data-toggle="dropdown" href="/#" aria-expanded="false" id="nav-items-2-1">{groupsActive.name}</a>
           <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right" style={{left: "inherit", right: "0px"}}>
-            <div id="nav-items-dropdown-1">
-              <a href="/#" className="dropdown-item">
-                <div className="media">
-                  <img src="/dist/img/user1-128x128.jpg" alt="User Avatar" className="img-size-50 mr-3 img-circle" />
-                  <div className="media-body">
-                    <h3 className="dropdown-item-title">
-                      Brad Diesel
-                      <span className="float-right text-sm text-danger"><i className="fas fa-star"></i></span>
-                    </h3>
-                    <p className="text-sm">Call me whenever you can...</p>
-                    <p className="text-sm text-muted"><i className="far fa-clock mr-1"></i> 4 Hours Ago</p>
+            {groups.map((v, k) => (
+              <div key={k}>
+                <button className="dropdown-item" onClick={(e) => {handleSelectActiveGroups(v.id); window.location.reload();}}>
+                  <div className="media">
+                    <div className="media-body">
+                      <h3 className="dropdown-item-title"><i className="fa fa-angle-double-right"></i> {v.name}</h3>
+                      <p className="text-sm">ID: {v.id}</p>
+                    </div>
                   </div>
-                </div>
-              </a>
-              <div className="dropdown-divider"></div>
-            </div>
+                </button>
+                <div className="dropdown-divider"></div>
+              </div>
+            ))}
           </div>
         </li>
-        
+
         <li className="nav-item" id="nav-items-3">
           <button className="btn btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
         </li>

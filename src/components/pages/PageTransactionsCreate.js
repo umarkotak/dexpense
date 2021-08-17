@@ -1,12 +1,14 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {useHistory} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
 
+import dexpenseApi from "../apis/DexpenseApi"
+
 function PageTransactionsCreate() {
   const alert = useAlert()
   const history = useHistory()
-  
+
   const [transactionsCreateParams, setTransactionsCreateParams] = useState({
     "category": "food",
     "amount": 0,
@@ -22,7 +24,7 @@ function PageTransactionsCreate() {
       setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [name]: value}))
     } catch (err) {
       setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [e.name]: e.value}))
-    } 
+    }
   }
 
   const options = [
@@ -36,11 +38,50 @@ function PageTransactionsCreate() {
   ]
 
   const [walletOptions, setWalletOptions] = useState([])
+  async function fetchWalletOptions() {
+    try {
+      const response = await dexpenseApi.GroupsShow(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"),
+        {id: localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")}
+      )
+      const status = response.status
+      const body = await response.json()
 
-  function handleTransactionSubmit() {
-    console.log(transactionsCreateParams)
+      if (status === 200) {
+        console.log(body)
+        var tempWalletOptions = body.data.group_wallets.map((v, k) => {
+          return { name: 'group_wallet_id', value: v.id, label: `${v.id} || ${v.name}` }
+        })
+        setWalletOptions(tempWalletOptions)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
   }
-  
+  useEffect(() => {
+    fetchWalletOptions()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  async function handleTransactionSubmit() {
+    console.log(transactionsCreateParams)
+    try {
+      const response = await dexpenseApi.TransactionsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), transactionsCreateParams)
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        console.log(body)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
   return (
     <div>
       <div className="content-wrapper">
@@ -62,7 +103,7 @@ function PageTransactionsCreate() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12 col-xl-4">
+            <div className="col-12 col-lg-6">
               <div className="card card-primary card-outline">
                 <div className="card-header">
                   <button className="btn btn-primary btn-xs" onClick={() => handleTransactionSubmit()}><i className="fas fa-check mr-2"></i> SUBMIT</button>
@@ -92,7 +133,7 @@ function PageTransactionsCreate() {
                   </div>
                   <div className="form-group">
                     <label>Amount</label> <small className="text-danger"><b>*</b></small>
-                    <input type="number" className="form-control form-control-sm" name="amount" />
+                    <input type="number" className="form-control form-control-sm" name="amount" onChange={(e) => handleTransactionsParamsChanges(e)} />
                   </div>
                   <div className="form-group">
                     <label>Direction</label> <small className="text-danger"><b>*</b></small>
@@ -103,15 +144,15 @@ function PageTransactionsCreate() {
                   </div>
                   <div className="form-group">
                     <label>Name</label> <small className="text-danger"><b>*</b></small>
-                    <input type="text" className="form-control form-control-sm" name="name" />
+                    <input type="text" className="form-control form-control-sm" name="name" onChange={(e) => handleTransactionsParamsChanges(e)} />
                   </div>
                   <div className="form-group">
                     <label>Description</label>
-                    <textarea className="form-control" rows="3" name="description"></textarea>
+                    <textarea className="form-control" rows="3" name="description" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
                   </div>
                   <div className="form-group">
                     <label>Note</label>
-                    <textarea className="form-control" rows="2" name="note"></textarea>
+                    <textarea className="form-control" rows="2" name="note" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
                   </div>
                 </div>
               </div>
