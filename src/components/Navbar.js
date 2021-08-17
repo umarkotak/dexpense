@@ -70,7 +70,7 @@ function Navbar() {
       <nav className="main-header navbar navbar-expand navbar-dark">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link" data-widget="pushmenu" href="/#" role="button"><i className="fas fa-bars"></i></a>
+            <Link className="nav-link" data-widget="pushmenu" role="button"><i className="fas fa-bars"></i></Link>
           </li>
         </ul>
 
@@ -91,11 +91,11 @@ function Navbar() {
     return(
       <ul className="navbar-nav ml-auto">
         <li className="nav-item" id="nav-items-1">
-          <button className="btn btn-outline-light mr-2" disabled><i className="fa fa-users"></i> group :</button>
+          <button className="btn btn-sm btn-outline-light mr-2" disabled><i className="fa fa-users"></i> group :</button>
         </li>
 
         <li className="nav-item dropdown show" id="nav-items-2">
-          <a className="btn btn-primary mr-2" data-toggle="dropdown" href="/#" aria-expanded="false" id="nav-items-2-1">{groupsActive.name}</a>
+          <a className="btn btn-sm btn-primary mr-2" data-toggle="dropdown" href="/#" aria-expanded="false" id="nav-items-2-1">{groupsActive.name}</a>
           <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right" style={{left: "inherit", right: "0px"}}>
             {groups.map((v, k) => (
               <div key={k}>
@@ -114,7 +114,7 @@ function Navbar() {
         </li>
 
         <li className="nav-item" id="nav-items-3">
-          <button className="btn btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
+          <button className="btn btn-sm btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
         </li>
       </ul>
     )
@@ -124,10 +124,10 @@ function Navbar() {
     return(
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link to="/sign_up" className="nav-link"><i className="fa fa-user-plus"></i> Sign Up</Link>
+          <Link to="/sign_up" className="btn btn-sm btn-outline-light mr-2"><i className="fa fa-user-plus"></i> Sign Up</Link>
         </li>
         <li className="nav-item">
-          <Link to="/login" className="nav-link btn btn-primary text-white"><i className="fa fa-sign-in-alt"></i> Login</Link>
+          <Link to="/login" className="btn btn-sm btn-primary text-white"><i className="fa fa-sign-in-alt"></i> Login</Link>
         </li>
       </ul>
     )
