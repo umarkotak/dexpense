@@ -8,7 +8,7 @@ function PageTransactionsCreate() {
   const history = useHistory()
   
   const [transactionsCreateParams, setTransactionsCreateParams] = useState({
-    "category": "",
+    "category": "food",
     "amount": 0,
     "direction_type": "out",
     "group_wallet_id": 0,
@@ -16,12 +16,30 @@ function PageTransactionsCreate() {
     "description": "",
     "note": ""
   })
+  function handleTransactionsParamsChanges(e) {
+    try {
+      const { name, value } = e.target
+      setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [name]: value}))
+    } catch (err) {
+      setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [e.name]: e.value}))
+    } 
+  }
 
   const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
+    { name: 'category', value: 'food', label: 'Food' },
+    { name: 'category', value: 'daily_needs', label: 'Daily Needs' },
+    { name: 'category', value: 'other', label: 'Other' }
   ]
+  const directionOptions = [
+    { name: 'direction_type', value: 'income', label: 'In-Come' },
+    { name: 'direction_type', value: 'outcome', label: 'Out-Come' }
+  ]
+
+  const [walletOptions, setWalletOptions] = useState([])
+
+  function handleTransactionSubmit() {
+    console.log(transactionsCreateParams)
+  }
   
   return (
     <div>
@@ -44,10 +62,10 @@ function PageTransactionsCreate() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12 col-lg-3">
+            <div className="col-12 col-xl-4">
               <div className="card card-primary card-outline">
                 <div className="card-header">
-                  <button className="btn btn-primary btn-xs"><i className="fas fa-check mr-2"></i> SUBMIT</button>
+                  <button className="btn btn-primary btn-xs" onClick={() => handleTransactionSubmit()}><i className="fas fa-check mr-2"></i> SUBMIT</button>
                   <div className="card-tools">
                     <button type="button" className="btn btn-primary btn-xs" data-card-widget="collapse">
                       <i className="fas fa-minus"></i>
@@ -56,32 +74,44 @@ function PageTransactionsCreate() {
                 </div>
                 <div className="card-body">
                   <div className="form-group" data-select2-id="29">
-                    <label>Category</label>
-                    <Select options={options} />
+                    <label>Category</label> <small className="text-danger"><b>*</b></small>
+                    <Select
+                      name="category"
+                      options={options}
+                      defaultValue={transactionsCreateParams.category}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                    />
                   </div>
                   <div className="form-group">
-                    <label>Amount</label>
-                    <input type="text" className="form-control form-control-sm" />
+                    <label>Wallet</label> <small className="text-danger"><b>*</b></small>
+                    <Select
+                      name="group_wallet_id"
+                      options={walletOptions}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                    />
                   </div>
                   <div className="form-group">
-                    <label>Direction</label>
-                    <input type="text" className="form-control form-control-sm" />
+                    <label>Amount</label> <small className="text-danger"><b>*</b></small>
+                    <input type="number" className="form-control form-control-sm" name="amount" />
                   </div>
                   <div className="form-group">
-                    <label>Wallet</label>
-                    <input type="text" className="form-control form-control-sm" />
+                    <label>Direction</label> <small className="text-danger"><b>*</b></small>
+                    <Select
+                      options={directionOptions}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                    />
                   </div>
                   <div className="form-group">
-                    <label>Name</label>
-                    <input type="text" className="form-control form-control-sm" />
+                    <label>Name</label> <small className="text-danger"><b>*</b></small>
+                    <input type="text" className="form-control form-control-sm" name="name" />
                   </div>
                   <div className="form-group">
                     <label>Description</label>
-                    <textarea className="form-control" rows="3" ></textarea>
+                    <textarea className="form-control" rows="3" name="description"></textarea>
                   </div>
                   <div className="form-group">
-                    <label>Notes</label>
-                    <textarea className="form-control" rows="2" ></textarea>
+                    <label>Note</label>
+                    <textarea className="form-control" rows="2" name="note"></textarea>
                   </div>
                 </div>
               </div>

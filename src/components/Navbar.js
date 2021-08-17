@@ -40,8 +40,34 @@ function Navbar() {
   function OnLoggedIn() {
     return(
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <button className="btn btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> Logout</button>
+        <li className="nav-item" id="nav-items-1">
+          <button className="btn btn-primary mr-2"><i className="fa fa-users"></i> group :</button>
+        </li>
+
+        <li className="nav-item dropdown show" id="nav-items-2">
+          <a className="btn btn-primary mr-2" data-toggle="dropdown" href="/#" aria-expanded="false" id="nav-items-2-1">default</a>
+          <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right" style={{left: "inherit", right: "0px"}}>
+            <div id="nav-items-dropdown-1">
+              <a href="/#" className="dropdown-item">
+                <div className="media">
+                  <img src="/dist/img/user1-128x128.jpg" alt="User Avatar" className="img-size-50 mr-3 img-circle" />
+                  <div className="media-body">
+                    <h3 className="dropdown-item-title">
+                      Brad Diesel
+                      <span className="float-right text-sm text-danger"><i className="fas fa-star"></i></span>
+                    </h3>
+                    <p className="text-sm">Call me whenever you can...</p>
+                    <p className="text-sm text-muted"><i className="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                  </div>
+                </div>
+              </a>
+              <div className="dropdown-divider"></div>
+            </div>
+          </div>
+        </li>
+        
+        <li className="nav-item" id="nav-items-3">
+          <button className="btn btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
         </li>
       </ul>
     )
