@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {useHistory} from "react-router-dom"
+import {useHistory, Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 
 import dexpenseApi from "../apis/DexpenseApi"
@@ -47,7 +47,7 @@ function PageSignUp() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><a href="/#">sign up</a></li>
+                  <li className="breadcrumb-item active"><Link to="/sign_up">Sign Up</Link></li>
                 </ol>
               </div>
             </div>

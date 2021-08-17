@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "react-router-dom"
 
 function PageDashboard() {
   return (
@@ -12,7 +13,7 @@ function PageDashboard() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><a href="/#">Dashboard</a></li>
+                  <li className="breadcrumb-item active"><Link to="/dashboard">Dashboard</Link></li>
                 </ol>
               </div>
             </div>

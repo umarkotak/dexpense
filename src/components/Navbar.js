@@ -91,7 +91,7 @@ function Navbar() {
     return(
       <ul className="navbar-nav ml-auto">
         <li className="nav-item" id="nav-items-1">
-          <button className="btn btn-primary mr-2"><i className="fa fa-users"></i> group :</button>
+          <button className="btn btn-outline-light mr-2" disabled><i className="fa fa-users"></i> group :</button>
         </li>
 
         <li className="nav-item dropdown show" id="nav-items-2">

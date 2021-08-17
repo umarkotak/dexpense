@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {useHistory} from "react-router-dom"
+import {useHistory, Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
 
@@ -48,7 +48,6 @@ function PageTransactionsCreate() {
       const body = await response.json()
 
       if (status === 200) {
-        console.log(body)
         var tempWalletOptions = body.data.group_wallets.map((v, k) => {
           return { name: 'group_wallet_id', value: v.id, label: `${v.id} || ${v.name}` }
         })
@@ -66,14 +65,14 @@ function PageTransactionsCreate() {
   }, [])
 
   async function handleTransactionSubmit() {
-    console.log(transactionsCreateParams)
     try {
       const response = await dexpenseApi.TransactionsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), transactionsCreateParams)
       const status = response.status
       const body = await response.json()
 
       if (status === 200) {
-        console.log(body)
+        alert.info("Transaction success!")
+        history.push("/transactions")
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -93,8 +92,8 @@ function PageTransactionsCreate() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><a href="/#">Transactions</a></li>
-                  <li className="breadcrumb-item active"><a href="/#">Create</a></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions">Transaction</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/create">Create</Link></li>
                 </ol>
               </div>
             </div>

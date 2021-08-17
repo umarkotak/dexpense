@@ -56,6 +56,18 @@ class DexpenseApi {
     return response
   }
 
+  async TransactionsList(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions?` + new URLSearchParams(params)
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    return response
+  }
+
   async GroupsShow(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}`
     const response = await fetch(uri, {

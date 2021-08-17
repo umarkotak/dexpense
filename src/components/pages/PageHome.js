@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "react-router-dom"
 
 function PageHome() {
   return (
@@ -12,7 +13,7 @@ function PageHome() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><a href="/#">Home</a></li>
+                  <li className="breadcrumb-item active"><Link to="/home">Home</Link>></li>
                 </ol>
               </div>
             </div>
