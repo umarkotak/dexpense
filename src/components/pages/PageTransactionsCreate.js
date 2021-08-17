@@ -16,7 +16,8 @@ function PageTransactionsCreate() {
     "group_wallet_id": 0,
     "name": "",
     "description": "",
-    "note": ""
+    "note": "",
+    "transaction_at": ""
   })
   function handleTransactionsParamsChanges(e) {
     try {
@@ -33,8 +34,8 @@ function PageTransactionsCreate() {
     { name: 'category', value: 'other', label: 'Other' }
   ]
   const directionOptions = [
-    { name: 'direction_type', value: 'income', label: 'In-Come' },
-    { name: 'direction_type', value: 'outcome', label: 'Out-Come' }
+    { name: 'direction_type', value: 'income', label: 'Pemasukan' },
+    { name: 'direction_type', value: 'outcome', label: 'Pengeluaran' }
   ]
 
   const [walletOptions, setWalletOptions] = useState([])
@@ -49,7 +50,7 @@ function PageTransactionsCreate() {
 
       if (status === 200) {
         var tempWalletOptions = body.data.group_wallets.map((v, k) => {
-          return { name: 'group_wallet_id', value: v.id, label: `${v.id} || ${v.name}` }
+          return { name: 'group_wallet_id', value: v.id, label: v.name }
         })
         setWalletOptions(tempWalletOptions)
       } else {
@@ -105,7 +106,6 @@ function PageTransactionsCreate() {
             <div className="col-12 col-lg-6">
               <div className="card card-primary card-outline">
                 <div className="card-header">
-                  <button className="btn btn-primary btn-xs" onClick={() => handleTransactionSubmit()}><i className="fas fa-check mr-2"></i> SUBMIT</button>
                   <div className="card-tools">
                     <button type="button" className="btn btn-primary btn-xs" data-card-widget="collapse">
                       <i className="fas fa-minus"></i>
@@ -113,8 +113,15 @@ function PageTransactionsCreate() {
                   </div>
                 </div>
                 <div className="card-body">
+                  <div className="form-group">
+                    <label>Jenis</label> <small className="text-danger"><b>*</b></small>
+                    <Select
+                      options={directionOptions}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                    />
+                  </div>
                   <div className="form-group" data-select2-id="29">
-                    <label>Category</label> <small className="text-danger"><b>*</b></small>
+                    <label>Kategori</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="category"
                       options={options}
@@ -131,26 +138,23 @@ function PageTransactionsCreate() {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Amount</label> <small className="text-danger"><b>*</b></small>
+                    <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
                     <input type="number" className="form-control form-control-sm" name="amount" onChange={(e) => handleTransactionsParamsChanges(e)} />
                   </div>
                   <div className="form-group">
-                    <label>Direction</label> <small className="text-danger"><b>*</b></small>
-                    <Select
-                      options={directionOptions}
-                      onChange={(e) => handleTransactionsParamsChanges(e)}
-                    />
+                    <label>Waktu Transaksi</label> <small className="text-danger"><b>*</b></small>
+                    <input type="datetime-local" className="form-control form-control-sm" name="transaction_at" onChange={(e) => handleTransactionsParamsChanges(e)} />
                   </div>
                   <div className="form-group">
-                    <label>Name</label> <small className="text-danger"><b>*</b></small>
+                    <label>Nama</label> <small className="text-danger"><b>*</b></small>
                     <input type="text" className="form-control form-control-sm" name="name" onChange={(e) => handleTransactionsParamsChanges(e)} />
                   </div>
                   <div className="form-group">
-                    <label>Description</label>
+                    <label>Deskripsi</label>
                     <textarea className="form-control" rows="3" name="description" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
                   </div>
                   <div className="form-group">
-                    <label>Note</label>
+                    <label>Catatan</label>
                     <textarea className="form-control" rows="2" name="note" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
                   </div>
                 </div>
@@ -162,6 +166,25 @@ function PageTransactionsCreate() {
           </div>
         </section>
       </div>
+
+      <Link
+        to="/transactions/create"
+        className="bg-primary"
+        onClick={() => handleTransactionSubmit()}
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"70px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center",
+          boxShadow:" 2px 2px 2px #999"
+        }}
+      >
+        <i className="fa fa-save my-float" style={{marginTop:"17px"}}></i>
+      </Link>
     </div>
   )
 }

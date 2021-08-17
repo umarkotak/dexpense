@@ -51,6 +51,7 @@ function App() {
 
             <Switch>
               <Route path="/" exact component={PageHome} />
+              <Route path="/home" exact component={PageHome} />
               <Route path="/login" exact component={PageLogin} />
               <Route path="/sign_up" exact component={PageSignUp} />
               <Route path="/dashboard" exact component={PageDashboard} />

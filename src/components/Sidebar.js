@@ -37,7 +37,7 @@ function Sidebar() {
               <img src="/default_avatar.png" className="img-circle elevation-2" alt="User" />
             </div>
             <div className="info">
-              <a href="/#" className="d-block">Hello, <b>{activeName}</b> !</a>
+              <Link to="/home" className="d-block">Hello, <b>{activeName}</b> !</Link>
             </div>
           </div>
 
@@ -61,13 +61,13 @@ function Sidebar() {
     return(
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li className="nav-item">
-          <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
+          <Link to="/home" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
         </li>
         <li className="nav-item">
           <Link to="/dashboard" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon fas fa-columns"></i> <p>Dashboard</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/transactions" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon fas fa-hand-holding-usd"></i> <p>Transactions</p></Link>
+          <Link to="/transactions" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon fas fa-hand-holding-usd"></i> <p>Transaksi</p></Link>
         </li>
       </ul>
     )

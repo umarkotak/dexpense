@@ -13,7 +13,7 @@ function PageHome() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/home">Home</Link>></li>
+                  <li className="breadcrumb-item active"><Link to="/home">Home</Link></li>
                 </ol>
               </div>
             </div>

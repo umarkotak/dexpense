@@ -76,6 +76,28 @@ function PageTransactions() {
 
                 </div>
 
+                <div className="clearfix mt-2">
+                  <ul className="pagination pagination-sm m-0 float-right">
+                    <li className="page-item">
+                      <button
+                        className="btn btn-primary mr-2"
+                        onClick={() => {history.push(`/transactions?offset=${queryParams.offset - queryParams.limit}`); window.location.reload()}}
+                        disabled={queryParams.offset < queryParams.limit}
+                      >
+                        «
+                      </button>
+                    </li>
+                    <li className="page-item">
+                      <button
+                        className="btn btn-primary mr-2"
+                        onClick={() => {history.push(`/transactions?offset=${queryParams.offset + queryParams.limit}`); window.location.reload()}}
+                      >
+                        »
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
                 <hr />
 
                 <div className="overflow-auto">
@@ -83,17 +105,17 @@ function PageTransactions() {
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Acc ID</th>
-                        <th>Wallet ID</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>Direction</th>
-                        <th>Time</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Note</th>
-                        <th>Created At</th>
-                        <th>Action</th>
+                        <th>Akun</th>
+                        <th>Wallet</th>
+                        <th>Kategori</th>
+                        <th>Jumlah</th>
+                        <th>Jenis</th>
+                        <th>Waktu</th>
+                        <th>Nama</th>
+                        <th>Deskripsi</th>
+                        <th>Catatan</th>
+                        <th>Dibuat</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -115,28 +137,6 @@ function PageTransactions() {
                       ))}
                     </tbody>
                   </table>
-                </div>
-
-                <div className="clearfix mt-2">
-                  <ul className="pagination pagination-sm m-0 float-right">
-                    <li className="page-item">
-                      <button
-                        className="btn btn-primary mr-2"
-                        onClick={() => {history.push(`/transactions?offset=${queryParams.offset - queryParams.limit}`); window.location.reload()}}
-                        disabled={queryParams.offset < queryParams.limit}
-                      >
-                        «
-                      </button>
-                    </li>
-                    <li className="page-item">
-                      <button
-                        className="btn btn-primary mr-2"
-                        onClick={() => {history.push(`/transactions?offset=${queryParams.offset + queryParams.limit}`); window.location.reload()}}
-                      >
-                        »
-                      </button>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
