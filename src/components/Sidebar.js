@@ -18,8 +18,10 @@ function Sidebar() {
   function RefreshSideBarItems() {
     let tempSideBarItems = {}
     if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
+    if (window.location.pathname === "/home") { tempSideBarItems.home = "active" }
     else if (window.location.pathname === "/dashboard") { tempSideBarItems.dashboard = "active" }
     else if (window.location.pathname === "/transactions") { tempSideBarItems.transactions = "active" }
+    else if (window.location.pathname === "/groups") { tempSideBarItems.groups = "active" }
     return tempSideBarItems
   }
 
@@ -37,7 +39,7 @@ function Sidebar() {
               <img src="/default_avatar.png" className="img-circle elevation-2" alt="User" />
             </div>
             <div className="info">
-              <Link to="/home" className="d-block">Hello, <b>{activeName}</b> !</Link>
+              <Link to="/dashboard" className="d-block">Hello, <b>{activeName}</b> !</Link>
             </div>
           </div>
 
@@ -68,6 +70,9 @@ function Sidebar() {
         </li>
         <li className="nav-item">
           <Link to="/transactions" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon fas fa-hand-holding-usd"></i> <p>Transaksi</p></Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/groups" className={`nav-link ${sideBarItems["groups"] || ""}`}><i className="nav-icon fas fa-users"></i> <p>Groups</p></Link>
         </li>
       </ul>
     )

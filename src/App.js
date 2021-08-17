@@ -12,6 +12,8 @@ import PageSignUp from "./components/pages/PageSignUp"
 import PageDashboard from "./components/pages/PageDashboard"
 import PageTransactions from "./components/pages/PageTransactions"
 import PageTransactionsCreate from "./components/pages/PageTransactionsCreate"
+import PageGroups from "./components/pages/PageGroups"
+import PageNotFound from "./components/pages/PageNotFound"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -57,6 +59,8 @@ function App() {
               <Route path="/dashboard" exact component={PageDashboard} />
               <Route path="/transactions" exact component={PageTransactions} />
               <Route path="/transactions/create" exact component={PageTransactionsCreate} />
+              <Route path="/groups" exact component={PageGroups} />
+              <Route path="/" component={PageNotFound} />
             </Switch>
 
             <Footer />
