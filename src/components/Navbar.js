@@ -22,7 +22,7 @@ function Navbar() {
   }, [history])
 
   const [dexpenseSessionToken, setDexpenseSessionToken] = useState(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
-  const [groups, setGroups] = useState(JSON.parse(localStorage.getItem("DEXPENSE_SESSION_GROUPS")) || [])
+  const [groups, setGroups] = useState([])
   const [groupsActive, setGroupsActive] = useState({"id": "", "name": "N/A"})
 
   function handleLogout() {
@@ -36,17 +36,20 @@ function Navbar() {
   async function refreshGroups() {
     if (groups.length > 0) { return }
     if (!localStorage.getItem("DEXPENSE_SESSION_TOKEN")) { return }
-    if (localStorage.getItem("DEXPENSE_SESSION_GROUPS")) { return }
+    if (localStorage.getItem("DEXPENSE_SESSION_GROUPS")) {
+      var tempGroups = JSON.parse(localStorage.getItem("DEXPENSE_SESSION_GROUPS"))
+      setGroups(tempGroups)
+    }
     try {
       const response = await dexpenseApi.AccountProfile(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {})
       const status = response.status
       const body = await response.json()
 
       if (status === 200) {
-        setGroups(body.data.groups)
-        setGroupsActive({"id": body.data.groups[0].id, "name": body.data.groups[0].name})
         localStorage.setItem("DEXPENSE_SESSION_GROUPS", JSON.stringify(body.data.groups))
         localStorage.setItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID", body.data.groups[0].id)
+        setGroups(body.data.groups)
+        setGroupsActive({"id": body.data.groups[0].id, "name": body.data.groups[0].name})
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -58,6 +61,7 @@ function Navbar() {
   function handleSelectActiveGroups(id) {
     localStorage.setItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID", id)
     var tempGroup = groups.find((obj) => { return parseInt(obj.id) === parseInt(id) })
+    if (!tempGroup) { return }
     setGroupsActive({"id": id, "name": tempGroup.name})
   }
 

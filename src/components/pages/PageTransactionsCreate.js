@@ -42,7 +42,7 @@ function PageTransactionsCreate() {
     try {
       const response = await dexpenseApi.GroupsShow(
         localStorage.getItem("DEXPENSE_SESSION_TOKEN"),
-        {id: localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")}
+        {id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))}
       )
       const status = response.status
       const body = await response.json()
