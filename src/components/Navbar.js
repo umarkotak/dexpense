@@ -9,6 +9,7 @@ function Navbar() {
   const history = useHistory()
 
   useEffect(() => {
+    checkProfile()
     refreshGroups()
     handleSelectActiveGroups(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,6 +71,25 @@ function Navbar() {
     var tempGroup = groups.find((obj) => { return parseInt(obj.id) === parseInt(id) })
     if (!tempGroup) { return }
     setGroupsActive({"id": id, "name": tempGroup.name})
+  }
+
+  async function checkProfile() {
+    try {
+      const response = await dexpenseApi.AccountProfile(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {})
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        return
+      } else if (status === 401) {
+        handleLogout()
+        history.push("/login")
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
   }
 
   return (
