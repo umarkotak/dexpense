@@ -13,7 +13,7 @@ function query_limit() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).limit
 }
 
-function PageTransactions() {
+function PageTransactionsCompact() {
   const history = useHistory()
   const alert = useAlert()
 
@@ -59,7 +59,6 @@ function PageTransactions() {
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item active"><Link to="/transactions">Transaction</Link></li>
-                  <li className="breadcrumb-item active"><Link to="/transactions/detailed">Detailed</Link></li>
                 </ol>
               </div>
             </div>
@@ -70,15 +69,11 @@ function PageTransactions() {
           <div className="row">
             <div className="col-12">
               <div className="card card-primary card-outline">
-                <div className="card-header">
-                  <h3 className="card-title">History</h3>
-                  <div className="card-tools">
-                    <button type="button" className="btn btn-primary btn-xs" data-card-widget="collapse"><i className="fas fa-minus"></i></button>
-                  </div>
-                </div>
-
                 <div className="clearfix mt-2">
                   <ul className="pagination pagination-sm m-0 float-right">
+                    <li className="page-item mr-2">
+                      <Link to="/transactions/detailed" type="button" className="btn btn-primary btn-sm"><i className="fas fa-info-circle"></i> Detail</Link>
+                    </li>
                     <li className="page-item mr-2">
                       <button
                         className="btn btn-sm btn-primary"
@@ -101,44 +96,34 @@ function PageTransactions() {
 
                 <hr className="my-2" />
 
-                <div className="overflow-auto">
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Akun</th>
-                        <th>Wallet</th>
-                        <th>Kategori</th>
-                        <th>Jumlah</th>
-                        <th>Jenis</th>
-                        <th>Waktu</th>
-                        <th>Nama</th>
-                        <th>Deskripsi</th>
-                        <th>Catatan</th>
-                        <th>Dibuat</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {transactions.map((val, k) => (
-                        <tr key={val.id}>
-                          <td>{val.id}</td>
-                          <td>{val.account.username}</td>
-                          <td>{val.group_wallet.name}</td>
-                          <td>{val.category}</td>
-                          <td>{val.amount}</td>
-                          <td>{DirectionBuilder(val.direction_type)}</td>
-                          <td><button className="btn btn-default btn-xs">{utils.FormatDateTime(val.transaction_at)}</button></td>
-                          <td>{val.name}</td>
-                          <td>{val.description}</td>
-                          <td>{val.note}</td>
-                          <td><button className="btn btn-default btn-xs">{utils.FormatDateTime(val.created_at)}</button></td>
-                          <td>{TransactionActionBuilder(val.id)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="card-body px-0 py-1">
+                  <div className="row mx-0">
+                    {transactions.map((val, k) => (
+                      <div className={`border rounded col-12 my-1 py-1 ${val.direction_type === "outcome" ? "border-danger" : "border-primary"}`} key={val.id}>
+                        <div className="row">
+                          <div className="col-3">{val.category}</div>
+                          <div className="col-3">{val.account.username}</div>
+                          <div className="col-3">{val.group_wallet.name}</div>
+                          <div className="col-3">{val.amount}</div>
+                        </div>
+                        <hr className="my-0" />
+                        <div className="row">
+                          <div className="col-12">{val.name} | {val.note}</div>
+                        </div>
+                        <hr className="my-0" />
+                        <div className="row">
+                          <div className="col-6"><button className="btn btn-default btn-xs">{utils.FormatDateTime(val.transaction_at)}</button></div>
+                          <div className="col-6">
+                            <Link to="/transactions" className="btn btn-xs btn-danger float-right"><i></i> delete</Link>
+                            <Link to="/transactions" className="btn btn-xs btn-primary float-right mr-2"><i></i> edit</Link>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                 </div>
+
               </div>
             </div>
           </div>
@@ -183,4 +168,4 @@ function PageTransactions() {
   }
 }
 
-export default PageTransactions
+export default PageTransactionsCompact
