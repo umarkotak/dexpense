@@ -4,6 +4,7 @@ import {useAlert} from 'react-alert'
 import Select from 'react-select'
 
 import dexpenseApi from "../apis/DexpenseApi"
+import utils from "../helper/Utils"
 
 function PageGroupWalletsEdit() {
   const history = useHistory()
@@ -28,10 +29,6 @@ function PageGroupWalletsEdit() {
       setGroupWalletParams(groupWalletParams => ({...groupWalletParams, [e.name]: e.value}))
     }
   }
-
-  const walletTypeOptions = [
-    { name: 'wallet_type', value: 'cash', label: 'Cash' },
-  ]
 
   async function handleGroupWalletsSubmit() {
     try {
@@ -102,7 +99,7 @@ function PageGroupWalletsEdit() {
                   <div className="form-group">
                     <label>Jenis Dompet</label> <small className="text-danger"><b>*</b></small>
                     <Select
-                      options={walletTypeOptions}
+                      options={utils.Global()["WALLET_TYPE_OPTS"]}
                       onChange={(e) => handleGroupWalletParamsChanges(e)}
                     />
                   </div>

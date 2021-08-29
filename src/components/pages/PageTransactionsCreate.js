@@ -4,6 +4,7 @@ import {useAlert} from 'react-alert'
 import Select from 'react-select'
 
 import dexpenseApi from "../apis/DexpenseApi"
+import utils from "../helper/Utils"
 
 function PageTransactionsCreate() {
   const alert = useAlert()
@@ -27,16 +28,6 @@ function PageTransactionsCreate() {
       setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [e.name]: e.value}))
     }
   }
-
-  const options = [
-    { name: 'category', value: 'food', label: 'Food' },
-    { name: 'category', value: 'daily_needs', label: 'Daily Needs' },
-    { name: 'category', value: 'other', label: 'Other' }
-  ]
-  const directionOptions = [
-    { name: 'direction_type', value: 'income', label: 'Pemasukan' },
-    { name: 'direction_type', value: 'outcome', label: 'Pengeluaran' }
-  ]
 
   const [walletOptions, setWalletOptions] = useState([])
   async function fetchWalletOptions() {
@@ -116,7 +107,7 @@ function PageTransactionsCreate() {
                   <div className="form-group">
                     <label>Jenis</label> <small className="text-danger"><b>*</b></small>
                     <Select
-                      options={directionOptions}
+                      options={utils.Global()["TRANSACTION_DIRECTION_OPTS"]}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
                   </div>
@@ -124,7 +115,7 @@ function PageTransactionsCreate() {
                     <label>Kategori</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="category"
-                      options={options}
+                      options={utils.Global()["TRANSACTION_CATEGORY_ALL_OPTS"]}
                       defaultValue={transactionsCreateParams.category}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
