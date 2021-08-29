@@ -130,6 +130,32 @@ class DexpenseApi {
     return response
   }
 
+  async GroupsMemberInvite(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}/invite`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async GroupsMemberRemove(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}/remove`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
   async GroupWalletsCreate(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/group_wallets`
     const response = await fetch(uri, {

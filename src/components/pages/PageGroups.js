@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react"
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import {useAlert} from 'react-alert'
 
 import dexpenseApi from "../apis/DexpenseApi"
 
 function PageGroups() {
+  const history = useHistory()
   const alert = useAlert()
 
   const [groupList, setGroupList] = useState(
@@ -24,6 +25,25 @@ function PageGroups() {
 
       if (status === 200) {
         setGroupList(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
+  async function handleRemoveMember(groupID, username) {
+    if (!window.confirm("Apakah anda yakin ingin mengeluarkan anggota ini?")) {return}
+
+    try {
+      const response = await dexpenseApi.GroupsMemberRemove(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {id: groupID, username: username})
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        alert.success(`Removing member success`)
+        fetcGroupsData()
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -98,7 +118,7 @@ function PageGroups() {
                             {group["accounts"].map((account, k) => (
                               <div className="my-1" key={k}>
                                 <i className="fa fa-caret-right"></i>  {account.username}
-                                <button className="btn btn-xs btn-danger rounded float-right">remove</button>
+                                <button className="btn btn-xs btn-danger rounded float-right" onClick={(e) => {handleRemoveMember(group.id, account.username)}}>remove</button>
                               </div>
                             ))}
                           </div>
