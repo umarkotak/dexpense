@@ -126,7 +126,7 @@ function PageTransactions() {
                           <td>{val.account.username}</td>
                           <td>{val.group_wallet.name}</td>
                           <td>{val.category}</td>
-                          <td>{val.amount}</td>
+                          <td>{utils.FormatNumber(parseInt(val.amount))}</td>
                           <td>{DirectionBuilder(val.direction_type)}</td>
                           <td><button className="btn btn-default btn-xs">{utils.FormatDateTime(val.transaction_at)}</button></td>
                           <td>{val.name}</td>

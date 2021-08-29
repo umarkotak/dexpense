@@ -5,14 +5,17 @@ import Select from 'react-select'
 
 import dexpenseApi from "../apis/DexpenseApi"
 
-function PageGroupWalletsCreate() {
+function PageGroupWalletsEdit() {
   const history = useHistory()
   const alert = useAlert()
 
   let { id } = useParams()
   const groupID = parseInt(id)
+  let { wallet_id } = useParams()
+  const walletID = parseInt(wallet_id)
 
   const [groupWalletParams, setGroupWalletParams] = useState({
+    "id": walletID,
     "group_id": groupID,
     "name": "",
     "wallet_type": ""
@@ -32,12 +35,30 @@ function PageGroupWalletsCreate() {
 
   async function handleGroupWalletsSubmit() {
     try {
-      const response = await dexpenseApi.GroupWalletsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), groupWalletParams)
+      const response = await dexpenseApi.GroupWalletsEdit(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), groupWalletParams)
       const status = response.status
       const body = await response.json()
 
       if (status === 200) {
-        alert.info("Wallet creation success!")
+        alert.info("Wallet edit success!")
+        history.push("/groups")
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
+  async function handleGroupWalletDelete() {
+    if (!window.confirm("Apakah anda yakin ingin menghapus dompet ini? semua transaksi yang berkaitan dengan dompet ini akan terhapus!")) {return}
+    try {
+      const response = await dexpenseApi.GroupWalletsDelete(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), groupWalletParams)
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        alert.info("Wallet delete success!")
         history.push("/groups")
       } else {
         alert.error(`There is some error: ${body.error}`)
@@ -54,7 +75,7 @@ function PageGroupWalletsCreate() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1>Create Wallet</h1>
+                <h1>Edit Wallet</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -98,6 +119,25 @@ function PageGroupWalletsCreate() {
 
       <Link
         to={`/groups/${groupID}/wallets/create`}
+        className="bg-danger"
+        onClick={() => handleGroupWalletDelete()}
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"140px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center",
+          boxShadow:" 2px 2px 2px #999"
+        }}
+      >
+        <i className="fa fa-trash my-float" style={{marginTop:"17px"}}></i>
+      </Link>
+
+      <Link
+        to={`/groups/${groupID}/wallets/create`}
         className="bg-primary"
         onClick={() => handleGroupWalletsSubmit()}
         style={{
@@ -118,4 +158,4 @@ function PageGroupWalletsCreate() {
   )
 }
 
-export default PageGroupWalletsCreate
+export default PageGroupWalletsEdit

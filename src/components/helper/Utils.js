@@ -8,6 +8,14 @@ class Utils {
     var jsTime = new Date(timeString)
     return `${jsTime.getFullYear()} ${this.months[jsTime.getMonth()]} ${jsTime.getDate()} - ${jsTime.getHours()}:${jsTime.getMinutes()}`
   }
+
+  FormatNumber(number) {
+    var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'IDR',
+    })
+    return formatter.format(number)
+  }
 }
 
 const utils = new Utils()

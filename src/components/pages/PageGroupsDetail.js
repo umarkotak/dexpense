@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react"
-import {Link, useParams} from "react-router-dom"
+import {Link, useParams, useHistory} from "react-router-dom"
 import {useAlert} from 'react-alert'
 
 import dexpenseApi from "../apis/DexpenseApi"
 
 function PageGroupsDetail() {
+  const history = useHistory()
   const alert = useAlert()
 
   let { id } = useParams()
@@ -49,6 +50,26 @@ function PageGroupsDetail() {
       if (status === 200) {
         localStorage.removeItem("DEXPENSE_SESSION_GROUPS")
         alert.info("Group edit success!")
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
+  async function handleGroupDelete() {
+    if (!window.confirm("Apakah anda yakin ingin menghapus group ini? semua transaksi yang berkaitan dengan group ini akan terhapus!")) {return}
+
+    try {
+      const response = await dexpenseApi.GroupsDelete(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), group)
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        localStorage.removeItem("DEXPENSE_SESSION_GROUPS")
+        alert.info("Group delete success!")
+        history.push("/groups")
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -102,6 +123,25 @@ function PageGroupsDetail() {
           </div>
         </section>
       </div>
+
+      <Link
+        to={`/groups/${groupID}`}
+        className="bg-danger"
+        onClick={() => handleGroupDelete()}
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"140px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center",
+          boxShadow:" 2px 2px 2px #999"
+        }}
+      >
+        <i className="fa fa-trash my-float" style={{marginTop:"17px"}}></i>
+      </Link>
 
       <Link
         to={`/groups/${groupID}`}

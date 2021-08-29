@@ -110,10 +110,10 @@ function PageTransactionsCompact() {
                     {transactions.map((val, k) => (
                       <div className={`border rounded col-12 my-1 py-1 ${val.direction_type === "outcome" ? "border-danger" : "border-primary"}`} key={val.id}>
                         <div className="row">
-                          <div className="col-3">{val.category}</div>
+                          <div className="col-2">{val.category}</div>
                           <div className="col-3">{val.account.username}</div>
                           <div className="col-3">{val.group_wallet.name}</div>
-                          <div className="col-3">{val.amount}</div>
+                          <div className="col-4">{utils.FormatNumber(parseInt(val.amount))}</div>
                         </div>
                         <hr className="my-0" />
                         <div className="row">

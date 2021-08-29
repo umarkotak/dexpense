@@ -20,6 +20,7 @@ import PageGroupsCreate from "./components/pages/PageGroupsCreate"
 import PageGroupWalletsCreate from "./components/pages/PageGroupWalletsCreate"
 import PageNotFound from "./components/pages/PageNotFound"
 import PageStatistics from "./components/pages/PageStatistics"
+import PageGroupWalletsEdit from "./components/pages/PageGroupWalletsEdit"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -68,9 +69,10 @@ function App() {
               <Route path="/transactions/create" exact component={PageTransactionsCreate} />
               <Route path="/transactions/:id/edit" exact component={PageTransactionsEdit} />
               <Route path="/groups" exact component={PageGroups} />
-              <Route path="/groups/:id" exact component={PageGroupsDetail} />
               <Route path="/groups/create" exact component={PageGroupsCreate} />
+              <Route path="/groups/:id" exact component={PageGroupsDetail} />
               <Route path="/groups/:id/wallets/create" exact component={PageGroupWalletsCreate} />
+              <Route path="/groups/:id/wallets/:wallet_id/edit" exact component={PageGroupWalletsEdit} />
               <Route path="/statistics" exact component={PageStatistics} />
               <Route path="/" component={PageNotFound} />
             </Switch>

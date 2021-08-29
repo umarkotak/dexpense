@@ -117,6 +117,56 @@ class DexpenseApi {
     })
     return response
   }
+
+  async GroupsDelete(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}`
+    const response = await fetch(uri, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    return response
+  }
+
+  async GroupWalletsCreate(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/group_wallets`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async GroupWalletsEdit(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/group_wallets/${params.id}`
+    const response = await fetch(uri, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async GroupWalletsDelete(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/group_wallets/${params.id}`
+    const response = await fetch(uri, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
 }
 
 const dexpenseApi = new DexpenseApi()

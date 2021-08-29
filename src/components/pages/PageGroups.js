@@ -65,7 +65,7 @@ function PageGroups() {
 
                 <div className="card-body px-2">
                   <div className="row">
-                    <div className="col-12 col-lg-8">
+                    <div className="col-12 col-lg-12">
                       {groupList.map((group, k) => (
                         <div className="row my-1 border border-primary rounded" key={k}>
                           <div className="col-4">
@@ -85,7 +85,7 @@ function PageGroups() {
                             {group["group_wallets"].map((group_wallet, k) => (
                               <div className="my-1" key={k}>
                                 <i className="fa fa-caret-right"></i>  {group_wallet.name}
-                                <Link to={`/groups`} className="btn btn-xs btn-primary rounded float-right">edit</Link>
+                                <Link to={`/groups/${group.id}/wallets/${group_wallet.id}/edit`} className="btn btn-xs btn-primary rounded float-right">edit</Link>
                               </div>
                             ))}
                           </div>
@@ -105,7 +105,7 @@ function PageGroups() {
                         </div>
                       ))}
                     </div>
-                    <div className="col-12 col-lg-4">
+                    <div className="col-12 col-lg-12">
                     </div>
                   </div>
                 </div>
