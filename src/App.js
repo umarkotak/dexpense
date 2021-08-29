@@ -12,11 +12,14 @@ import PageSignUp from "./components/pages/PageSignUp"
 import PageDashboard from "./components/pages/PageDashboard"
 import PageTransactions from "./components/pages/PageTransactions"
 import PageTransactionsCreate from "./components/pages/PageTransactionsCreate"
+import PageTransactionsCompact from "./components/pages/PageTransactionsCompact"
+import PageTransactionsEdit from "./components/pages/PageTransactionsEdit"
 import PageGroups from "./components/pages/PageGroups"
+import PageGroupsDetail from "./components/pages/PageGroupsDetail"
 import PageGroupsCreate from "./components/pages/PageGroupsCreate"
+import PageGroupWalletsCreate from "./components/pages/PageGroupWalletsCreate"
 import PageNotFound from "./components/pages/PageNotFound"
 import PageStatistics from "./components/pages/PageStatistics"
-import PageTransactionsCompact from "./components/pages/PageTransactionsCompact"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -63,8 +66,11 @@ function App() {
               <Route path="/transactions" exact component={PageTransactionsCompact} />
               <Route path="/transactions/detailed" exact component={PageTransactions} />
               <Route path="/transactions/create" exact component={PageTransactionsCreate} />
+              <Route path="/transactions/:id/edit" exact component={PageTransactionsEdit} />
               <Route path="/groups" exact component={PageGroups} />
+              <Route path="/groups/:id" exact component={PageGroupsDetail} />
               <Route path="/groups/create" exact component={PageGroupsCreate} />
+              <Route path="/groups/:id/wallets/create" exact component={PageGroupWalletsCreate} />
               <Route path="/statistics" exact component={PageStatistics} />
               <Route path="/" component={PageNotFound} />
             </Switch>

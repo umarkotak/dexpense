@@ -24,6 +24,7 @@ function PageGroupsCreate() {
 
       if (status === 200) {
         alert.info("Group creation success!")
+        localStorage.removeItem("DEXPENSE_SESSION_GROUPS")
         history.push("/groups")
       } else {
         alert.error(`There is some error: ${body.error}`)
@@ -32,7 +33,7 @@ function PageGroupsCreate() {
       alert.error(`There is some error: ${e.message}`)
     }
   }
-  
+
   return (
     <div>
       <div className="content-wrapper">

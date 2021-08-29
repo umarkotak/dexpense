@@ -24,24 +24,24 @@ function PageNotFound() {
         </div>
 
         <section className="content">
-          <div class="error-page">
-            <h2 class="headline text-warning"> 404</h2>
+          <div className="error-page">
+            <h2 className="headline text-warning"> 404</h2>
 
-            <div class="error-content">
-              <h3><i class="fas fa-exclamation-triangle text-warning"></i> Eeeaa! Gak ketemu mas bro!!!</h3>
+            <div className="error-content">
+              <h3><i className="fas fa-exclamation-triangle text-warning"></i> Eeeaa! Gak ketemu mas bro!!!</h3>
 
               <p>
                 Kita ga nemu nih halaman yang kamu cari.
                 Jadi... kamu bisa coba balik ke <Link to="/home">kembalik ke Home</Link> atau coba halaman lain yang ada di menu.
               </p>
 
-              <div class="search-form">
-                <div class="input-group">
-                  <input type="text" name="search" class="form-control" placeholder="Search" />
+              <div className="search-form">
+                <div className="input-group">
+                  <input type="text" name="search" className="form-control" placeholder="Search" />
 
-                  <div class="input-group-append">
-                    <button type="submit" name="submit" class="btn btn-warning" onClick={() => alert.error("Fiturnya belom dibikin. Cari aja yang di menu gan!")}>
-                      <i class="fas fa-search"></i>
+                  <div className="input-group-append">
+                    <button type="submit" name="submit" className="btn btn-warning" onClick={() => alert.error("Fiturnya belom dibikin. Cari aja yang di menu gan!")}>
+                      <i className="fas fa-search"></i>
                     </button>
                   </div>
                 </div>

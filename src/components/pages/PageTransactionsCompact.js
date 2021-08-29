@@ -47,6 +47,15 @@ function PageTransactionsCompact() {
     }
   }
 
+  async function executeDeleteTransaction(transactionID) {
+    try {
+      if (!window.confirm("Are you sure?")) { return }
+      console.log(transactionID)
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
   return (
     <div>
       <div className="content-wrapper">
@@ -114,8 +123,8 @@ function PageTransactionsCompact() {
                         <div className="row">
                           <div className="col-6"><button className="btn btn-default btn-xs">{utils.FormatDateTime(val.transaction_at)}</button></div>
                           <div className="col-6">
-                            <Link to="/transactions" className="btn btn-xs btn-danger float-right"><i></i> delete</Link>
-                            <Link to="/transactions" className="btn btn-xs btn-primary float-right mr-2"><i></i> edit</Link>
+                            <button to="/transactions" className="btn btn-xs btn-danger float-right" onClick={() => executeDeleteTransaction(val.id)}><i></i> delete</button>
+                            <Link to={`/transactions/${val.id}/edit`} className="btn btn-xs btn-primary float-right mr-2"><i></i> edit</Link>
                           </div>
                         </div>
                       </div>

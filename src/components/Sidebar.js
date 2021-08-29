@@ -20,10 +20,9 @@ function Sidebar() {
     if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
     if (window.location.pathname === "/home") { tempSideBarItems.home = "active" }
     else if (window.location.pathname === "/dashboard") { tempSideBarItems.dashboard = "active" }
-    else if (window.location.pathname === "/transactions") { tempSideBarItems.transactions = "active" }
-    else if (window.location.pathname === "/transactions/detailed") { tempSideBarItems.transactions = "active" }
+    else if (window.location.pathname.startsWith("/transactions")) { tempSideBarItems.transactions = "active" }
     else if (window.location.pathname === "/statistics") { tempSideBarItems.statistics = "active" }
-    else if (window.location.pathname === "/groups") { tempSideBarItems.groups = "active" }
+    else if (window.location.pathname.startsWith("/groups")) { tempSideBarItems.groups = "active" }
     return tempSideBarItems
   }
 
