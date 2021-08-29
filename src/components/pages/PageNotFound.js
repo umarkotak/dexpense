@@ -28,11 +28,11 @@ function PageNotFound() {
             <h2 className="headline text-warning"> 404</h2>
 
             <div className="error-content">
-              <h3><i className="fas fa-exclamation-triangle text-warning"></i> Eeeaa! Gak ketemu mas bro!!!</h3>
+              <h3><i className="fas fa-exclamation-triangle text-warning"></i> Maaf halaman yang anda cari tidak ditemukan</h3>
 
               <p>
                 Kita ga nemu nih halaman yang kamu cari.
-                Jadi... kamu bisa coba balik ke <Link to="/home">kembalik ke Home</Link> atau coba halaman lain yang ada di menu.
+                Jadi... kamu bisa coba balik ke <Link to="/home">halaman Home</Link> atau coba halaman lain yang ada di menu.
               </p>
 
               <div className="search-form">

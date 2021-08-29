@@ -94,11 +94,11 @@ function PageGroups() {
                           <div className="col-8 my-1">
                             <b>{group.name}</b>
                             <Link to={`/groups/${group.id}`} className="btn btn-xs btn-primary rounded float-right">edit</Link>
-                            <Link to={`/groups/${group.id}/wallets/create`} className="btn btn-xs btn-primary rounded float-right mr-1">+ wallet</Link>
                           </div>
                           <div className="col-4">
                             <hr className="my-1" />
                             Wallets
+                            <Link to={`/groups/${group.id}/wallets/create`} className="btn btn-xs btn-primary rounded float-right mr-1"><i className="fa fa-plus-circle"></i></Link>
                           </div>
                           <div className="col-8">
                             <hr className="my-1" />
@@ -112,6 +112,7 @@ function PageGroups() {
                           <div className="col-4">
                             <hr className="my-1" />
                             Members
+                            <Link to={`/groups/${group.id}/members/invite`} className="btn btn-xs btn-primary rounded float-right mr-1"><i className="fa fa-plus-circle"></i></Link>
                           </div>
                           <div className="col-8">
                             <hr className="my-1" />
