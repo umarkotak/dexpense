@@ -50,7 +50,17 @@ function PageTransactionsCompact() {
   async function executeDeleteTransaction(transactionID) {
     try {
       if (!window.confirm("Are you sure?")) { return }
-      console.log(transactionID)
+
+      const response = await dexpenseApi.TransactionsDelete(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {id: transactionID})
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        fetchTransactions()
+        alert.success(`Delete transaction success!`)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
     } catch (e) {
       alert.error(`There is some error: ${e.message}`)
     }
@@ -117,7 +127,7 @@ function PageTransactionsCompact() {
                         </div>
                         <hr className="my-0" />
                         <div className="row">
-                          <div className="col-12">{val.name} | {val.note}</div>
+                          <div className="col-12">{val.name} | {val.description} | {val.note}</div>
                         </div>
                         <hr className="my-0" />
                         <div className="row">
@@ -158,23 +168,6 @@ function PageTransactionsCompact() {
       </Link>
     </div>
   )
-
-  function DirectionBuilder(directionType) {
-    if (directionType === "outcome") {
-      return(<button className="btn btn-xs btn-danger" disabled>pengeluaran</button>)
-    } else {
-      return(<button className="btn btn-xs btn-success" disabled>pemasukan</button>)
-    }
-  }
-
-  function TransactionActionBuilder(transactionId) {
-    return(
-      <div>
-        <button className="btn btn-xs btn-primary mr-1">edit</button>
-        <button className="btn btn-xs btn-danger">delete</button>
-      </div>
-    )
-  }
 }
 
 export default PageTransactionsCompact

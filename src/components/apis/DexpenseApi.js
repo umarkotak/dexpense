@@ -68,6 +68,18 @@ class DexpenseApi {
     return response
   }
 
+  async TransactionsDelete(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions/${params.id}`
+    const response = await fetch(uri, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    return response
+  }
+
   async GroupsShow(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}`
     const response = await fetch(uri, {

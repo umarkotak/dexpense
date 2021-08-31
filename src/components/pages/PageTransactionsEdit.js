@@ -1,7 +1,10 @@
 import React from "react"
-import {Link} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 
 function PageTransactionsEdit() {
+  let { id } = useParams()
+  const transactionID = parseInt(id)
+
   return (
     <div>
       <div className="content-wrapper">
@@ -14,6 +17,7 @@ function PageTransactionsEdit() {
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item active"><Link to="/transactions">Transactions</Link></li>
+                  <li className="breadcrumb-item active"><Link to={`/transactions/${transactionID}/edit`}>Edit</Link></li>
                 </ol>
               </div>
             </div>
