@@ -11,11 +11,11 @@
       content="Aplikasi manajemen keuangan keluarga."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    
+
     <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.css">
-    
+
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   </head>
 
@@ -38,12 +38,25 @@
         location.replace(`https:${location.href.substring(location.protocol.length)}`);
       }
     </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('worker.js').then(function(registration) {
+            console.log('Worker registration successful', registration.scope);
+          }, function(err) {
+            console.log('Worker registration failed', err);
+          }).catch(function(err) {
+            console.log(err);
+          });
+        });
+      } else {
+        console.log('Service Worker is not supported by browser.');
+      }
+    </script>
 
     <script src="/plugins/jquery/jquery.min.js"></script>
     <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script>
-      $.widget.bridge('uibutton', $.ui.button)
-    </script>
+    <script>$.widget.bridge('uibutton', $.ui.button);</script>
     <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/plugins/chart.js/Chart.min.js"></script>
     <script src="/plugins/sparklines/sparkline.js"></script>
