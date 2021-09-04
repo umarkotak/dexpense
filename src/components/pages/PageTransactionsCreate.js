@@ -11,9 +11,9 @@ function PageTransactionsCreate() {
   const history = useHistory()
 
   const [transactionsCreateParams, setTransactionsCreateParams] = useState({
-    "category": "food",
+    "category": "",
     "amount": 0,
-    "direction_type": "out",
+    "direction_type": "",
     "group_wallet_id": 0,
     "name": "",
     "description": "",
@@ -111,6 +111,7 @@ function PageTransactionsCreate() {
                   <div className="form-group">
                     <label>Jenis</label> <small className="text-danger"><b>*</b></small>
                     <Select
+                      defaultValue={utils.Global()["TRANSACTION_DIRECTION_OPTS"][0]}
                       options={utils.Global()["TRANSACTION_DIRECTION_OPTS"]}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
