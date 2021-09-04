@@ -9,12 +9,29 @@ class Utils {
     return `${jsTime.getFullYear()} ${this.months[jsTime.getMonth()]} ${jsTime.getDate()} - ${jsTime.getHours()}:${jsTime.getMinutes()}`
   }
 
+  FormatDateInput(timeObj) {
+    return `${timeObj.getFullYear()}-${timeObj.getMonth()}-${timeObj.getDate()}T${timeObj.getHours()}:${timeObj.getMinutes()}`
+  }
+
   FormatNumber(number) {
     var formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'IDR',
     })
     return formatter.format(number)
+  }
+
+  ConvertLocalTimeToUTC(localTimeString) {
+    var localTime = new Date(localTimeString)
+    var localTimeUTC = new Date(
+      localTime.getUTCFullYear(),
+      localTime.getUTCMonth(),
+      localTime.getUTCDate(),
+      localTime.getUTCHours(),
+      localTime.getUTCMinutes(),
+      localTime.getUTCSeconds()
+    )
+    return localTimeUTC
   }
 
   Global() {
