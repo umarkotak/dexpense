@@ -25,7 +25,7 @@ class Utils {
     var localTime = new Date(localTimeString)
     var localTimeUTC = new Date(
       localTime.getUTCFullYear(),
-      localTime.getUTCMonth(),
+      localTime.getUTCMonth()+1,
       localTime.getUTCDate(),
       localTime.getUTCHours(),
       localTime.getUTCMinutes(),
@@ -56,7 +56,7 @@ class Utils {
         {name:"category", value: "salary", label: "Gaji"},
         {name:"category", value: "petty_cash", label: "Uang Kaget"},
         {name:"category", value: "bonus", label: "Bonus"},
-        
+
         { name: 'category', value: 'other', label: 'Lainnya' }
       ],
       "TRANSACTION_DIRECTION_OPTS": [
