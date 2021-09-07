@@ -51,6 +51,8 @@ class Utils {
         {name:"category", value: "gift", label: "Hadiah"},
         {name:"category", value: "infaq", label: "Infaq"},
         {name:"category", value: "admin_fee", label: "Biaya Admin"},
+        {name:"category", value: "debt", label: "Hutang"},
+        {name:"category", value: "toys", label: "Mainan"},
 
         {name:"category", value: "allowance", label: "Uang Jajan"},
         {name:"category", value: "salary", label: "Gaji"},

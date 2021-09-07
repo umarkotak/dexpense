@@ -16,7 +16,7 @@ function PageTransactionsCreate() {
     "direction_type": "",
     "group_wallet_id": 0,
     "name": "",
-    "description": "",
+    "description": "outcome",
     "note": "",
     "transaction_at": ""
   })
@@ -61,7 +61,7 @@ function PageTransactionsCreate() {
       var tempTransactionsCreateParams = transactionsCreateParams
       var transactionAtUTC = utils.ConvertLocalTimeToUTC(tempTransactionsCreateParams["transaction_at"])
       tempTransactionsCreateParams["transaction_at"] =utils.FormatDateInput(transactionAtUTC)
-      
+
       const response = await dexpenseApi.TransactionsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempTransactionsCreateParams)
       const status = response.status
       const body = await response.json()
@@ -111,7 +111,7 @@ function PageTransactionsCreate() {
                   <div className="form-group">
                     <label>Jenis</label> <small className="text-danger"><b>*</b></small>
                     <Select
-                      defaultValue={utils.Global()["TRANSACTION_DIRECTION_OPTS"][0]}
+                      defaultValue={utils.Global()["TRANSACTION_DIRECTION_OPTS"][1]}
                       options={utils.Global()["TRANSACTION_DIRECTION_OPTS"]}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
