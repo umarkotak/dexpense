@@ -68,6 +68,31 @@ class DexpenseApi {
     return response
   }
 
+  async TransactionsDetail(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions/${params.id}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    return response
+  }
+
+  async TransactionsEdit(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions/${params.id}`
+    const response = await fetch(uri, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
   async TransactionsDelete(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/transactions/${params.id}`
     const response = await fetch(uri, {
