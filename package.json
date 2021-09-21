@@ -1,7 +1,12 @@
 {
   "name": "dexpense",
-  "version": "0.1.0",
+  "homepage": "https://dexpense.netlify.app/",
+  "version": "1.1.0",
   "private": true,
+  "engines": {
+    "npm": "5.7.1",
+    "node": "9.5.0"
+  },
   "dependencies": {
     "@coreui/react": "^4.0.0-alpha.3",
     "@testing-library/jest-dom": "^5.12.0",
