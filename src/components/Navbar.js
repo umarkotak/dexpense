@@ -75,6 +75,8 @@ function Navbar() {
 
   async function checkProfile() {
     try {
+      if (!localStorage.getItem("DEXPENSE_SESSION_TOKEN")) { return }
+
       const response = await dexpenseApi.AccountProfile(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {})
       const status = response.status
       const body = await response.json()
