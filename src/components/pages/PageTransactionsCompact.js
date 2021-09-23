@@ -120,18 +120,22 @@ function PageTransactionsCompact() {
                     {transactions.map((val, k) => (
                       <div className={`border rounded col-12 my-1 py-1 ${val.direction_type === "outcome" ? "border-danger" : "border-primary"}`} key={val.id}>
                         <div className="row">
-                          <div className="col-2">{val.category}</div>
-                          <div className="col-3">{val.account.username}</div>
-                          <div className="col-3">{val.group_wallet.name}</div>
-                          <div className="col-4">{utils.FormatNumber(parseInt(val.amount))}</div>
+                          <div className="col-2"><small className="badge badge-light mr-1">{val.category}</small></div>
+                          <div className="col-3"><small className="badge badge-light mr-1">{val.account.username}</small></div>
+                          <div className="col-3"><small className="badge badge-light mr-1">{val.group_wallet.name}</small></div>
+                          <div className="col-4"><small className="badge badge-light mr-1">{utils.FormatNumber(parseInt(val.amount))}</small></div>
                         </div>
                         <hr className="my-0" />
                         <div className="row">
-                          <div className="col-12">{val.name} | {val.description} | {val.note}</div>
+                          <div className="col-12">
+                            <small className="badge badge-light mr-1">{val.name}</small>
+                            <small className="badge badge-light mr-1">{val.description}</small>
+                            <small className="badge badge-light mr-1">{val.note}</small>
+                          </div>
                         </div>
                         <hr className="my-0" />
                         <div className="row">
-                          <div className="col-6"><button className="btn btn-default btn-xs">{utils.FormatDateTime(val.transaction_at)}</button></div>
+                          <div className="col-6"><small className="badge badge-light">{utils.FormatDateTime(val.transaction_at)}</small></div>
                           <div className="col-6">
                             <button to="/transactions" className="btn btn-xs btn-danger float-right" onClick={() => executeDeleteTransaction(val.id)}><i></i> delete</button>
                             <Link to={`/transactions/${val.id}/edit`} className="btn btn-xs btn-primary float-right mr-2"><i></i> edit</Link>

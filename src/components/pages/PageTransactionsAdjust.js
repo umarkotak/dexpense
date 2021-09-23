@@ -6,11 +6,10 @@ import Select from 'react-select'
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 
-function PageTransactionsCreate() {
+function PageTransactionsAdjust() {
   const alert = useAlert()
   const history = useHistory()
 
-  const [selectedWalletBalance, setSelectedWalletBalance] = useState("")
   const [transactionsCreateParams, setTransactionsCreateParams] = useState({
     "category": "",
     "amount": 0,
@@ -27,9 +26,6 @@ function PageTransactionsCreate() {
       setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [name]: value}))
     } catch (err) {
       setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [e.name]: e.value}))
-      if (e.name === "group_wallet_id") {
-        setSelectedWalletBalance(e.balance)
-      }
     }
   }
 
@@ -43,11 +39,9 @@ function PageTransactionsCreate() {
       const status = response.status
       const body = await response.json()
 
-      console.log("fetchWalletOptions", status, body)
-
       if (status === 200) {
         var tempWalletOptions = body.data.group_wallets.map((v, k) => {
-          return { name: 'group_wallet_id', value: v.id, label: v.name, balance: v.amount }
+          return { name: 'group_wallet_id', value: v.id, label: v.name }
         })
         setWalletOptions(tempWalletOptions)
       } else {
@@ -108,10 +102,7 @@ function PageTransactionsCreate() {
               <div className="card card-primary card-outline">
                 <div className="card-header">
                   <div className="card-tools">
-                    <Link to="/transactions/transfer" className="btn btn-primary btn-sm mx-1">
-                      <i className="fas fa-exchange-alt"></i> Transfer
-                    </Link>
-                    <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
+                    <button type="button" className="btn btn-primary btn-xs" data-card-widget="collapse">
                       <i className="fas fa-minus"></i>
                     </button>
                   </div>
@@ -141,17 +132,6 @@ function PageTransactionsCreate() {
                       options={walletOptions}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
-                  </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text"><i className="fas fa-wallet"></i></span>
-                    </div>
-                    <input type="text" className="form-control" value={selectedWalletBalance} readOnly />
-                    <div className="input-group-append">
-                      <div className="input-group-text">
-                        <Link to={`/transactions/adjust?group_wallet_id=${transactionsCreateParams["group_wallet_id"]}`}><i className="fas fa-edit"></i></Link>
-                      </div>
-                    </div>
                   </div>
                   <div className="form-group">
                     <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
@@ -205,4 +185,4 @@ function PageTransactionsCreate() {
   )
 }
 
-export default PageTransactionsCreate
+export default PageTransactionsAdjust

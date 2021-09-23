@@ -6,11 +6,10 @@ import Select from 'react-select'
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 
-function PageTransactionsCreate() {
+function PageTransactionsTransfer() {
   const alert = useAlert()
   const history = useHistory()
 
-  const [selectedWalletBalance, setSelectedWalletBalance] = useState("")
   const [transactionsCreateParams, setTransactionsCreateParams] = useState({
     "category": "",
     "amount": 0,
@@ -19,7 +18,9 @@ function PageTransactionsCreate() {
     "name": "",
     "description": "",
     "note": "",
-    "transaction_at": ""
+    "transaction_at": "",
+    "target_group_wallet_id": 0,
+    "transfer_fee": 0
   })
   function handleTransactionsParamsChanges(e) {
     try {
@@ -27,13 +28,11 @@ function PageTransactionsCreate() {
       setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [name]: value}))
     } catch (err) {
       setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [e.name]: e.value}))
-      if (e.name === "group_wallet_id") {
-        setSelectedWalletBalance(e.balance)
-      }
     }
   }
 
   const [walletOptions, setWalletOptions] = useState([])
+  const [targetWalletOptions, setTargetWalletOptions] = useState([])
   async function fetchWalletOptions() {
     try {
       const response = await dexpenseApi.GroupsShow(
@@ -43,13 +42,16 @@ function PageTransactionsCreate() {
       const status = response.status
       const body = await response.json()
 
-      console.log("fetchWalletOptions", status, body)
-
       if (status === 200) {
-        var tempWalletOptions = body.data.group_wallets.map((v, k) => {
-          return { name: 'group_wallet_id', value: v.id, label: v.name, balance: v.amount }
+        var tempWalletOptions = []
+        var tempTargetWalletOptions = []
+
+        body.data.group_wallets.map((v, k) => {
+          tempWalletOptions.push({ name: 'group_wallet_id', value: v.id, label: v.name })
+          tempTargetWalletOptions.push({ name: 'target_group_wallet_id', value: v.id, label: v.name })
         })
         setWalletOptions(tempWalletOptions)
+        setTargetWalletOptions(tempTargetWalletOptions)
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -68,7 +70,7 @@ function PageTransactionsCreate() {
       var transactionAtUTC = utils.ConvertLocalTimeToUTC(tempTransactionsCreateParams["transaction_at"])
       tempTransactionsCreateParams["transaction_at"] = utils.FormatDateInput(transactionAtUTC)
 
-      const response = await dexpenseApi.TransactionsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempTransactionsCreateParams)
+      const response = await dexpenseApi.TransactionsTransfer(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempTransactionsCreateParams)
       const status = response.status
       const body = await response.json()
 
@@ -90,12 +92,13 @@ function PageTransactionsCreate() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1>New Transaction</h1>
+                <h1>Transfer</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item active"><Link to="/transactions">Transaction</Link></li>
                   <li className="breadcrumb-item active"><Link to="/transactions/create">New</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/transfer">Transfer</Link></li>
                 </ol>
               </div>
             </div>
@@ -108,8 +111,8 @@ function PageTransactionsCreate() {
               <div className="card card-primary card-outline">
                 <div className="card-header">
                   <div className="card-tools">
-                    <Link to="/transactions/transfer" className="btn btn-primary btn-sm mx-1">
-                      <i className="fas fa-exchange-alt"></i> Transfer
+                    <Link to="/transactions/create" className="btn btn-primary btn-sm mx-1">
+                      <i className="fas fa-cash-register"></i> Transaksi
                     </Link>
                     <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
                       <i className="fas fa-minus"></i>
@@ -121,57 +124,50 @@ function PageTransactionsCreate() {
                     <label>Jenis</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       defaultValue={utils.Global()["TRANSACTION_DIRECTION_OPTS"][0]}
-                      options={utils.Global()["TRANSACTION_DIRECTION_OPTS"]}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
+                      isDisabled={true}
                     />
                   </div>
                   <div className="form-group" data-select2-id="29">
                     <label>Kategori</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="category"
-                      options={utils.Global()["TRANSACTION_CATEGORY_ALL_OPTS"]}
-                      defaultValue={transactionsCreateParams.category}
+                      defaultValue={{name:"category", value: "transfer", label: "Transfer"}}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
+                      isDisabled={true}
                     />
                   </div>
                   <div className="form-group">
-                    <label>Wallet</label> <small className="text-danger"><b>*</b></small>
+                    <label>Dari Wallet</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="group_wallet_id"
                       options={walletOptions}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
                   </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text"><i className="fas fa-wallet"></i></span>
-                    </div>
-                    <input type="text" className="form-control" value={selectedWalletBalance} readOnly />
-                    <div className="input-group-append">
-                      <div className="input-group-text">
-                        <Link to={`/transactions/adjust?group_wallet_id=${transactionsCreateParams["group_wallet_id"]}`}><i className="fas fa-edit"></i></Link>
-                      </div>
-                    </div>
+                  <div className="form-group">
+                    <label>Kepada Wallet</label> <small className="text-danger"><b>*</b></small>
+                    <Select
+                      name="group_wallet_id"
+                      options={targetWalletOptions}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                    />
                   </div>
                   <div className="form-group">
                     <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
                     <input type="number" className="form-control form-control-sm" name="amount" onChange={(e) => handleTransactionsParamsChanges(e)} />
                   </div>
                   <div className="form-group">
+                    <label>Biaya Transfer</label> <small className="text-danger"><b>*</b></small>
+                    <input type="number" className="form-control form-control-sm" name="transfer_fee" onChange={(e) => handleTransactionsParamsChanges(e)} />
+                  </div>
+                  <div className="form-group">
                     <label>Waktu Transaksi</label> <small className="text-danger"><b>*</b></small>
                     <input type="datetime-local" className="form-control form-control-sm" name="transaction_at" onChange={(e) => handleTransactionsParamsChanges(e)} />
                   </div>
                   <div className="form-group">
-                    <label>Nama</label> <small className="text-danger"><b>*</b></small>
-                    <input type="text" className="form-control form-control-sm" name="name" onChange={(e) => handleTransactionsParamsChanges(e)} />
-                  </div>
-                  <div className="form-group">
                     <label>Deskripsi</label>
                     <textarea className="form-control" rows="3" name="description" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
-                  </div>
-                  <div className="form-group">
-                    <label>Catatan</label>
-                    <textarea className="form-control" rows="2" name="note" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
                   </div>
                 </div>
               </div>
@@ -205,4 +201,4 @@ function PageTransactionsCreate() {
   )
 }
 
-export default PageTransactionsCreate
+export default PageTransactionsTransfer

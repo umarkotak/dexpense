@@ -56,6 +56,32 @@ class DexpenseApi {
     return response
   }
 
+  async TransactionsTransfer(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions/transfer`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async TransactionsAdjust(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions/adjust`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
   async TransactionsList(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/transactions?` + new URLSearchParams(params)
     const response = await fetch(uri, {

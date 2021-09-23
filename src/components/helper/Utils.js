@@ -1,8 +1,7 @@
 const GLOBAL = {
   "TRANSACTION_CATEGORY_ALL_OPTS": [
-    { name: 'category', value: 'food', label: 'Makanan' },
-    { name: 'category', value: 'daily_needs', label: 'Kebutuhan Harian' },
-
+    {name:"category", value: "food", label: "Makanan" },
+    {name:"category", value: "daily_needs", label: "Kebutuhan Harian" },
     {name:"category", value: "social_life", label: "Sosial"},
     {name:"category", value: "self_development", label: "Pengembangan Diri"},
     {name:"category", value: "transportation", label: "Transportasi"},
@@ -16,13 +15,17 @@ const GLOBAL = {
     {name:"category", value: "admin_fee", label: "Biaya Admin"},
     {name:"category", value: "debt", label: "Hutang"},
     {name:"category", value: "toys", label: "Mainan"},
+    {name:"category", value: "investation", label: "Investasi"},
+    {name:"category", value: "fee", label: "Biaya Tambahan"},
 
     {name:"category", value: "allowance", label: "Uang Jajan"},
     {name:"category", value: "salary", label: "Gaji"},
     {name:"category", value: "petty_cash", label: "Uang Kaget"},
     {name:"category", value: "bonus", label: "Bonus"},
 
-    { name: 'category', value: 'other', label: 'Lainnya' }
+    {name:"category", value: "transfer", label: "Transfer"},
+    {name:"category", value: "adjustment", label: "Adjusment"},
+    {name:"category", value: "other", label: "Lainnya"}
   ],
   "TRANSACTION_DIRECTION_OPTS": [
     { name: 'direction_type', value: 'outcome', label: 'Pengeluaran' },
@@ -74,7 +77,7 @@ class Utils {
     )
     return localTimeUTC
   }
-  
+
   Global() { return GLOBAL }
 
   GetOptsIndexByValue(optsSource, value) {
