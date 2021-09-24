@@ -8,7 +8,7 @@ function PageDashboard() {
   const [groupDetail, setGroupDetail] = useState({
     group_wallets: []
   })
-  
+
   async function fetchGroupDetail() {
     try {
       const response = await dexpenseApi.GroupsShow(
@@ -28,12 +28,12 @@ function PageDashboard() {
       alert.error(`There is some error: ${e.message}`)
     }
   }
-  
+
   useEffect(() => {
     fetchGroupDetail()
   // eslint-disable-next-line
   }, [])
-  
+
   return (
     <div>
       <div className="content-wrapper">
@@ -100,7 +100,7 @@ function PageDashboard() {
                             </p>
                           </div>
                           <div className="icon"><i className="fa fa-wallet"></i></div>
-                          <Link to="/transactions" className="small-box-footer">Transaksi <i className="fas fa-arrow-circle-right"></i></Link>
+                          <Link to={`/transactions/adjust?group_wallet_id=${groupWallet.id}`} className="small-box-footer">Ubah saldo <i className="fas fa-arrow-circle-right"></i></Link>
                         </div>
                       </div>
                     )))}

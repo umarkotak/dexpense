@@ -1,16 +1,21 @@
 import React, {useState, useEffect} from "react"
-import {useHistory, Link} from "react-router-dom"
+import {useHistory, Link, useLocation} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search)
+}
+
 function PageTransactionsAdjust() {
   const alert = useAlert()
   const history = useHistory()
+  let query = useQuery()
 
-  const [transactionsCreateParams, setTransactionsCreateParams] = useState({
+  const [transactionsAdjustParams, setTransactionsAdjustParams] = useState({
     "category": "",
     "amount": 0,
     "direction_type": "outcome",
@@ -23,9 +28,9 @@ function PageTransactionsAdjust() {
   function handleTransactionsParamsChanges(e) {
     try {
       const { name, value } = e.target
-      setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [name]: value}))
+      setTransactionsAdjustParams(transactionsAdjustParams => ({...transactionsAdjustParams, [name]: value}))
     } catch (err) {
-      setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [e.name]: e.value}))
+      setTransactionsAdjustParams(transactionsAdjustParams => ({...transactionsAdjustParams, [e.name]: e.value}))
     }
   }
 
@@ -56,13 +61,13 @@ function PageTransactionsAdjust() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  async function handleTransactionSubmit() {
+  async function handleTransactionAdjustSubmit() {
     try {
-      var tempTransactionsCreateParams = transactionsCreateParams
-      var transactionAtUTC = utils.ConvertLocalTimeToUTC(tempTransactionsCreateParams["transaction_at"])
-      tempTransactionsCreateParams["transaction_at"] = utils.FormatDateInput(transactionAtUTC)
+      var tempTransactionsAdjustParams = transactionsAdjustParams
+      var transactionAtUTC = utils.ConvertLocalTimeToUTC(tempTransactionsAdjustParams["transaction_at"])
+      tempTransactionsAdjustParams["transaction_at"] = utils.FormatDateInput(transactionAtUTC)
 
-      const response = await dexpenseApi.TransactionsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempTransactionsCreateParams)
+      const response = await dexpenseApi.TransactionsAdjust(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempTransactionsAdjustParams)
       const status = response.status
       const body = await response.json()
 
@@ -84,12 +89,13 @@ function PageTransactionsAdjust() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1>New Transaction</h1>
+                <h1>Ubah Saldo Dompet</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item active"><Link to="/transactions">Transaction</Link></li>
                   <li className="breadcrumb-item active"><Link to="/transactions/create">New</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/adjust">Adjust</Link></li>
                 </ol>
               </div>
             </div>
@@ -109,28 +115,12 @@ function PageTransactionsAdjust() {
                 </div>
                 <div className="card-body">
                   <div className="form-group">
-                    <label>Jenis</label> <small className="text-danger"><b>*</b></small>
-                    <Select
-                      defaultValue={utils.Global()["TRANSACTION_DIRECTION_OPTS"][0]}
-                      options={utils.Global()["TRANSACTION_DIRECTION_OPTS"]}
-                      onChange={(e) => handleTransactionsParamsChanges(e)}
-                    />
-                  </div>
-                  <div className="form-group" data-select2-id="29">
-                    <label>Kategori</label> <small className="text-danger"><b>*</b></small>
-                    <Select
-                      name="category"
-                      options={utils.Global()["TRANSACTION_CATEGORY_ALL_OPTS"]}
-                      defaultValue={transactionsCreateParams.category}
-                      onChange={(e) => handleTransactionsParamsChanges(e)}
-                    />
-                  </div>
-                  <div className="form-group">
                     <label>Wallet</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="group_wallet_id"
                       options={walletOptions}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
+                      value={walletOptions[utils.GetArrIndexByValue(walletOptions, "value", parseInt(query.get("group_wallet_id")))]}
                     />
                   </div>
                   <div className="form-group">
@@ -164,9 +154,9 @@ function PageTransactionsAdjust() {
       </div>
 
       <Link
-        to="/transactions/create"
+        to="/transactions/adjust"
         className="bg-primary"
-        onClick={() => handleTransactionSubmit()}
+        onClick={() => handleTransactionAdjustSubmit()}
         style={{
           position:"fixed",
           width:"50px",

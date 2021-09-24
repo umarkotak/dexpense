@@ -49,6 +49,7 @@ function PageTransactionsTransfer() {
         body.data.group_wallets.map((v, k) => {
           tempWalletOptions.push({ name: 'group_wallet_id', value: v.id, label: v.name })
           tempTargetWalletOptions.push({ name: 'target_group_wallet_id', value: v.id, label: v.name })
+          return 0
         })
         setWalletOptions(tempWalletOptions)
         setTargetWalletOptions(tempTargetWalletOptions)
@@ -180,7 +181,7 @@ function PageTransactionsTransfer() {
       </div>
 
       <Link
-        to="/transactions/create"
+        to="/transactions/transfer"
         className="bg-primary"
         onClick={() => handleTransactionSubmit()}
         style={{
