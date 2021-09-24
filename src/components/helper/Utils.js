@@ -56,11 +56,11 @@ class Utils {
   }
 
   FormatNumber(number) {
-    var formatter = new Intl.NumberFormat('en-US', {
+    var formatter = new Intl.NumberFormat('id-ID', {
       style: 'currency',
-      currency: 'IDR',
+      currency: 'IDR'
     })
-    return formatter.format(number)
+    return formatter.format(number).replace(/(\.|,)00$/g, '')
   }
 
   ConvertLocalTimeToUTC(localTimeString) {

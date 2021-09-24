@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react"
 import {Link} from "react-router-dom"
+import {useAlert} from 'react-alert'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 
 function PageDashboard() {
+  const alert = useAlert()
+
   const [groupDetail, setGroupDetail] = useState({
     group_wallets: []
   })
