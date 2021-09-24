@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import {Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
@@ -136,24 +136,29 @@ function PageStatistics() {
               </div>
             </div>
 
-            <div className="col-12" style={{ height: 350 }}>
-              <ResponsiveContainer>
-                <LineChart
-                  width={400}
-                  height={350}
-                  data={statisticsData}
-                  margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <CartesianGrid stroke="#f5f5f5" />
-                  <Line type="monotone" dataKey="income" stroke="#ff7300" />
-                  <Line type="monotone" dataKey="outcome" stroke="#387908" />
-                </LineChart>
-              </ResponsiveContainer>
+            <div className="col-12 mt-1">
+              <div  className="border border-primary rounded p-1">
+                <ResponsiveContainer width={"100%"} height={300}>
+                  <ComposedChart
+                    data={statisticsData}
+                    margin={{
+                      top: 20,
+                      right: 20,
+                      bottom: 20,
+                      left: 20,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend wrapperStyle={{ position: 'relative' }} />
+                    <CartesianGrid stroke="#f5f5f5" />
+                    <Line type="monotone" dataKey="outcome" stroke="#ff7300" />
+                    <Line type="monotone" dataKey="income" stroke="#387908" />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </section>
