@@ -118,24 +118,29 @@ function PageTransactionsCompact() {
                 <div className="card-body px-0 py-1">
                   <div className="row mx-0">
                     {transactions.map((val, k) => (
-                      <div className={`border rounded col-12 my-1 py-1 ${val.direction_type === "outcome" ? "border-danger" : "border-primary"}`} key={val.id}>
+                      <div className={`border rounded col-12 my-1 py-1 ${val.direction_type === "income" ? "border-success" : "border-danger"}`} key={val.id}>
                         <div className="row">
-                          <div className="col-2"><small className="badge badge-light mr-1">{val.category}</small></div>
-                          <div className="col-3"><small className="badge badge-light mr-1">{val.account.username}</small></div>
-                          <div className="col-3"><small className="badge badge-light mr-1">{val.group_wallet.name}</small></div>
-                          <div className="col-4"><small className="badge badge-light mr-1">{utils.FormatNumber(parseInt(val.amount))}</small></div>
+                          <div className="col-3">
+                            <small className={val.direction_type === "income" ? "badge badge-pill badge-success mr-1" : "badge badge-pill badge-danger mr-1"}>
+                              <i className={val.direction_type === "income" ? "fa fa-arrow-down" : "fa fa-arrow-up"}></i>
+                            </small>
+                          </div>
+                          <div className="col-3"><small className="badge badge-pill badge-warning mr-1">{val.account.username}</small></div>
+                          <div className="col-3"><small className="badge badge-pill badge-info mr-1">{val.group_wallet.name}</small></div>
+                          <div className="col-3"><small className="badge badge-pill badge-info mr-1">{utils.FormatNumber(parseInt(val.amount))}</small></div>
                         </div>
-                        <hr className="my-0" />
+                        {/* <hr className={`my-0 ${val.direction_type === "income" ? "bg-success" : "bg-danger"}`} /> */}
                         <div className="row">
                           <div className="col-12">
-                            <small className="badge badge-light mr-1">{val.name}</small>
-                            <small className="badge badge-light mr-1">{val.description}</small>
-                            <small className="badge badge-light mr-1">{val.note}</small>
+                            <small className="badge badge-pill badge-primary mr-1">{val.category}</small>
+                            <small className="badge badge-pill bg-fuchsia mr-1">{val.name}</small>
+                            <small className="badge badge-pill bg-fuchsia mr-1">{val.description}</small>
+                            <small className="badge badge-pill bg-fuchsia mr-1">{val.note}</small>
                           </div>
                         </div>
-                        <hr className="my-0" />
+                        {/* <hr className={`my-0 ${val.direction_type === "income" ? "bg-success" : "bg-danger"}`} /> */}
                         <div className="row">
-                          <div className="col-6"><small className="badge badge-light">{utils.FormatDateTime(val.transaction_at)}</small></div>
+                          <div className="col-6"><small className="badge badge-pill badge-secondary">{utils.FormatDateTime(val.transaction_at)}</small></div>
                           <div className="col-6">
                             <button to="/transactions" className="btn btn-xs btn-danger float-right" onClick={() => executeDeleteTransaction(val.id)}><i></i> delete</button>
                             <Link to={`/transactions/${val.id}/edit`} className="btn btn-xs btn-primary float-right mr-2"><i></i> edit</Link>
