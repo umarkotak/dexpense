@@ -101,6 +101,18 @@ class Utils {
     })
     return selectedIdx
   }
+
+  CompactNumber(number) {
+    var result
+    if (number < 1000) {
+      result = `${number}`
+    } else if (number < 1000000) {
+      result = `${number / 1000} Rb`
+    } else if (number < 1000000000) {
+      result = `${number / 1000000} Jt`
+    }
+    return result
+  }
 }
 
 const utils = new Utils()

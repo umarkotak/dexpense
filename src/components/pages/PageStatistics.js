@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import { ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import {Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
@@ -41,8 +41,28 @@ function PageStatistics() {
       alert.error(`There is some error: ${e.message}`)
     }
   }
+  const [statisticsDataPerCategory, setStatisticsDataPerCategory] = useState([])
+  async function fetchStatisticsTransactionsPerCategory() {
+    try {
+      const response = await dexpenseApi.StatisticsTransactionsPerCategory(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        console.log("fetchStatisticsTransactionsPerCategory", status, body)
+        setStatisticsDataPerCategory(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
   useEffect(() => {
     fetchStatisticsTransactionsDaily()
+    fetchStatisticsTransactionsPerCategory()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -74,6 +94,16 @@ function PageStatistics() {
     fetchWalletOptions()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  function yAxisTickFormatter(value) {
+    return utils.CompactNumber(value)
+  }
+
+  function toolTipFormatter(value, name, props) {
+    return utils.CompactNumber(value)
+  }
+
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
     <div>
@@ -142,21 +172,46 @@ function PageStatistics() {
                   <ComposedChart
                     data={statisticsData}
                     margin={{
-                      top: 20,
-                      right: 20,
                       bottom: 20,
-                      left: 20,
                     }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
+                    <YAxis yAxisId="left" tickFormatter={yAxisTickFormatter} />
+                    <YAxis yAxisId="right" tickFormatter={yAxisTickFormatter} orientation="right" />
+                    <Tooltip formatter={toolTipFormatter} />
                     <Legend wrapperStyle={{ position: 'relative' }} />
                     <CartesianGrid stroke="#f5f5f5" />
-                    <Line type="monotone" dataKey="outcome" stroke="#ff7300" />
-                    <Line type="monotone" dataKey="income" stroke="#387908" />
+                    <Line type="monotone" dataKey="outcome" name="pengeluaran" yAxisId="left" stroke="#ff7300" />
+                    <Line type="monotone" dataKey="income" name="pemasukan" yAxisId="right" stroke="#387908" />
                   </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="col-12 col-xl-6 mt-1">
+              <div  className="border border-primary rounded p-1">
+                <ResponsiveContainer width={"100%"} height={300}>
+                  <PieChart>
+                    <Pie
+                      data={statisticsDataPerCategory}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={0}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      labelLine={true}
+                      label={true}
+                    >
+                      {statisticsDataPerCategory.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={toolTipFormatter} />
+                    <Legend />
+                  </PieChart>
                 </ResponsiveContainer>
               </div>
             </div>

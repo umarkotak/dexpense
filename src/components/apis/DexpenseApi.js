@@ -269,6 +269,19 @@ class DexpenseApi {
     })
     return response
   }
+
+  async StatisticsTransactionsPerCategory(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/statistics/transactions/per_category`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
 }
 
 const dexpenseApi = new DexpenseApi()
