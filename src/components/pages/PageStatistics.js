@@ -41,18 +41,41 @@ function PageStatistics() {
       alert.error(`There is some error: ${e.message}`)
     }
   }
-  const [statisticsDataPerCategory, setStatisticsDataPerCategory] = useState([])
-  async function fetchStatisticsTransactionsPerCategory() {
+  const [statisticsDataPerCategoryOutcome, setStatisticsDataPerCategoryOutcome] = useState([])
+  async function fetchStatisticsTransactionsPerCategoryOutcome() {
     try {
+      var newParams = queryParams
+      newParams.direction_type = "outcome"
       const response = await dexpenseApi.StatisticsTransactionsPerCategory(
-        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), newParams
       )
       const status = response.status
       const body = await response.json()
 
       if (status === 200) {
         console.log("fetchStatisticsTransactionsPerCategory", status, body)
-        setStatisticsDataPerCategory(body.data)
+        setStatisticsDataPerCategoryOutcome(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  const [statisticsDataPerCategoryIncome, setStatisticsDataPerCategoryIncome] = useState([])
+  async function fetchStatisticsTransactionsPerCategoryIncome() {
+    try {
+      var newParams = queryParams
+      newParams.direction_type = "income"
+      const response = await dexpenseApi.StatisticsTransactionsPerCategory(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), newParams
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        console.log("fetchStatisticsTransactionsPerCategory", status, body)
+        setStatisticsDataPerCategoryIncome(body.data)
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -62,7 +85,8 @@ function PageStatistics() {
   }
   useEffect(() => {
     fetchStatisticsTransactionsDaily()
-    fetchStatisticsTransactionsPerCategory()
+    fetchStatisticsTransactionsPerCategoryOutcome()
+    fetchStatisticsTransactionsPerCategoryIncome()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -167,7 +191,7 @@ function PageStatistics() {
             </div>
 
             <div className="col-12 mt-1">
-              <div  className="border border-primary rounded p-1">
+              <div className="border border-primary rounded p-1">
                 <ResponsiveContainer width={"100%"} height={300}>
                   <ComposedChart
                     data={statisticsData}
@@ -190,11 +214,12 @@ function PageStatistics() {
             </div>
 
             <div className="col-12 col-xl-6 mt-1">
-              <div  className="border border-primary rounded p-1">
+              <div className="border border-primary rounded p-1">
+                <h4><span className="badge badge-pill badge-danger"><i className="fa fa-arrow-up" /> Pengeluaran</span></h4>
                 <ResponsiveContainer width={"100%"} height={300}>
                   <PieChart>
                     <Pie
-                      data={statisticsDataPerCategory}
+                      data={statisticsDataPerCategoryOutcome}
                       dataKey="value"
                       nameKey="name"
                       cx="50%"
@@ -205,7 +230,35 @@ function PageStatistics() {
                       labelLine={true}
                       label={true}
                     >
-                      {statisticsDataPerCategory.map((entry, index) => (
+                      {statisticsDataPerCategoryOutcome.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={toolTipFormatter} />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="col-12 col-xl-6 mt-1">
+              <div className="border border-primary rounded p-1">
+              <h4><span className="badge badge-pill badge-success"><i className="fa fa-arrow-down" /> Pemasukan</span></h4>
+                <ResponsiveContainer width={"100%"} height={300}>
+                  <PieChart>
+                    <Pie
+                      data={statisticsDataPerCategoryIncome}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={0}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      labelLine={true}
+                      label={true}
+                    >
+                      {statisticsDataPerCategoryIncome.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
