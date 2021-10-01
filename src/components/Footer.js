@@ -3,7 +3,7 @@ import React from "react"
 function Footer() {
   return (
     <div>
-      <footer className="main-footer">
+      <footer className="main-footer bg-dark">
         <strong>Copyright &copy; 2021 DEXPENSE.</strong>
 
         <div className="float-right d-none d-sm-inline-block">

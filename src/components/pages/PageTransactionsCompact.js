@@ -20,7 +20,7 @@ function PageTransactionsCompact() {
   const [transactions, setTransactions] = useState([])
 
   const [queryParams, setQueryParams] = useState({
-    limit: parseInt(query_limit()) || 10,
+    limit: parseInt(query_limit()) || 50,
     offset: parseInt(query_offset()) || 0,
     group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
   })

@@ -103,15 +103,20 @@ class Utils {
   }
 
   CompactNumber(number) {
-    var result
+    var newNumber
+    var suffix
     if (number < 1000) {
-      result = `${number}`
+      newNumber = number
+      suffix = ""
     } else if (number < 1000000) {
-      result = `${number / 1000} Rb`
+      newNumber = number / 1000
+      suffix = "Rb"
     } else if (number < 1000000000) {
-      result = `${number / 1000000} Jt`
+      newNumber = number / 1000000
+      suffix = "Jt"
     }
-    return result
+
+    return `${newNumber.toFixed(1)} ${suffix}`
   }
 }
 
