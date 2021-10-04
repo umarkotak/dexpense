@@ -32,10 +32,53 @@ function PageDashboard() {
     }
   }
 
+  const [dashboardDetail, setDashboardDetail] = useState({
+    "balance": 0,
+    "minus_balance": 0,
+    "total_income": 0,
+    "total_outcome": 0
+  })
+
+  async function fetchDashboardDetail() {
+    try {
+      const response = await dexpenseApi.StatisticsTransactionsDashboard(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"),
+        {"group_id": parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))}
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        console.log("DASHBOARD DETAIL", body)
+        setDashboardDetail(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
   useEffect(() => {
     fetchGroupDetail()
+    fetchDashboardDetail()
   // eslint-disable-next-line
   }, [])
+
+  function iconDecider(walletType) {
+    switch(walletType) {
+      case "cash":
+        return "fa-money-bill-wave"
+      case "bank":
+        return "fa-university"
+      case "credit_card":
+        return "fa-credit-card"
+      case "ewallet":
+        return "fa-wallet"
+      default:
+        return "fa-coins"
+    }
+  }
 
   return (
     <div>
@@ -70,18 +113,23 @@ function PageDashboard() {
                 <div className="card-header"><h3 className="card-title">Summary</h3></div>
                 <div className="card-body">
                   <div>
-                    <strong><i className="fas fa-wallet mr-1"></i> Saldo Sekarang</strong>
-                    <p className="text-muted my-1">IDR 995.000</p>
+                    <strong className="text-success"><i className="fas fa-wallet mr-1"></i> Saldo Sekarang</strong>
+                    <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.balance)}</p>
+                    <hr className="my-2" />
+                  </div>
+                  <div>
+                    <strong className="text-danger"><i className="fas fa-wallet mr-1"></i> Saldo Minus</strong>
+                    <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.minus_balance)}</p>
                     <hr className="my-2" />
                   </div>
                   <div>
                     <strong className="text-success"><i className="fas fa-reply mr-1"></i> Pemasukan</strong>
-                    <p className="text-muted my-1">IDR 1.000.000</p>
+                    <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.total_income)}</p>
                     <hr className="my-2" />
                   </div>
                   <div>
                     <strong className="text-danger"><i className="fas fa-share mr-1"></i> Pengeluaran</strong>
-                    <p className="text-muted my-1">IDR 5.000</p>
+                    <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.total_outcome)}</p>
                     <hr className="my-2" />
                   </div>
                 </div>
@@ -93,16 +141,17 @@ function PageDashboard() {
                 <div className="col-12">
                   <div className="row">
                     {groupDetail.group_wallets.map(((groupWallet, index) => (
-                      <div className="col-12 col-sm-6 col-xl-4" key={`GROUP-WALET-${index}`}>
-                        <div className="small-box bg-primary">
+                      <div className="col-12 col-sm-6 col-xl-4 text-sm" key={`GROUP-WALET-${index}`}>
+                        <div className={`small-box ${parseInt(groupWallet.amount) < 0 ? "bg-danger" : "bg-primary"}`}>
                           <div className="inner">
                             <h3>{utils.FormatNumber(parseInt(groupWallet.amount))}</h3>
                             <p>
-                              {groupWallet.wallet_type} <br/>
-                              {groupWallet.name}
+                            <span className="badge badge-pill badge-light">{groupWallet.wallet_type}</span>
+                              <br/>
+                              <span className="badge badge-pill badge-light">{groupWallet.name}</span>
                             </p>
                           </div>
-                          <div className="icon"><i className="fa fa-wallet"></i></div>
+                          <div className="icon"><i className={`fa ${iconDecider(groupWallet.wallet_type)}`}></i></div>
                           <Link to={`/transactions/adjust?group_wallet_id=${groupWallet.id}`} className="small-box-footer">Ubah saldo <i className="fas fa-arrow-circle-right"></i></Link>
                         </div>
                       </div>

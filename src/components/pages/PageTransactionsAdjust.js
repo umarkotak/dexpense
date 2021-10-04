@@ -19,8 +19,8 @@ function PageTransactionsAdjust() {
     "category": "",
     "amount": 0,
     "direction_type": "outcome",
-    "group_wallet_id": 0,
-    "name": "",
+    "group_wallet_id": parseInt(query.get("group_wallet_id") || "0"),
+    "name": "adjustment",
     "description": "",
     "note": "",
     "transaction_at": ""
@@ -133,7 +133,7 @@ function PageTransactionsAdjust() {
                   </div>
                   <div className="form-group">
                     <label>Nama</label> <small className="text-danger"><b>*</b></small>
-                    <input type="text" className="form-control form-control-sm" name="name" onChange={(e) => handleTransactionsParamsChanges(e)} />
+                    <input type="text" className="form-control form-control-sm" name="name" onChange={(e) => handleTransactionsParamsChanges(e)} value={transactionsAdjustParams.name} readOnly />
                   </div>
                   <div className="form-group">
                     <label>Deskripsi</label>
@@ -154,7 +154,7 @@ function PageTransactionsAdjust() {
       </div>
 
       <Link
-        to="/transactions/adjust"
+        to={`${window.location.pathname}${window.location.search}`}
         className="bg-primary"
         onClick={() => handleTransactionAdjustSubmit()}
         style={{
