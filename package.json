@@ -1,6 +1,5 @@
 {
   "name": "dexpense",
-  "homepage": "https://dexpense.netlify.app/",
   "version": "1.1.0",
   "private": true,
   "engines": {
