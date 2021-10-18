@@ -18,9 +18,12 @@ function PageTransactionsCompact() {
   const alert = useAlert()
 
   const [transactions, setTransactions] = useState([])
+  const [transactionsBreakdownOut, setTransactionsBreakdownOut] = useState({})
+  const [transactionsBreakdownIn, setTransactionsBreakdownIn] = useState({})
+  const [transactionBreakdownSummary, setTransactionBreakdownSummary] = useState({})
 
   const [queryParams, setQueryParams] = useState({
-    limit: parseInt(query_limit()) || 50,
+    limit: parseInt(query_limit()) || 100,
     offset: parseInt(query_offset()) || 0,
     group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
   })
@@ -39,6 +42,7 @@ function PageTransactionsCompact() {
 
       if (status === 200) {
         setTransactions(body.data)
+        breakdownTransactions(body.data)
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -66,6 +70,37 @@ function PageTransactionsCompact() {
     }
   }
 
+  function breakdownTransactions(transactionList) {
+    if (!transactionList) { return }
+    var tempTransactionsBreakdownOut = {}
+    var tempTransactionsBreakdownIn = {}
+    var tempGrandTotalOut = 0
+    var tempGrandTotalIn = 0
+    transactionList.forEach((val, idx) => {
+      if (val.direction_type === "outcome") {
+        tempTransactionsBreakdownOut[val.category] = tempTransactionsBreakdownOut[val.category] || {"count": 0, "total": 0}
+        tempTransactionsBreakdownOut[val.category] = {
+          "count": tempTransactionsBreakdownOut[val.category]["count"] + 1,
+          "total": tempTransactionsBreakdownOut[val.category]["total"] + val.amount
+        }
+        tempGrandTotalOut += val.amount
+      } else {
+        tempTransactionsBreakdownIn[val.category] = tempTransactionsBreakdownIn[val.category] || {"count": 0, "total": 0}
+        tempTransactionsBreakdownIn[val.category] = {
+          "count": tempTransactionsBreakdownIn[val.category]["count"] + 1,
+          "total": tempTransactionsBreakdownIn[val.category]["total"] + val.amount
+        }
+        tempGrandTotalIn += val.amount
+      }
+    })
+    setTransactionsBreakdownOut(tempTransactionsBreakdownOut)
+    setTransactionsBreakdownIn(tempTransactionsBreakdownIn)
+    setTransactionBreakdownSummary({
+      "grand_total_out": tempGrandTotalOut,
+      "grand_total_in": tempGrandTotalIn,
+    })
+  }
+
   return (
     <div>
       <div className="content-wrapper">
@@ -86,7 +121,7 @@ function PageTransactionsCompact() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12">
+            <div className="col-12 col-xl-6">
               <div className="card card-primary card-outline">
                 <div className="clearfix mt-2">
                   <ul className="pagination pagination-sm m-0 float-right">
@@ -116,7 +151,7 @@ function PageTransactionsCompact() {
                 <hr className="my-2" />
 
                 <div className="card-body px-0 py-1">
-                  <div className="row mx-0">
+                  <div className="row mx-0 p-1">
                     {transactions.map((val, k) => (
                       <div className={`border rounded col-12 my-1 py-1 ${val.direction_type === "income" ? "border-success" : "border-danger"}`} key={val.id}>
                         <div className="row">
@@ -129,7 +164,6 @@ function PageTransactionsCompact() {
                           <div className="col-3"><small className="badge badge-pill badge-info mr-1">{val.group_wallet.name}</small></div>
                           <div className="col-3"><small className="badge badge-pill badge-info mr-1">{utils.FormatNumber(parseInt(val.amount))}</small></div>
                         </div>
-                        {/* <hr className={`my-0 ${val.direction_type === "income" ? "bg-success" : "bg-danger"}`} /> */}
                         <div className="row">
                           <div className="col-12">
                             <small className="badge badge-pill badge-primary mr-1">{val.category}</small>
@@ -138,7 +172,6 @@ function PageTransactionsCompact() {
                             <small className="badge badge-pill bg-fuchsia mr-1">{val.note}</small>
                           </div>
                         </div>
-                        {/* <hr className={`my-0 ${val.direction_type === "income" ? "bg-success" : "bg-danger"}`} /> */}
                         <div className="row">
                           <div className="col-6"><small className="badge badge-pill badge-secondary">{utils.FormatDateTime(val.transaction_at)}</small></div>
                           <div className="col-6">
@@ -149,9 +182,88 @@ function PageTransactionsCompact() {
                       </div>
                     ))}
                   </div>
+                </div>
+              </div>
+            </div>
 
+            <div className="col-12 col-xl-6">
+              <div className="card card-primary card-outline">
+                <div className="clearfix mt-2">
+                  <b className="mx-2">Transactions Breakdown</b>
+                  <ul className="pagination pagination-sm m-0 float-right">
+                    <li className="page-item mr-2">
+                      <button className="btn btn-sm btn-primary">
+                        <i className="fa fa-info-circle"></i>
+                      </button>
+                    </li>
+                  </ul>
                 </div>
 
+                <hr className="my-2" />
+
+                <div className="card-body px-0 py-1">
+                  <div className="row mx-0 p-1">
+                    <div className="col-12"><h4><i className="fa fa-arrow-up"></i> Pengeluaran</h4></div>
+                  </div>
+                  <div className="row mx-0 p-1">
+                    <div className="col-12 my-1">
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th className="p-1">Kategori</th>
+                            <th className="p-1">Jumlah</th>
+                            <th className="p-1">Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Object.keys(transactionsBreakdownOut).map((val) => (
+                            <tr id={`out-${val}`}>
+                              <td className="p-1">{val}</td>
+                              <td className="p-1">{transactionsBreakdownOut[val].count}</td>
+                              <td className="p-1">{utils.FormatNumber(transactionsBreakdownOut[val].total)}</td>
+                            </tr>
+                          ))}
+                          <tr>
+                            <td className="p-1"></td>
+                            <td className="p-1"><b>Grand Total</b></td>
+                            <td className="p-1">{utils.FormatNumber(transactionBreakdownSummary["grand_total_out"] || 0)}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div className="row mx-0 p-1">
+                    <div className="col-12"><h4><i className="fa fa-arrow-down"></i> Pemasukan</h4></div>
+                  </div>
+                  <div className="row mx-0 p-1">
+                    <div className="col-12 my-1">
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th className="p-1">Kategori</th>
+                            <th className="p-1">Jumlah</th>
+                            <th className="p-1">Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Object.keys(transactionsBreakdownIn).map((val) => (
+                            <tr id={`out-${val}`}>
+                              <td className="p-1">{val}</td>
+                              <td className="p-1">{transactionsBreakdownIn[val].count}</td>
+                              <td className="p-1">{utils.FormatNumber(transactionsBreakdownIn[val].total)}</td>
+                            </tr>
+                          ))}
+                          <tr>
+                            <td className="p-1"></td>
+                            <td className="p-1"><b>Grand Total</b></td>
+                            <td className="p-1">{utils.FormatNumber(transactionBreakdownSummary["grand_total_in"] || 0)}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
