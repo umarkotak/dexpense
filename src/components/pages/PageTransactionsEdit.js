@@ -9,7 +9,7 @@ import utils from "../helper/Utils"
 function PageTransactionsEdit() {
   const alert = useAlert()
   const history = useHistory()
-  
+
   let { id } = useParams()
   const transactionID = parseInt(id)
 
@@ -95,7 +95,7 @@ function PageTransactionsEdit() {
       alert.error(`There is some error: ${e.message}`)
     }
   }
-  
+
   return (
     <div>
       <div className="content-wrapper">
@@ -165,7 +165,7 @@ function PageTransactionsEdit() {
                       className="form-control form-control-sm"
                       name="transaction_at"
                       onChange={(e) => handleTransactionsParamsChanges(e)}
-                      value={transactionsEditParams.transaction_at.split(".")[0]}
+                      value={(transactionsEditParams.transaction_at || "").split(".")[0]}
                     />
                   </div>
                   <div className="form-group">

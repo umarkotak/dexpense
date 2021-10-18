@@ -23,6 +23,10 @@ function PageDashboard() {
 
       if (status === 200) {
         console.log("GROUP", body)
+        var shortedData = body.data
+        shortedData.group_wallets.sort(function (a, b) {
+          return a.wallet_type.localeCompare(b.wallet_type) || b.amount - a.amount
+        })
         setGroupDetail(body.data)
       } else {
         alert.error(`There is some error: ${body.error}`)
