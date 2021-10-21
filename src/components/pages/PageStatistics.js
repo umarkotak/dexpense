@@ -285,7 +285,7 @@ function PageStatistics() {
                     <Tooltip formatter={toolTipFormatter} />
                     <Legend wrapperStyle={{ position: 'relative' }} />
                     <CartesianGrid stroke="#f5f5f5" />
-                    <Line type="monotone" dataKey="current_whealth" name="kekayaan" stroke="#ff7300" />
+                    <Line type="monotone" dataKey="current_whealth" name="total_balance" stroke="#ff7300" />
                     <Line type="monotone" dataKey="mid_point" name="mid_point" stroke="black" />
                     <Scatter dataKey="income" fill="green" />
                     <Scatter dataKey="outcome" fill="red" />
