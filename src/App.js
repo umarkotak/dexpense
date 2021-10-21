@@ -54,7 +54,7 @@ const AlertTemplate = ({ style, options, message, close }) => (
 function App() {
   return (
     <Router>
-      <div className="dark-mode sidebar-mini">
+      <div className="dark-mode sidebar-mini layout-fixed">
         <div className="wrapper">
           <AlertProvider template={AlertTemplate} {...options}>
             <Navbar />

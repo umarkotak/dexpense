@@ -296,6 +296,19 @@ class DexpenseApi {
     })
     return response
   }
+
+  async StatisticsWhealthDaily(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/statistics/whealth/daily`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
 }
 
 const dexpenseApi = new DexpenseApi()

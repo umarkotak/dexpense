@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import { ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import { ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, Scatter } from 'recharts'
 import {Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
@@ -25,7 +25,7 @@ function PageStatistics() {
   const [statisticsData, setStatisticsData] = useState([])
   async function fetchStatisticsTransactionsDaily() {
     try {
-      const response = await dexpenseApi.StatisticsTransactionsDaily(
+      const response = await dexpenseApi.StatisticsWhealthDaily(
         localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams
       )
       const status = response.status
@@ -267,6 +267,35 @@ function PageStatistics() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
+            </div>
+
+            <div className="col-12 mt-1">
+              <div className="border border-primary rounded p-1">
+                <h4><span className="badge badge-pill badge-primary"><i className="fa fa-chart-line" /> Whealth Log</span></h4>
+                <ResponsiveContainer width={"100%"} height={300}>
+                  <ComposedChart
+                    data={statisticsData}
+                    margin={{
+                      bottom: 20,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis tickFormatter={yAxisTickFormatter} />
+                    <Tooltip formatter={toolTipFormatter} />
+                    <Legend wrapperStyle={{ position: 'relative' }} />
+                    <CartesianGrid stroke="#f5f5f5" />
+                    <Line type="monotone" dataKey="current_whealth" name="kekayaan" stroke="#ff7300" />
+                    <Line type="monotone" dataKey="mid_point" name="mid_point" stroke="black" />
+                    <Scatter dataKey="income" fill="green" />
+                    <Scatter dataKey="outcome" fill="red" />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="col-12 mt-1 mb-4">
+              <br/>
             </div>
           </div>
         </section>
