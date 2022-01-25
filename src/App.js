@@ -10,7 +10,8 @@ import PageHome from "./components/pages/PageHome"
 import PageLogin from "./components/pages/PageLogin"
 import PageSignUp from "./components/pages/PageSignUp"
 import PageDashboard from "./components/pages/PageDashboard"
-import PageTransactions from "./components/pages/PageTransactions"
+import PageTransactionsDetailed from "./components/pages/PageTransactionsDetailed"
+import PageTransactionsDaily from "./components/pages/PageTransactionsDaily"
 import PageTransactionsCreate from "./components/pages/PageTransactionsCreate"
 import PageTransactionsCompact from "./components/pages/PageTransactionsCompact"
 import PageTransactionsEdit from "./components/pages/PageTransactionsEdit"
@@ -68,7 +69,8 @@ function App() {
               <Route path="/sign_up" exact component={PageSignUp} />
               <Route path="/dashboard" exact component={PageDashboard} />
               <Route path="/transactions" exact component={PageTransactionsCompact} />
-              <Route path="/transactions/detailed" exact component={PageTransactions} />
+              <Route path="/transactions/detailed" exact component={PageTransactionsDetailed} />
+              <Route path="/transactions/daily" exact component={PageTransactionsDaily} />
               <Route path="/transactions/create" exact component={PageTransactionsCreate} />
               <Route path="/transactions/transfer" exact component={PageTransactionsTransfer} />
               <Route path="/transactions/adjust" exact component={PageTransactionsAdjust} />

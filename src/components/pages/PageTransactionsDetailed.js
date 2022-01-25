@@ -13,7 +13,7 @@ function query_limit() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).limit
 }
 
-function PageTransactions() {
+function PageTransactionsDetailed() {
   const history = useHistory()
   const alert = useAlert()
 
@@ -183,4 +183,4 @@ function PageTransactions() {
   }
 }
 
-export default PageTransactions
+export default PageTransactionsDetailed
