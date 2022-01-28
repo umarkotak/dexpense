@@ -2,6 +2,9 @@ import React, {useState,useEffect} from "react"
 import {Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 
+import FullCalendar from '@fullcalendar/react' // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 import TransactionMiniNav from "../components/TransactionMiniNav"
@@ -28,6 +31,9 @@ function PageTransactionsDaily() {
     max_date: utils.FormatDateInput(endOfMonth),
     group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))
   })
+  const[formattedFullCalendarEvents, setFormattedFullCalendarEvents] = useState([])
+
+  var calendarRef = React.createRef()
 
   useEffect(() => {
     fetchTransactionsDaily()
@@ -39,16 +45,26 @@ function PageTransactionsDaily() {
       const response = await dexpenseApi.TransactionsListDaily(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams)
       const status = response.status
       const body = await response.json()
-      console.log(body)
 
       if (status === 200) {
         setGroupedTransactions(body.data)
+        ConstructFullCalendarEvents(body.data.groupped_transactions)
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
     } catch (e) {
       alert.error(`There is some error: ${e.message}`)
     }
+  }
+
+  function ConstructFullCalendarEvents(grouppedTransactions) {
+    var temps = grouppedTransactions.map((v) => {
+      return {
+        start: `${v.date}T00:00`,
+        title: `${v.income} & ${v.outcome}`
+      }
+    })
+    setFormattedFullCalendarEvents(temps)
   }
 
   function prevMonth() {
@@ -58,6 +74,7 @@ function PageTransactionsDaily() {
       'min_date': utils.FormatDateInput(beginOfMonth),
       'max_date': utils.FormatDateInput(endOfMonth),
     }))
+    calendarRef.current.getApi().prev()
 }
 
   function nextMonth() {
@@ -67,6 +84,17 @@ function PageTransactionsDaily() {
       'min_date': utils.FormatDateInput(beginOfMonth),
       'max_date': utils.FormatDateInput(endOfMonth),
     }))
+    calendarRef.current.getApi().next()
+  }
+
+  function renderEventContent(eventInfo) {
+    var vals = eventInfo.event.title.split(" & ")
+    return (
+      <ul className="m-0 pl-2" style={{listStyleType: "none"}}>
+        <li className="text-primary">{utils.FormatNumber(parseInt(vals[0]))}</li>
+        <li className="text-danger">{utils.FormatNumber(parseInt(vals[1]))}</li>
+      </ul>
+    )
   }
 
   return (
@@ -106,11 +134,29 @@ function PageTransactionsDaily() {
               </div>
             </div>
 
-            {grouppedTransactions.groupped_transactions.map((val, k) => (
+            <div className="col-xl-6 col-12 mb-4">
+              <FullCalendar
+                plugins={[ dayGridPlugin ]}
+                headerToolbar={{
+                  left: '',
+                  center: '',
+                  right: ''
+                }}
+                initialEvents={formattedFullCalendarEvents}
+                events={formattedFullCalendarEvents}
+                eventContent={renderEventContent}
+                initialView="dayGridMonth"
+                initialDate={timeNow}
+                ref={calendarRef}
+                eventClick={(e) => {console.log(e)}}
+              />
+            </div>
+
+            {/* {grouppedTransactions.groupped_transactions.map((val, k) => (
               <div className="col-12 mt-2" key={`1-${k}`}>
                 <GrouppedTransactionCard grouppedTransaction={val} />
               </div>
-            ))}
+            ))} */}
           </div>
         </section>
       </div>
@@ -119,6 +165,7 @@ function PageTransactionsDaily() {
         to="/transactions/create"
         className="bg-primary"
         style={{
+          zIndex: "1000",
           position:"fixed",
           width:"50px",
           height:"50px",
@@ -134,39 +181,6 @@ function PageTransactionsDaily() {
       </Link>
     </div>
   )
-
-  function GrouppedTransactionCard(props) {
-    return(
-      <div className="bg-light shadow-sm">
-        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
-          <h6 className="my-auto">
-            {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
-            <small> {props.grouppedTransaction.month}.{props.grouppedTransaction.year}</small>
-          </h6>
-          <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
-          <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
-        </div>
-        <div className="px-1">
-          {props.grouppedTransaction.transactions.map((val, k) => (
-            <div className="d-flex justify-content-between py-0" key={`2-${k}`}>
-              <small className="my-auto" style={{width: "25%"}}>{val.category}</small>
-              <small className="my-auto text-left" style={{width: "50%"}}>
-                {val.name}
-                <br />
-                {val.account.username} . {val.group_wallet.name}
-              </small>
-              <Link to={`/transactions/${val.id}/edit`} className="my-auto text-right" style={{width: "25%"}}>
-                <small className={`${val.direction_type === "income" ? "text-primary" : "text-danger"}`}>
-                  {utils.FormatNumber(val.amount)}
-                </small>
-              </Link>
-            </div>
-          ))}
-        </div>
-        <hr className="mt-1 mb-0" />
-      </div>
-    )
-  }
 }
 
 export default PageTransactionsDaily

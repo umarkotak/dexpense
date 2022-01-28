@@ -137,7 +137,7 @@ function PageTransactionsDaily() {
 
   function GrouppedTransactionCard(props) {
     return(
-      <div className="bg-light shadow-sm">
+      <div className="bg-light">
         <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
           <h6 className="my-auto">
             {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
@@ -148,7 +148,7 @@ function PageTransactionsDaily() {
         </div>
         <div className="px-1">
           {props.grouppedTransaction.transactions.map((val, k) => (
-            <div className="d-flex justify-content-between py-0" key={`2-${k}`}>
+            <div className="border-bottom d-flex justify-content-between py-0" key={`2-${k}`}>
               <small className="my-auto" style={{width: "25%"}}>{val.category}</small>
               <small className="my-auto text-left" style={{width: "50%"}}>
                 {val.name}
@@ -163,7 +163,6 @@ function PageTransactionsDaily() {
             </div>
           ))}
         </div>
-        <hr className="mt-1 mb-0" />
       </div>
     )
   }
