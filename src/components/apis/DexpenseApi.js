@@ -3,8 +3,8 @@ class DexpenseApi {
     if (window.location.protocol === "https:") {
       this.DexpenseApiHost = "https://dexpense-api.herokuapp.com"
     } else {
-      this.DexpenseApiHost = "http://localhost:4000"
       this.DexpenseApiHost = "https://dexpense-api.herokuapp.com"
+      this.DexpenseApiHost = "http://localhost:4000"
     }
   }
 
@@ -13,6 +13,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(params)
@@ -25,6 +26,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(params)
@@ -37,6 +39,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       }
@@ -49,6 +52,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -62,6 +66,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -75,6 +80,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -88,6 +94,20 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    return response
+  }
+
+  async TransactionsListDaily(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions/daily?` + new URLSearchParams(params)
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       }
@@ -100,6 +120,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       }
@@ -112,6 +133,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'PATCH',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -125,6 +147,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'DELETE',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       }
@@ -137,6 +160,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       }
@@ -149,6 +173,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -162,6 +187,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       }
@@ -174,6 +200,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'PATCH',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -187,6 +214,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'DELETE',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       }
@@ -199,6 +227,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -212,6 +241,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -225,6 +255,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'POST',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -238,6 +269,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'PATCH',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -251,6 +283,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'DELETE',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -264,6 +297,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -277,6 +311,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -290,6 +325,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },
@@ -303,6 +339,7 @@ class DexpenseApi {
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
         'Content-Type': 'application/json',
         'Authorization': token
       },

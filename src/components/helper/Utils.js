@@ -52,7 +52,7 @@ class Utils {
   }
 
   FormatDateInput(timeObj) {
-    return `${timeObj.getFullYear()}-${timeObj.getMonth()}-${timeObj.getDate()}T${timeObj.getHours()}:${timeObj.getMinutes()}`
+    return `${timeObj.getFullYear()}-${timeObj.getMonth()+1}-${timeObj.getDate()}T${timeObj.getHours()}:${timeObj.getMinutes()}`
   }
 
   FormatNumber(number) {
