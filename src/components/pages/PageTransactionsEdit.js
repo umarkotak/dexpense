@@ -96,6 +96,25 @@ function PageTransactionsEdit() {
     }
   }
 
+  async function executeDeleteTransaction() {
+    try {
+      if (!window.confirm("Are you sure?")) { return }
+
+      const response = await dexpenseApi.TransactionsDelete(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {id: id})
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        alert.success(`Delete transaction success!`)
+        history.push("/transactions/daily")
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
   return (
     <div>
       <div className="content-wrapper">
@@ -107,7 +126,7 @@ function PageTransactionsEdit() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/transactions">Transactions</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Transactions</Link></li>
                   <li className="breadcrumb-item active"><Link to={`/transactions/${transactionID}/edit`}>Edit</Link></li>
                 </ol>
               </div>
@@ -121,7 +140,10 @@ function PageTransactionsEdit() {
               <div className="card card-primary card-outline">
                 <div className="card-header">
                   <div className="card-tools">
-                    <button type="button" className="btn btn-primary btn-xs" data-card-widget="collapse">
+                    <button className="btn btn-xs btn-danger mr-2" onClick={() => executeDeleteTransaction()}>
+                      <i className="fa fa-trash"></i> delete
+                    </button>
+                    <button className="btn btn-xs btn-primary" data-card-widget="collapse">
                       <i className="fas fa-minus"></i>
                     </button>
                   </div>

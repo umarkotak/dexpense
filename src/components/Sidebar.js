@@ -70,7 +70,7 @@ function Sidebar() {
           <Link to="/dashboard" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon fas fa-columns"></i> <p>Dashboard</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/transactions" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon fas fa-hand-holding-usd"></i> <p>Transaksi</p></Link>
+          <Link to="/transactions/daily" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon fas fa-hand-holding-usd"></i> <p>Transaksi</p></Link>
         </li>
         <li className="nav-item">
           <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>

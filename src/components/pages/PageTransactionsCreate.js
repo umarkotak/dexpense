@@ -74,7 +74,7 @@ function PageTransactionsCreate() {
 
       if (status === 200) {
         alert.info("Transaction success!")
-        history.push("/transactions")
+        history.push("/transactions/daily")
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -94,7 +94,7 @@ function PageTransactionsCreate() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/transactions">Transaction</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Transaction</Link></li>
                   <li className="breadcrumb-item active"><Link to="/transactions/create">New</Link></li>
                 </ol>
               </div>
