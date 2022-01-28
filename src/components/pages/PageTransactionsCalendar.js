@@ -81,7 +81,7 @@ function PageTransactionsDaily() {
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item active"><Link to="/transactions/daily">Transaction</Link></li>
-                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Daily</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/calendar">Calendar</Link></li>
                 </ol>
               </div>
             </div>
@@ -90,7 +90,7 @@ function PageTransactionsDaily() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12"><TransactionMiniNav data={{active: "daily"}} /></div>
+            <div className="col-12"><TransactionMiniNav data={{active: "calendar"}} /></div>
             <div className="col-12 mt-1">
               <div>
                 <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>

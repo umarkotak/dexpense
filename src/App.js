@@ -12,6 +12,10 @@ import PageSignUp from "./components/pages/PageSignUp"
 import PageDashboard from "./components/pages/PageDashboard"
 import PageTransactionsDetailed from "./components/pages/PageTransactionsDetailed"
 import PageTransactionsDaily from "./components/pages/PageTransactionsDaily"
+import PageTransactionsCalendar from "./components/pages/PageTransactionsCalendar"
+import PageTransactionsWeekly from "./components/pages/PageTransactionsWeekly"
+import PageTransactionsMonthly from "./components/pages/PageTransactionsMonthly"
+import PageTransactionsTotal from "./components/pages/PageTransactionsTotal"
 import PageTransactionsCreate from "./components/pages/PageTransactionsCreate"
 import PageTransactionsCompact from "./components/pages/PageTransactionsCompact"
 import PageTransactionsEdit from "./components/pages/PageTransactionsEdit"
@@ -72,6 +76,10 @@ function App() {
               <Route path="/transactions/detailed" exact component={PageTransactionsDetailed} />
               <Route path="/transactions/daily" exact component={PageTransactionsDaily} />
               <Route path="/transactions/create" exact component={PageTransactionsCreate} />
+              <Route path="/transactions/calendar" exact component={PageTransactionsCalendar} />
+              <Route path="/transactions/weekly" exact component={PageTransactionsWeekly} />
+              <Route path="/transactions/monthly" exact component={PageTransactionsMonthly} />
+              <Route path="/transactions/total" exact component={PageTransactionsTotal} />
               <Route path="/transactions/transfer" exact component={PageTransactionsTransfer} />
               <Route path="/transactions/adjust" exact component={PageTransactionsAdjust} />
               <Route path="/transactions/:id/edit" exact component={PageTransactionsEdit} />
