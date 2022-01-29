@@ -69,7 +69,7 @@ class Utils {
 
     var localTimeUTC = new Date(
       localTime.getUTCFullYear(),
-      localTime.getUTCMonth()+1,
+      localTime.getUTCMonth(),
       localTime.getUTCDate(),
       localTime.getUTCHours(),
       localTime.getUTCMinutes(),
