@@ -134,7 +134,7 @@ function PageTransactionsDaily() {
               </div>
             </div>
 
-            <div className="col-xl-6 col-12 mb-4">
+            <div className="col-12 mb-4">
               <FullCalendar
                 plugins={[ dayGridPlugin ]}
                 headerToolbar={{

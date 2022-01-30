@@ -58,7 +58,7 @@ function PageTransactionsDetailed() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/transactions">Transaction</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Transaction</Link></li>
                   <li className="breadcrumb-item active"><Link to="/transactions/detailed">Detailed</Link></li>
                 </ol>
               </div>

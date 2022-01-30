@@ -112,7 +112,7 @@ function PageTransactionsCompact() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/transactions">Transaction</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Transaction</Link></li>
                 </ol>
               </div>
             </div>
@@ -175,7 +175,7 @@ function PageTransactionsCompact() {
                         <div className="row">
                           <div className="col-6"><small className="badge badge-pill badge-secondary">{utils.FormatDateTime(val.transaction_at)}</small></div>
                           <div className="col-6">
-                            <button to="/transactions" className="btn btn-xs btn-danger float-right" onClick={() => executeDeleteTransaction(val.id)}><i></i> delete</button>
+                            <button to="/transactions/daily" className="btn btn-xs btn-danger float-right" onClick={() => executeDeleteTransaction(val.id)}><i></i> delete</button>
                             <Link to={`/transactions/${val.id}/edit`} className="btn btn-xs btn-primary float-right mr-2"><i></i> edit</Link>
                           </div>
                         </div>

@@ -87,7 +87,7 @@ function PageTransactionsEdit() {
       if (status === 200) {
         console.log("EDIT", body)
         alert.info("Transaction edit success!")
-        history.push("/transactions")
+        history.push("/transactions/daily")
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
