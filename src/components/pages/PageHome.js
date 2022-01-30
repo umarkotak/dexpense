@@ -24,13 +24,13 @@ function PageHome() {
           <div className="row" style={{maxHeight: "200px"}}>
             <div className="col-8 col-md-6 pr-0">
               <div className="border rounded p-4 bg-olive">
-                <h1><b>DEX</b>PENSE</h1>
+                <h1><b className="bg-white rounded p-1"><span className="text-teal">BUKUKAS</span></b>KITA</h1>
                 <br/>
                 <h2><b>Group</b> Budgetting</h2>
-                <h2>On The Go <b>Anywhere!</b></h2>
+                <h2>On The Go, <b>Anywhere!</b></h2>
                 <br/>
                 <br/>
-                <h4><Link to="/sign_up" className="btn btn-light rounded">Try Now!</Link> It's Free!</h4>
+                <h4><Link to="/sign_up" className="btn btn-light rounded">Sign Up Now!</Link> It's Free!</h4>
               </div>
             </div>
             <div className="col-4 col-md-6 pl-0">
