@@ -30,8 +30,8 @@ function Sidebar() {
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         <Link to="/" className="brand-link">
-          <img src="/logo192.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: ".8"}} />
-          <span className="brand-text font-weight-light"><b>DEX</b>PENSE</span>
+          <img src="/images/new_logo.png" alt="bukukas kita Logo" className="brand-image img-circle elevation-3" style={{opacity: ".8"}} />
+          <span className="brand-text font-weight-light"><b className="text-teal">BUKUKAS</b>KITA</span>
         </Link>
 
         <div className="sidebar">
@@ -40,7 +40,7 @@ function Sidebar() {
               <img src="/default_avatar.png" className="img-circle elevation-2" alt="User" />
             </div>
             <div className="info">
-              <Link to="/dashboard" className="d-block">Hello, <b>{activeName}</b> !</Link>
+              <Link to="/dashboard" className="d-block">Hello, <b className="text-teal">{activeName}</b> !</Link>
             </div>
           </div>
 
