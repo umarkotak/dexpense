@@ -115,6 +115,19 @@ class DexpenseApi {
     return response
   }
 
+  async TransactionsListMonthly(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions/monthly?` + new URLSearchParams(params)
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    return response
+  }
+
   async TransactionsDetail(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/transactions/${params.id}`
     const response = await fetch(uri, {

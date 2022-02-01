@@ -14,9 +14,9 @@ var timeNow = new Date()
 var beginOfMonth, endOfMonth
 function RecalculateBeginAndEndOfMonth(timeObj) {
   beginOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth(), 1)
-  endOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth() + 1, 0)
-  beginOfMonth.setMinutes(beginOfMonth.getMinutes() - (-new Date().getTimezoneOffset()/60))
-  endOfMonth.setMinutes(endOfMonth.getMinutes() - (-new Date().getTimezoneOffset()/60))
+  endOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth() + 1, 1)
+  beginOfMonth.setHours(beginOfMonth.getHours() - (-new Date().getTimezoneOffset()/60))
+  endOfMonth.setHours(endOfMonth.getHours() - (-new Date().getTimezoneOffset()/60))
 }
 RecalculateBeginAndEndOfMonth(timeNow)
 

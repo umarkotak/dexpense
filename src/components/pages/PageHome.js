@@ -43,6 +43,16 @@ function PageHome() {
               }>
               </div>
             </div>
+            <div className="col-12 mt-2">
+              <div className="bg-light rounded">
+                <h3>Features</h3>
+                <ul>
+                  <li>Pencatatan transaksi harian.</li>
+                  <li>Dompet dengan pencatatan saldo.</li>
+                  <li>Manajemen user, group, dan wallet.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
       </div>

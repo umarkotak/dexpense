@@ -8,14 +8,14 @@ import TransactionMiniNav from "../components/TransactionMiniNav"
 
 
 var timeNow = new Date()
-var beginOfMonth, endOfMonth
-function RecalculateBeginAndEndOfMonth(timeObj) {
-  beginOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth(), 1)
-  endOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth() + 1, 0)
-  beginOfMonth.setMinutes(beginOfMonth.getMinutes() - (-new Date().getTimezoneOffset()/60))
-  endOfMonth.setMinutes(endOfMonth.getMinutes() - (-new Date().getTimezoneOffset()/60))
+var beginOfYear, endOfYear
+function RecalculateBeginAndEndOfYear(timeObj) {
+  beginOfYear = new Date(timeObj.getFullYear(), 0, 1)
+  endOfYear = new Date(timeObj.getFullYear() + 1, 0, 1)
+  beginOfYear.setHours(beginOfYear.getHours() - (-new Date().getTimezoneOffset()/60))
+  endOfYear.setHours(endOfYear.getHours() - (-new Date().getTimezoneOffset()/60))
 }
-RecalculateBeginAndEndOfMonth(timeNow)
+RecalculateBeginAndEndOfYear(timeNow)
 
 function PageTransactionsDaily() {
   const alert = useAlert()
@@ -24,19 +24,19 @@ function PageTransactionsDaily() {
   const[queryParams, setQueryParams] = useState({
     limit: 1000,
     offset: 0,
-    min_date: utils.FormatDateInput(beginOfMonth),
-    max_date: utils.FormatDateInput(endOfMonth),
+    min_date: utils.FormatDateInput(beginOfYear),
+    max_date: utils.FormatDateInput(endOfYear),
     group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))
   })
 
   useEffect(() => {
-    fetchTransactionsDaily()
+    fetchTransactionsMonthly()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryParams])
 
-  async function fetchTransactionsDaily() {
+  async function fetchTransactionsMonthly() {
     try {
-      const response = await dexpenseApi.TransactionsListDaily(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams)
+      const response = await dexpenseApi.TransactionsListMonthly(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams)
       const status = response.status
       const body = await response.json()
       console.log(body)
@@ -52,20 +52,20 @@ function PageTransactionsDaily() {
   }
 
   function prevMonth() {
-    timeNow.setMonth(timeNow.getMonth() - 1)
-    RecalculateBeginAndEndOfMonth(timeNow)
+    timeNow.setYear(timeNow.getFullYear() - 1)
+    RecalculateBeginAndEndOfYear(timeNow)
     setQueryParams(queryParams => ({...queryParams,
-      'min_date': utils.FormatDateInput(beginOfMonth),
-      'max_date': utils.FormatDateInput(endOfMonth),
+      'min_date': utils.FormatDateInput(beginOfYear),
+      'max_date': utils.FormatDateInput(endOfYear),
     }))
 }
 
   function nextMonth() {
-    timeNow.setMonth(timeNow.getMonth() + 1)
-    RecalculateBeginAndEndOfMonth(timeNow)
+    timeNow.setYear(timeNow.getFullYear() + 1)
+    RecalculateBeginAndEndOfYear(timeNow)
     setQueryParams(queryParams => ({...queryParams,
-      'min_date': utils.FormatDateInput(beginOfMonth),
-      'max_date': utils.FormatDateInput(endOfMonth),
+      'min_date': utils.FormatDateInput(beginOfYear),
+      'max_date': utils.FormatDateInput(endOfYear),
     }))
   }
 
@@ -94,7 +94,7 @@ function PageTransactionsDaily() {
             <div className="col-12 mt-1">
               <div>
                 <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
-                <button className="ml-1 btn btn-xs text-black" disabled>{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</button>
+                <button className="ml-1 btn btn-xs text-black" disabled>{`${timeNow.getFullYear()}`}</button>
                 <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
               </div>
             </div>
@@ -108,7 +108,7 @@ function PageTransactionsDaily() {
 
             {grouppedTransactions.groupped_transactions.map((val, k) => (
               <div className="col-12 mt-2" key={`1-${k}`}>
-                <GrouppedTransactionCard grouppedTransaction={val} />
+                <GrouppedMonthlyTransactionCard grouppedTransaction={val} />
               </div>
             ))}
           </div>
@@ -135,10 +135,10 @@ function PageTransactionsDaily() {
     </div>
   )
 
-  function GrouppedTransactionCard(props) {
+  function GrouppedMonthlyTransactionCard(props) {
     return(
       <div className="bg-light shadow-sm">
-        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
+        {/* <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
           <h6 className="my-auto">
             {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
             <small> {props.grouppedTransaction.month}.{props.grouppedTransaction.year}</small>
@@ -162,7 +162,7 @@ function PageTransactionsDaily() {
               </Link>
             </div>
           ))}
-        </div>
+        </div> */}
         <hr className="mt-1 mb-0" />
       </div>
     )
