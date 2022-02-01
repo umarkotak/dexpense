@@ -44,12 +44,15 @@ function PageHome() {
               </div>
             </div>
             <div className="col-12 mt-2">
-              <div className="bg-light rounded">
+              <div className="bg-light border rounded p-2">
                 <h3>Features</h3>
                 <ul>
-                  <li>Pencatatan transaksi harian.</li>
+                  <li>Pencatatan transaksi harian dan bulanan.</li>
                   <li>Dompet dengan pencatatan saldo.</li>
                   <li>Manajemen user, group, dan wallet.</li>
+                  <li>Grafik statistik pengeluaran dan pertumbuhan harta.</li>
+                  <li>[WIP] Budgeting bulanan.</li>
+                  <li>[WIP] Simulasi investasi dengan platform Alami.</li>
                 </ul>
               </div>
             </div>

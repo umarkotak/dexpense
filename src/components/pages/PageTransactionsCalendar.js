@@ -90,9 +90,9 @@ function PageTransactionsDaily() {
   function renderEventContent(eventInfo) {
     var vals = eventInfo.event.title.split(" & ")
     return (
-      <ul className="m-0 pl-1" style={{listStyleType: "none"}}>
-        <li className="text-primary" style={{fontSize: "10px"}}>{utils.FormatNumber(parseInt(vals[0]))}</li>
-        <li className="text-danger" style={{fontSize: "10px"}}>{utils.FormatNumber(parseInt(vals[1]))}</li>
+      <ul className="m-0 pl-0" style={{listStyleType: "none"}}>
+        <li className="text-primary" style={{fontSize: "10px"}}>{utils.CompactNumber(parseInt(vals[0]))}</li>
+        <li className="text-danger" style={{fontSize: "10px"}}>{utils.CompactNumber(parseInt(vals[1]))}</li>
       </ul>
     )
   }

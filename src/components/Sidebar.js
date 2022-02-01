@@ -23,6 +23,7 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/transactions")) { tempSideBarItems.transactions = "active" }
     else if (window.location.pathname === "/statistics") { tempSideBarItems.statistics = "active" }
     else if (window.location.pathname.startsWith("/groups")) { tempSideBarItems.groups = "active" }
+    else if (window.location.pathname.startsWith("/budget")) { tempSideBarItems.budget = "active" }
     return tempSideBarItems
   }
 
@@ -71,6 +72,9 @@ function Sidebar() {
         </li>
         <li className="nav-item">
           <Link to="/transactions/daily" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon fas fa-hand-holding-usd"></i> <p>Transaksi</p></Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/budget" className={`nav-link ${sideBarItems["budget"] || ""}`}><i className="nav-icon fas fa-list-ul"></i> <p>Budgeting</p></Link>
         </li>
         <li className="nav-item">
           <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
