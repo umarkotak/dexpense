@@ -20,7 +20,7 @@ RecalculateBeginAndEndOfYear(timeNow)
 function PageTransactionsDaily() {
   const alert = useAlert()
 
-  const[grouppedTransactions, setGroupedTransactions] = useState({groupped_transactions: [{transactions: []}]})
+  const[grouppedTransactions, setGroupedTransactions] = useState({groupped_transactions: [{month: 1}]})
   const[queryParams, setQueryParams] = useState({
     limit: 1000,
     offset: 0,
@@ -107,7 +107,7 @@ function PageTransactionsDaily() {
             </div>
 
             {grouppedTransactions.groupped_transactions.map((val, k) => (
-              <div className="col-12 mt-2" key={`1-${k}`}>
+              <div className="col-12" key={`1-${k}`}>
                 <GrouppedMonthlyTransactionCard grouppedTransaction={val} />
               </div>
             ))}
@@ -137,33 +137,14 @@ function PageTransactionsDaily() {
 
   function GrouppedMonthlyTransactionCard(props) {
     return(
-      <div className="bg-light shadow-sm">
-        {/* <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
+      <div className="bg-light">
+        <div className="border-top border-bottom d-flex justify-content-between py-2 px-1">
           <h6 className="my-auto">
-            {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
-            <small> {props.grouppedTransaction.month}.{props.grouppedTransaction.year}</small>
+            <span className={`bg-secondary rounded px-1`}>{utils.months[props.grouppedTransaction.month-1]}</span>
           </h6>
           <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
           <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
         </div>
-        <div className="px-1">
-          {props.grouppedTransaction.transactions.map((val, k) => (
-            <div className="d-flex justify-content-between py-0" key={`2-${k}`}>
-              <small className="my-auto" style={{width: "25%"}}>{val.category}</small>
-              <small className="my-auto text-left" style={{width: "50%"}}>
-                {val.name}
-                <br />
-                {val.account.username} . {val.group_wallet.name}
-              </small>
-              <Link to={`/transactions/${val.id}/edit`} className="my-auto text-right" style={{width: "25%"}}>
-                <small className={`${val.direction_type === "income" ? "text-primary" : "text-danger"}`}>
-                  {utils.FormatNumber(val.amount)}
-                </small>
-              </Link>
-            </div>
-          ))}
-        </div> */}
-        <hr className="mt-1 mb-0" />
       </div>
     )
   }
