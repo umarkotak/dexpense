@@ -57,7 +57,7 @@ function PageSignUp() {
         <section className="content">
           <div className="card card-outline card-primary">
             <div className="card-header text-center">
-              <a href="/#" className="h1"><b>DEX</b>PENSE</a>
+              <a href="/#" className="h1"><b>BUKUKAS</b>KITA</a>
             </div>
 
             <div className="card-body">

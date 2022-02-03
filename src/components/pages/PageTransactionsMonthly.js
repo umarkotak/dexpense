@@ -12,8 +12,8 @@ var beginOfYear, endOfYear
 function RecalculateBeginAndEndOfYear(timeObj) {
   beginOfYear = new Date(timeObj.getFullYear(), 0, 1)
   endOfYear = new Date(timeObj.getFullYear() + 1, 0, 1)
-  beginOfYear.setHours(beginOfYear.getHours() - (-new Date().getTimezoneOffset()/60))
-  endOfYear.setHours(endOfYear.getHours() - (-new Date().getTimezoneOffset()/60))
+  // beginOfYear.setHours(beginOfYear.getHours() - (-new Date().getTimezoneOffset()/60))
+  // endOfYear.setHours(endOfYear.getHours() - (-new Date().getTimezoneOffset()/60))
 }
 RecalculateBeginAndEndOfYear(timeNow)
 
