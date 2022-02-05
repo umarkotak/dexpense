@@ -3,8 +3,8 @@ class DexpenseApi {
     if (window.location.protocol === "https:") {
       this.DexpenseApiHost = "https://dexpense-api.herokuapp.com"
     } else {
-      this.DexpenseApiHost = "http://localhost:4000"
       this.DexpenseApiHost = "https://dexpense-api.herokuapp.com"
+      this.DexpenseApiHost = "http://localhost:4000"
     }
   }
 
