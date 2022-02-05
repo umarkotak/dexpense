@@ -78,13 +78,13 @@ function PageInvestation() {
 
                 <div className="card-body">
                   <div className="row">
-                    <div className="col-md-3 col-6">
+                    <div className="col-md-4 col-12">
                       <div className="form-group">
                         <label>Modal Awal</label>
                         <input type="text" className="form-control" name="alami_initial_amount" value={alamiObject.alami_initial_amount} onChange={(e) => handleAlamiObjectChanges(e)} />
                       </div>
                     </div>
-                    <div className="col-md-3 col-6">
+                    <div className="col-md-4 col-12">
                       <div className="form-group">
                         <label>Ujrah Tahunan</label>
                         <div class="input-group mb-3">
@@ -95,7 +95,7 @@ function PageInvestation() {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-3 col-6">
+                    <div className="col-md-4 col-12">
                       <div className="form-group">
                         <label>Durasi</label>
                         <Select
