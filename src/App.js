@@ -30,6 +30,7 @@ import PageStatistics from "./components/pages/PageStatistics"
 import PageGroupWalletsEdit from "./components/pages/PageGroupWalletsEdit"
 import PageGroupsMemberInvite from "./components/pages/PageGroupsMemberInvite"
 import PageInvestation from "./components/pages/PageInvestation"
+import PageDailyIbadah from "./components/pages/PageDailyIbadah"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -92,6 +93,7 @@ function App() {
               <Route path="/groups/:id/members/invite" exact component={PageGroupsMemberInvite} />
               <Route path="/statistics" exact component={PageStatistics} />
               <Route path="/investation" exact component={PageInvestation} />
+              <Route path="/daily_ibadah" exact component={PageDailyIbadah} />
               <Route path="/" component={PageNotFound} />
             </Switch>
 

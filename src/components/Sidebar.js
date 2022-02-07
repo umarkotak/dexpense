@@ -25,6 +25,7 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/groups")) { tempSideBarItems.groups = "active" }
     else if (window.location.pathname.startsWith("/budget")) { tempSideBarItems.budget = "active" }
     else if (window.location.pathname.startsWith("/investation")) { tempSideBarItems.investation = "active" }
+    else if (window.location.pathname.startsWith("/daily_ibadah")) { tempSideBarItems.daily_ibadah = "active" }
     return tempSideBarItems
   }
 
@@ -86,6 +87,9 @@ function Sidebar() {
         <li className="nav-item">
           <Link to="/groups" className={`nav-link ${sideBarItems["groups"] || ""}`}><i className="nav-icon fas fa-users"></i> <p>Groups</p></Link>
         </li>
+        <li className="nav-item">
+          <Link to="/daily_ibadah" className={`nav-link ${sideBarItems["daily_ibadah"] || ""}`}><i className="nav-icon fas fa-mosque"></i> <p>Ibadah Harian</p></Link>
+        </li>
       </ul>
     )
   }
@@ -95,6 +99,9 @@ function Sidebar() {
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li className="nav-item">
           <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/daily_ibadah" className={`nav-link ${sideBarItems["daily_ibadah"] || ""}`}><i className="nav-icon fas fa-mosque"></i> <p>Ibadah Harian</p></Link>
         </li>
       </ul>
     )
