@@ -22,6 +22,10 @@ function PageDailyIbadah() {
     13: { "time": "~19:00 - ~24:00", "name": "Sholat Sunnah Isya", ibadah_type: "sunnah", "checked": false },
   }
 
+  const [daily_ibadah_stat, set_daily_ibadah_stat] = useState({
+
+  })
+
   // var daily_ibadah_date_index = get_initial_daily_ibadah_date_index()
 
   const [daily_ibadah_today, set_daily_ibadah_today] = useState(get_initial_daily_ibadah_today())
@@ -119,15 +123,25 @@ function PageDailyIbadah() {
             </div>
 
             <div className="col-12">
+              <div className="border-top border-bottom d-flex float-right py-1 px-1">
+                <span className="my-auto">Wajib</span>
+                <span className="my-auto ml-2">Sunnah</span>
+              </div>
+            </div>
+
+            <div className="col-12">
               <div>
                 {
                   Object.keys(daily_ibadah_map).map((daily_ibadah_id) => (
                     <div className="border-top border-bottom d-flex justify-content-between py-1 px-1" key={`ID-${daily_ibadah_id}`}>
                       <span style={{width: "40%"}} className="my-auto">{daily_ibadah_today[daily_ibadah_id].time}</span>
                       <span
-                        style={{width: "55%", textDecoration: `${daily_ibadah_today[daily_ibadah_id].checked ? "line-through" : ""}`}}
+                        style={{
+                          width: "55%",
+                          textDecoration: `${daily_ibadah_today[daily_ibadah_id].checked ? "line-through" : ""}`,
+                          fontWeight: `${daily_ibadah_today[daily_ibadah_id].ibadah_type === "wajib" ? "bold" : ""}`
+                        }}
                         className="my-auto"
-                        onClick={(e) => check_daily_ibadah(daily_ibadah_id)}
                       >{daily_ibadah_today[daily_ibadah_id].name}</span>
                       <button
                         style={{width: "5%"}}
