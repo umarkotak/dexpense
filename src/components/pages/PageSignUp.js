@@ -18,12 +18,15 @@ function PageSignUp() {
     const { name, value } = e.target
     setSignUpParams(signUpParams => ({...signUpParams, [name]: value}))
   }
+  const [onLoading, setOnLoading] = useState(false)
 
   async function submitSignUp() {
     try {
+      setOnLoading(true)
       const response = await dexpenseApi.AccountRegister(signUpParams)
       const status = response.status
       const body = await response.json()
+      setOnLoading(false)
 
       if (status === 200) {
         alert.info("Sign up success!")
@@ -107,8 +110,8 @@ function PageSignUp() {
                 />
                 <div className="input-group-append"><div className="input-group-text"><span className="fas fa-lock"></span></div></div>
               </div>
-              <button className="btn btn-block btn-primary" onClick={() => submitSignUp()}>
-                <i className="fas fa-check mr-2"></i> Sign Up!
+              <button className="btn btn-block btn-primary" onClick={() => submitSignUp()} disabled={onLoading}>
+                <i className="fas fa-check mr-2"></i> {onLoading ? "Signing you up, please wait . . ." : "Sign Up!"}
               </button>
             </div>
           </div>
