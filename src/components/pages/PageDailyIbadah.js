@@ -22,9 +22,9 @@ function PageDailyIbadah() {
     13: { "time": "~19:00 - ~24:00", "name": "Sholat Sunnah Isya", ibadah_type: "sunnah", "checked": false },
   }
 
-  const [daily_ibadah_stat, set_daily_ibadah_stat] = useState({
+  // const [daily_ibadah_stat, set_daily_ibadah_stat] = useState({
 
-  })
+  // })
 
   // var daily_ibadah_date_index = get_initial_daily_ibadah_date_index()
 
