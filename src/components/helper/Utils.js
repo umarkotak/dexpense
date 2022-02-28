@@ -39,6 +39,14 @@ const GLOBAL = {
     { name: 'wallet_type', value: 'other', label: 'Lainnya' }
   ]
 }
+const GLOBAL_FILTER = {
+  "TRANSACTION_DIRECTION_FILTER_OPTS": [
+    { name: 'direction_type', value: 'all', label: 'All' },
+  ].concat(GLOBAL["TRANSACTION_DIRECTION_OPTS"]),
+  "TRANSACTION_CATEGORY_ALL_FILTER_OPTS": [
+    { name: 'category', value: 'all', label: 'All' },
+  ].concat(GLOBAL["TRANSACTION_CATEGORY_ALL_OPTS"])
+}
 
 class Utils {
   constructor() {
@@ -79,6 +87,8 @@ class Utils {
   }
 
   Global() { return GLOBAL }
+
+  GlobalFilter() { return GLOBAL_FILTER }
 
   GetOptsIndexByValue(optsSource, value) {
     var selectedIdx
