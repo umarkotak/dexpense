@@ -9,7 +9,7 @@ function TransactionMiniNav(props) {
       <Link to="/transactions/daily" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "daily" ? activeClass : "text-dark"}`}>Harian</Link>
       <Link to="/transactions/calendar" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "calendar" ? activeClass : "text-dark"}`}>Kalender</Link>
       <Link to="/transactions/monthly" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "monthly" ? activeClass : "text-dark"}`}>Bulanan</Link>
-      <Link to="/transactions/total" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "total" ? activeClass : "text-dark"}`}>Total</Link>
+      <Link to="/transactions/total" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "total" ? activeClass : "text-dark"}`}>Summary</Link>
     </div>
   )
 }

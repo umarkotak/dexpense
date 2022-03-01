@@ -359,6 +359,20 @@ class DexpenseApi {
     })
     return response
   }
+
+  async TransactionsDownload(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/transactions/download`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
 }
 
 const dexpenseApi = new DexpenseApi()
