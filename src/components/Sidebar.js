@@ -101,7 +101,7 @@ function Sidebar() {
           <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/daily_ibadah" className={`nav-link ${sideBarItems["daily_ibadah"] || ""}`}><i className="nav-icon fas fa-mosque"></i> <p>Ibadah Harian</p></Link>
+          <Link to="/daily_ibadah" className={`nav-link ${sideBarItems["daily_ibadah"] || ""}`}><i className="nav-icon fas fa-mosque"></i> <p>Daily Routine</p></Link>
         </li>
       </ul>
     )

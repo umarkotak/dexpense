@@ -88,7 +88,7 @@ function PageGroups() {
                       {groupList.map((group, k) => (
                         <div className="row my-1 border border-primary rounded" key={k}>
                           <div className="col-4">
-                            Name
+                            Nama Group
                           </div>
                           <div className="col-8 my-1">
                             <b>{group.name}</b>
@@ -96,7 +96,7 @@ function PageGroups() {
                           </div>
                           <div className="col-4">
                             <hr className="my-1" />
-                            Wallets
+                            Daftar Dompet
                             <Link to={`/groups/${group.id}/wallets/create`} className="btn btn-xs btn-primary rounded float-right mr-1"><i className="fa fa-plus-circle"></i></Link>
                           </div>
                           <div className="col-8">
@@ -110,7 +110,7 @@ function PageGroups() {
                           </div>
                           <div className="col-4">
                             <hr className="my-1" />
-                            Members
+                            Anggota
                             <Link to={`/groups/${group.id}/members/invite`} className="btn btn-xs btn-primary rounded float-right mr-1"><i className="fa fa-plus-circle"></i></Link>
                           </div>
                           <div className="col-8">
@@ -118,7 +118,7 @@ function PageGroups() {
                             {group["accounts"].map((account, k) => (
                               <div className="my-1" key={k}>
                                 <i className="fa fa-caret-right"></i>  {account.username}
-                                <button className="btn btn-xs btn-danger rounded float-right" onClick={(e) => {handleRemoveMember(group.id, account.username)}}>remove</button>
+                                <button className="btn btn-xs btn-danger rounded float-right" onClick={(e) => {handleRemoveMember(group.id, account.username)}}>hapus</button>
                               </div>
                             ))}
                           </div>

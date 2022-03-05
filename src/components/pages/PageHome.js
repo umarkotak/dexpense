@@ -54,8 +54,8 @@ function PageHome() {
                   <li>Dompet dengan pencatatan saldo.</li>
                   <li>Manajemen user, group, dan wallet.</li>
                   <li>Grafik statistik pengeluaran dan pertumbuhan harta.</li>
-                  <li>[WIP] Download report dalam bentuk excel</li>
-                  <li>[WIP] Budgeting bulanan. (create, update, delete, index)</li>
+                  <li>Download report dalam bentuk excel</li>
+                  <li>[WIP] Budgeting bulanan.</li>
                   <li>[WIP] Simulasi investasi dengan Emas dan platform Alami.</li>
                 </ul>
               </div>
