@@ -31,6 +31,7 @@ import PageGroupWalletsEdit from "./components/pages/PageGroupWalletsEdit"
 import PageGroupsMemberInvite from "./components/pages/PageGroupsMemberInvite"
 import PageInvestation from "./components/pages/PageInvestation"
 import PageDailyIbadah from "./components/pages/PageDailyIbadah"
+import PageBudgetsIndex from "./components/pages/PageBudgetsIndex"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -85,6 +86,7 @@ function App() {
               <Route path="/transactions/transfer" exact component={PageTransactionsTransfer} />
               <Route path="/transactions/adjust" exact component={PageTransactionsAdjust} />
               <Route path="/transactions/:id/edit" exact component={PageTransactionsEdit} />
+              <Route path="/budgets" exact component={PageBudgetsIndex} />
               <Route path="/groups" exact component={PageGroups} />
               <Route path="/groups/create" exact component={PageGroupsCreate} />
               <Route path="/groups/:id" exact component={PageGroupsDetail} />
