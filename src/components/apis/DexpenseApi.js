@@ -373,6 +373,92 @@ class DexpenseApi {
     })
     return response
   }
+
+  async MonthlyBudgetIndexCurrent(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/current`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
+
+  async MonthlyBudgetShow(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.category}`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
+
+  async MonthlyBudgetCreate(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async MonthlyBudgetEdit(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.category}`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'PATCH',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async MonthlyBudgetDelete(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.category}`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'DELETE',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
+
+  async CategoriesIndexStatic(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/categories/index/static`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
 }
 
 const dexpenseApi = new DexpenseApi()

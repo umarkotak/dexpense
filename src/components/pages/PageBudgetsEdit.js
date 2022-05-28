@@ -15,7 +15,7 @@ function RecalculateBeginAndEndOfMonth(timeObj) {
 }
 RecalculateBeginAndEndOfMonth(timeNow)
 
-function PageBudgetsIndex() {
+function PageBudgetsEdit() {
   const alert = useAlert()
 
   const[monthlyBudgets, setMonthlyBudgets] = useState(
@@ -64,7 +64,7 @@ function PageBudgetsIndex() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/budgets">Budgets</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/budgets">budgets</Link></li>
                 </ol>
               </div>
             </div>
@@ -84,7 +84,7 @@ function PageBudgetsIndex() {
             <div className="row" style={{marginTop: "24px"}}>
               <div className="col-12">
                 <div className="d-flex justify-content-between">
-                  <span style={{fontSize: "14px"}}><b>Detail Budgetmu:</b></span>
+                  <span style={{fontSize: "14px"}}><b>Detail Budgetmu!</b></span>
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@ function PageBudgetsIndex() {
                   <div style={{marginBottom: "24px"}}>
                     <div className="d-flex justify-content-between">
                       <span style={{fontSize: "14px"}}>
-                        <b>{categoryBudget.category_label} </b>
+                        <b>Buat {categoryBudget.category_label} </b>
                         <Link to={`/budgets/${categoryBudget.category}/edit`}><small>edit</small></Link>
                       </span>
                       <span style={{fontSize: "14px"}}>{utils.FormatNumber(categoryBudget.remaining_budget)} ({utils.FormatNumber(categoryBudget.average_daily_remaining_budget)}/hari)</span>
@@ -150,4 +150,4 @@ function PageBudgetsIndex() {
   )
 }
 
-export default PageBudgetsIndex
+export default PageBudgetsEdit
