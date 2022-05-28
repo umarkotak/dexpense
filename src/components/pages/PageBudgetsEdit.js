@@ -24,11 +24,11 @@ function PageBudgetsEdit() {
     }
   )
 
-  const[queryParams, setQueryParams] = useState({
+  const queryParams = {
     min_date: utils.FormatDateInput(beginOfMonth),
     max_date: utils.FormatDateInput(endOfMonth),
     group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
-  })
+  }
 
   async function fetchMonthlyBudgetCurrent() {
     try {
@@ -49,7 +49,7 @@ function PageBudgetsEdit() {
   useEffect(() => {
     fetchMonthlyBudgetCurrent()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryParams])
+  }, [])
 
   return(
     <div>

@@ -24,11 +24,16 @@ function PageBudgetsIndex() {
     }
   )
 
-  const[queryParams, setQueryParams] = useState({
+  // const[queryParams, setQueryParams] = useState({
+  //   min_date: utils.FormatDateInput(beginOfMonth),
+  //   max_date: utils.FormatDateInput(endOfMonth),
+  //   group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
+  // })
+  const queryParams = {
     min_date: utils.FormatDateInput(beginOfMonth),
     max_date: utils.FormatDateInput(endOfMonth),
     group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
-  })
+  }
 
   async function fetchMonthlyBudgetCurrent() {
     try {
@@ -49,7 +54,7 @@ function PageBudgetsIndex() {
   useEffect(() => {
     fetchMonthlyBudgetCurrent()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryParams])
+  }, [])
 
   return(
     <div>
