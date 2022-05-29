@@ -62,6 +62,29 @@ function PageTransactionsCreate() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const [categoryOptions, setCategoryOptions] = useState([{}])
+  async function fetchCategoryOptions() {
+    try {
+      const response = await dexpenseApi.CategoriesIndexStatic(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {}
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        setCategoryOptions(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  useEffect(() => {
+    fetchCategoryOptions()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   async function handleTransactionSubmit() {
     try {
       var tempTransactionsCreateParams = transactionsCreateParams
@@ -129,8 +152,7 @@ function PageTransactionsCreate() {
                     <label>Kategori</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="category"
-                      options={utils.Global()["TRANSACTION_CATEGORY_ALL_OPTS"]}
-                      defaultValue={transactionsCreateParams.category}
+                      options={categoryOptions}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
                   </div>

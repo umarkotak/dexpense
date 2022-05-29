@@ -1,21 +1,10 @@
-// import React, {useState,useEffect} from "react"
-import React, {useState} from "react"
+import React, {useState,useEffect} from "react"
 import {useHistory, Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
+import NumberFormat from 'react-number-format'
 
 import dexpenseApi from "../apis/DexpenseApi"
-import utils from "../helper/Utils"
-
-var timeNow = new Date()
-var beginOfMonth, endOfMonth
-function RecalculateBeginAndEndOfMonth(timeObj) {
-  beginOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth(), 1)
-  endOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth() + 1, 1)
-  beginOfMonth.setHours(beginOfMonth.getHours() - (-new Date().getTimezoneOffset()/60))
-  endOfMonth.setHours(endOfMonth.getHours() - (-new Date().getTimezoneOffset()/60))
-}
-RecalculateBeginAndEndOfMonth(timeNow)
 
 function PageBudgetsCreate() {
   const alert = useAlert()
@@ -24,7 +13,7 @@ function PageBudgetsCreate() {
   const [monthlyBudgetParams, setMonthlyBudgetParams] = useState({
     "group_id": parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
     "category": "",
-    "total_budget": 0
+    "total_budget": null
   })
   function handleMonthlyBudgetParamsChanges(e) {
     try {
@@ -51,6 +40,29 @@ function PageBudgetsCreate() {
       alert.error(`There is some error: ${e.message}`)
     }
   }
+
+  const [categoryOptions, setCategoryOptions] = useState([{}])
+  async function fetchCategoryOptions() {
+    try {
+      const response = await dexpenseApi.CategoriesIndexStatic(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {}
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        setCategoryOptions(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  useEffect(() => {
+    fetchCategoryOptions()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return(
     <div>
@@ -89,14 +101,21 @@ function PageBudgetsCreate() {
                     <label>Kategori</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="category"
-                      options={utils.Global()["TRANSACTION_CATEGORY_ALL_OPTS"]}
-                      defaultValue={monthlyBudgetParams.category}
+                      options={categoryOptions}
                       onChange={(e) => handleMonthlyBudgetParamsChanges(e)}
                     />
                   </div>
                   <div className="form-group">
                     <label>Jumlah Budget</label> <small className="text-danger"><b>*</b></small>
-                    <input type="number" className="form-control form-control-sm" name="total_budget" onChange={(e) => handleMonthlyBudgetParamsChanges(e)} />
+                    {/* <input type="number" className="form-control form-control-sm" name="total_budget" onChange={(e) => handleMonthlyBudgetParamsChanges(e)} /> */}
+                    <NumberFormat
+                      name="total_budget"
+                      className="form-control form-control-sm"
+                      value={monthlyBudgetParams.total_budget}
+                      thousandSeparator={true}
+                      prefix={'Rp.'}
+                      onValueChange={(values) => setMonthlyBudgetParams(monthlyBudgetParams => ({...monthlyBudgetParams, "total_budget": values.value}))}
+                    />
                   </div>
                 </div>
               </div>

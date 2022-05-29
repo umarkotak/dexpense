@@ -55,8 +55,9 @@ function PageHome() {
                   <li>Manajemen user, group, dan wallet.</li>
                   <li>Grafik statistik pengeluaran dan pertumbuhan harta.</li>
                   <li>Download report dalam bentuk excel</li>
-                  <li>[WIP] Budgeting bulanan.</li>
-                  <li>[WIP] Simulasi investasi dengan Emas dan platform Alami.</li>
+                  <li>Budgeting bulanan.</li>
+                  <li>Simulasi investasi dengan Emas dan platform Alami.</li>
+                  <li>[WIP] Pencatatan aset (emas, saham, rumah, tanah, dan lainya).</li>
                 </ul>
               </div>
             </div>

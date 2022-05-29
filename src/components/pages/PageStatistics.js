@@ -129,6 +129,29 @@ function PageStatistics() {
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
+  const [categoryOptions, setCategoryOptions] = useState([{}])
+  async function fetchCategoryOptions() {
+    try {
+      const response = await dexpenseApi.CategoriesIndexStatic(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {}
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        setCategoryOptions(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  useEffect(() => {
+    fetchCategoryOptions()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div>
       <div className="content-wrapper">
@@ -166,7 +189,7 @@ function PageStatistics() {
                     <label>Kategori</label>
                     <Select
                       name="category"
-                      options={utils.Global()["TRANSACTION_CATEGORY_ALL_OPTS"]}
+                      options={categoryOptions}
                       onChange={(e) => handleQueryParamsChanges(e)}
                     />
                   </div>

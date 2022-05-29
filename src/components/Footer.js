@@ -4,10 +4,10 @@ function Footer() {
   return (
     <div>
       <footer className="main-footer bg-dark">
-        <strong>Copyright &copy; 2021 BUKUKASKITA.</strong>
+        <strong>Copyright &copy; 2022 BUKUKASKITA.</strong>
 
         <div className="float-right d-none d-sm-inline-block">
-          <b>Version</b> 1.3.0
+          <b>Version</b> 1.4.0
         </div>
       </footer>
     </div>

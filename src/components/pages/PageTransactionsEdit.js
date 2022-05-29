@@ -115,6 +115,29 @@ function PageTransactionsEdit() {
     }
   }
 
+  const [categoryOptions, setCategoryOptions] = useState([{}])
+  async function fetchCategoryOptions() {
+    try {
+      const response = await dexpenseApi.CategoriesIndexStatic(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {}
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        setCategoryOptions(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  useEffect(() => {
+    fetchCategoryOptions()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div>
       <div className="content-wrapper">
@@ -162,8 +185,8 @@ function PageTransactionsEdit() {
                     <label>Kategori</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="category"
-                      options={utils.Global()["TRANSACTION_CATEGORY_ALL_OPTS"]}
-                      value={utils.Global()["TRANSACTION_CATEGORY_ALL_OPTS"][utils.GetOptsIndexByValue("TRANSACTION_CATEGORY_ALL_OPTS", transactionsEditParams.category)]}
+                      options={categoryOptions}
+                      value={categoryOptions[utils.GetArrOptsIndexByValue(categoryOptions, transactionsEditParams.category)]}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
                   </div>

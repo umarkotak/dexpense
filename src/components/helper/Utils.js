@@ -101,6 +101,17 @@ class Utils {
     return selectedIdx
   }
 
+  GetArrOptsIndexByValue(arrOptsSource, value) {
+    var selectedIdx
+    arrOptsSource.forEach((val, index) => {
+      if (val.value === value) {
+        selectedIdx = index
+        return
+      }
+    })
+    return selectedIdx
+  }
+
   GetArrIndexByValue(arr, field, value) {
     var selectedIdx
     arr.forEach((val, index) => {
@@ -113,6 +124,12 @@ class Utils {
   }
 
   CompactNumber(number) {
+    var minus = false
+    if (number < 0) {
+      minus = true
+      number = number * -1
+    }
+
     var newNumber
     var suffix
     if (number < 1000) {
@@ -126,7 +143,7 @@ class Utils {
       suffix = "Jt"
     }
 
-    return `${newNumber.toFixed(1)} ${suffix}`
+    return `${minus?"-":""}${newNumber.toFixed(1)} ${suffix}`
   }
 }
 

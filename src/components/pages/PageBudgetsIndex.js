@@ -102,7 +102,7 @@ function PageBudgetsIndex() {
                         <b>{categoryBudget.category_label} </b>
                         <Link to={`/budgets/${categoryBudget.category}/edit`}><small>edit</small></Link>
                       </span>
-                      <span style={{fontSize: "14px"}}>{utils.FormatNumber(categoryBudget.remaining_budget)} ({utils.FormatNumber(categoryBudget.average_daily_remaining_budget)}/hari)</span>
+                      <span style={{fontSize: "14px"}}>{utils.CompactNumber(categoryBudget.remaining_budget)} ({utils.CompactNumber(categoryBudget.average_daily_remaining_budget)}/hari)</span>
                     </div>
                     <div className="">
                       <div className="progress rounded" style={{height: "26px", backgroundColor: "#EDCBCE"}}>
