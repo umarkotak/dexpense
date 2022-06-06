@@ -96,8 +96,8 @@ function PageGroups() {
                           </div>
                           <div className="col-4">
                             <hr className="my-1" />
-                            Daftar Dompet
-                            <Link to={`/groups/${group.id}/wallets/create`} className="btn btn-xs btn-primary rounded float-right mr-1"><i className="fa fa-plus-circle"></i></Link>
+                            Dompet
+                            <Link to={`/groups/${group.id}/wallets/create`} className="btn btn-xs btn-primary rounded float-right mr-1">+ dompet</Link>
                           </div>
                           <div className="col-8">
                             <hr className="my-1" />
@@ -108,12 +108,12 @@ function PageGroups() {
                               </div>
                             ))}
                           </div>
-                          <div className="col-4">
+                          <div className="col-4 mb-2">
                             <hr className="my-1" />
                             Anggota
-                            <Link to={`/groups/${group.id}/members/invite`} className="btn btn-xs btn-primary rounded float-right mr-1"><i className="fa fa-plus-circle"></i></Link>
+                            <Link to={`/groups/${group.id}/members/invite`} className="btn btn-xs btn-primary rounded float-right mr-1">+ anggota</Link>
                           </div>
-                          <div className="col-8">
+                          <div className="col-8 mb-2">
                             <hr className="my-1" />
                             {group["accounts"].map((account, k) => (
                               <div className="my-1" key={k}>

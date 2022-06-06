@@ -105,35 +105,38 @@ function PageDashboard() {
         <section className="content">
           <div className="row">
             <div className="col-12 col-lg-3">
-              <div className="card card-primary card-outline">
-                <div className="card-body box-profile">
-                  <div className="text-center">
-                    <img className="profile-user-img img-fluid img-circle" src="/default_avatar.png" alt="User Profile" />
+              <div class="card card-widget widget-user">
+                <div class="widget-user-header text-white bg-info">
+                  <h5 class="widget-user-desc text-right">{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</h5>
+                  <h3 class="widget-user-username text-right"><i className="fas fa-wallet mr-1"></i> {utils.FormatNumber(dashboardDetail.balance)}</h3>
+                </div>
+                <div class="widget-user-image">
+                  <img class="img-circle" src="/default_avatar.png" alt="User Profile" />
+                </div>
+                <div class="card-footer px-1 pt-5 pb-1">
+                  <div class="row">
+                    <div class="col-6 border-right">
+                      <div class="description-block">
+                        <h5 class="description-header">{utils.FormatNumber(dashboardDetail.total_income)}</h5>
+                        <span class="text-sm text-success"><i className="fas fa-reply mr-1"></i> Pemasukan</span>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="description-block">
+                        <h5 class="description-header">{utils.FormatNumber(dashboardDetail.total_outcome)}</h5>
+                        <span class="text-sm text-danger"><i className="fas fa-share mr-1"></i> Pengeluaran</span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="profile-username text-center">{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</h3>
                 </div>
               </div>
-              <div className="card card-primary">
+
+              <div className="card card-info">
                 <div className="card-header"><h3 className="card-title">Summary</h3></div>
                 <div className="card-body">
                   <div>
-                    <strong className="text-success"><i className="fas fa-wallet mr-1"></i> Saldo Sekarang</strong>
-                    <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.balance)}</p>
-                    <hr className="my-2" />
-                  </div>
-                  <div>
                     <strong className="text-danger"><i className="fas fa-wallet mr-1"></i> Saldo Minus</strong>
                     <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.minus_balance)}</p>
-                    <hr className="my-2" />
-                  </div>
-                  <div>
-                    <strong className="text-success"><i className="fas fa-reply mr-1"></i> Pemasukan</strong>
-                    <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.total_income)}</p>
-                    <hr className="my-2" />
-                  </div>
-                  <div>
-                    <strong className="text-danger"><i className="fas fa-share mr-1"></i> Pengeluaran</strong>
-                    <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.total_outcome)}</p>
                     <hr className="my-2" />
                   </div>
                 </div>

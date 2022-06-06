@@ -5,7 +5,7 @@ import {useAlert} from 'react-alert'
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 import TransactionMiniNav from "../components/TransactionMiniNav"
-
+import MiniTips from "../components/MiniTips"
 
 var timeNow = new Date()
 var beginOfMonth, endOfMonth
@@ -141,53 +141,61 @@ function PageTransactionsDaily() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12"><TransactionMiniNav data={{active: "total"}} /></div>
-            <div className="col-12 mt-1">
-              <div>
-                <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
-                <button className="ml-1 btn btn-xs text-black" disabled>{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</button>
-                <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
-                <a className="float-right" style={{display: "none"}} href="." ref={downloadFileRef} target="_blank">_</a>
+            <div className="col-12 col-xl-9 mb-4">
+              <div className="row">
+                <div className="col-12"><TransactionMiniNav data={{active: "total"}} /></div>
+                <div className="col-12 mt-1">
+                  <div>
+                    <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
+                    <button className="ml-1 btn btn-xs text-black" disabled>{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</button>
+                    <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
+                    <a className="float-right" style={{display: "none"}} href="." ref={downloadFileRef} target="_blank">_</a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className="row">
-            <div className="col-12 mt-2">
-              <div className="border rounded p-1">
-                <p className="d-flex justify-content-between mb-1">
-                  <span className="text-primary">Pemasukan bulan ini</span>
-                  <span className="text-primary">{utils.FormatNumber(grouppedTransactions.income)}</span>
-                </p>
-                <p className="d-flex justify-content-between mb-1">
-                  <span className="text-danger">Pengeluaran bulan ini</span>
-                  <span className="text-danger">{utils.FormatNumber(grouppedTransactions.outcome)}</span>
-                </p>
-                <p className="d-flex justify-content-between mb-1">
-                  <span className="">Total</span>
-                  <span>{utils.FormatNumber(grouppedTransactions.total)}</span>
-                </p>
+              <div className="row">
+                <div className="col-12 mt-2">
+                  <div className="border rounded p-1">
+                    <p className="d-flex justify-content-between mb-1">
+                      <span className="text-primary">Pemasukan bulan ini</span>
+                      <span className="text-primary">{utils.FormatNumber(grouppedTransactions.income)}</span>
+                    </p>
+                    <p className="d-flex justify-content-between mb-1">
+                      <span className="text-danger">Pengeluaran bulan ini</span>
+                      <span className="text-danger">{utils.FormatNumber(grouppedTransactions.outcome)}</span>
+                    </p>
+                    <p className="d-flex justify-content-between mb-1">
+                      <span className="">Total</span>
+                      <span>{utils.FormatNumber(grouppedTransactions.total)}</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="col-12 mt-2">
+                  <div className="border rounded p-1">
+                    <p className="d-flex justify-content-between mb-1">
+                      <span className="text-danger">Pengeluaran bulan kemarin</span>
+                      <span className="text-danger">{utils.FormatNumber(grouppedTransactionsLastMonth.outcome)}</span>
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="col-12 mt-2">
-              <div className="border rounded p-1">
-                <p className="d-flex justify-content-between mb-1">
-                  <span className="text-danger">Pengeluaran bulan kemarin</span>
-                  <span className="text-danger">{utils.FormatNumber(grouppedTransactionsLastMonth.outcome)}</span>
-                </p>
-              </div>
-            </div>
-          </div>
 
-          <div className="row">
-            <div className="col-lg-4 col-12 mt-2">
+              <div className="row">
+                <div className="col-lg-4 col-12 mt-2">
+                </div>
+                <div className="col-lg-4 col-12 mt-2">
+                </div>
+                <div className="col-lg-4 col-12 mt-2">
+                  <button className="btn btn-sm btn-block btn-primary" style={{borderRadius: "23px"}} onClick={() => downloadTransactions()}>
+                    <i className="fa fa-download"></i> Download Summary
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="col-lg-4 col-12 mt-2">
-            </div>
-            <div className="col-lg-4 col-12 mt-2">
-              <button className="btn btn-sm btn-block btn-primary" style={{borderRadius: "23px"}} onClick={() => downloadTransactions()}>
-                <i className="fa fa-download"></i> Download Summary
-              </button>
+
+            <div className="col-12 col-xl-3">
+              <MiniTips />
             </div>
           </div>
         </section>

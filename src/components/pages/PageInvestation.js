@@ -3,6 +3,7 @@ import {Link} from "react-router-dom"
 import Select from 'react-select'
 
 import utils from "../helper/Utils"
+import MiniTips from "../components/MiniTips"
 
 function PageInvestation() {
   const [alamiObject, setAlamiObject] = useState({
@@ -65,75 +66,83 @@ function PageInvestation() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12">
-              <div className="card card-default">
-                <div className="card-header">
-                  <h3 className="card-title my-auto">Alami Syariah</h3>
-                  <a href="https://alamisharia.co.id/id" className="ml-2 my-auto"><i className="my-auto fa fa-external-link-alt"></i></a>
+            <div className="col-12 col-xl-9 mb-4">
+              <div className="row">
+                <div className="col-12">
+                  <div className="card card-default">
+                    <div className="card-header">
+                      <h3 className="card-title my-auto">Alami Syariah</h3>
+                      <a href="https://alamisharia.co.id/id" className="ml-2 my-auto"><i className="my-auto fa fa-external-link-alt"></i></a>
 
-                  <div className="card-tools">
-                    <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus"></i></button>
-                  </div>
-                </div>
-
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-md-4 col-12">
-                      <div className="form-group">
-                        <label>Modal Awal</label>
-                        <input type="text" className="form-control" name="alami_initial_amount" value={alamiObject.alami_initial_amount} onChange={(e) => handleAlamiObjectChanges(e)} />
+                      <div className="card-tools">
+                        <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus"></i></button>
                       </div>
                     </div>
-                    <div className="col-md-4 col-12">
-                      <div className="form-group">
-                        <label>Ujrah Tahunan</label>
-                        <div class="input-group mb-3">
-                          <input type="text" className="form-control" name="alami_yearly_ujrah" value={alamiObject.alami_yearly_ujrah} onChange={(e) => handleAlamiObjectChanges(e)} />
-                          <div className="input-group-append">
-                            <span className="input-group-text">%</span>
+
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-md-4 col-12">
+                          <div className="form-group">
+                            <label>Modal Awal</label>
+                            <input type="text" className="form-control" name="alami_initial_amount" value={alamiObject.alami_initial_amount} onChange={(e) => handleAlamiObjectChanges(e)} />
+                          </div>
+                        </div>
+                        <div className="col-md-2 col-12">
+                          <div className="form-group">
+                            <label>Ujrah Tahunan</label>
+                            <div class="input-group mb-3">
+                              <input type="text" className="form-control" name="alami_yearly_ujrah" value={alamiObject.alami_yearly_ujrah} onChange={(e) => handleAlamiObjectChanges(e)} />
+                              <div className="input-group-append">
+                                <span className="input-group-text">%</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-2 col-12">
+                          <div className="form-group">
+                            <label>Durasi</label>
+                            <Select
+                              name="alami_duration"
+                              options={alamiDurationOptions}
+                              defaultValue={alamiDurationOptions[0]}
+                              onChange={(e) => handleAlamiObjectChanges(e)}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-4">
+                          <div className="d-flex justify-content-center p-1" style={{width: "100%"}}>
+                            <span>Estimasi Imbal Hasil (Ujrah)</span>
+                          </div>
+                          <div className="bg-success rounded-pill p-1" style={{width: "100%"}}>
+                            <h3 className="d-flex justify-content-center m-0">{utils.FormatNumber(alamiResult)}</h3>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-4 col-12">
-                      <div className="form-group">
-                        <label>Durasi</label>
-                        <Select
-                          name="alami_duration"
-                          options={alamiDurationOptions}
-                          defaultValue={alamiDurationOptions[0]}
-                          onChange={(e) => handleAlamiObjectChanges(e)}
-                        />
+                  </div>
+                </div>
+
+                <div className="col-12">
+                  <div className="card card-default">
+                    <div className="card-header">
+                      <h3 className="card-title my-auto">Emas</h3>
+                      <a href="https://www.logammulia.com/id/harga-emas-hari-ini" className="ml-2 my-auto"><i className="my-auto fa fa-external-link-alt"></i></a>
+
+                      <div className="card-tools">
+                        <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus"></i></button>
                       </div>
                     </div>
-                    <div className="col-12">
-                      <div className="d-flex justify-content-center p-1" style={{width: "100%"}}>
-                        <span>Estimasi Imbal Hasil (Ujrah)</span>
-                      </div>
-                      <div className="bg-success rounded-pill p-1" style={{width: "100%"}}>
-                        <h3 className="d-flex justify-content-center m-0">{utils.FormatNumber(alamiResult)}</h3>
-                      </div>
+
+                    <div className="card-body">
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-12">
-              <div className="card card-default">
-                <div className="card-header">
-                  <h3 className="card-title my-auto">Emas</h3>
-                  <a href="https://www.logammulia.com/id/harga-emas-hari-ini" className="ml-2 my-auto"><i className="my-auto fa fa-external-link-alt"></i></a>
-
-                  <div className="card-tools">
-                    <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus"></i></button>
-                  </div>
-                </div>
-
-                <div className="card-body">
-
-                </div>
-              </div>
+            <div className="col-12 col-xl-3">
+              <MiniTips />
             </div>
           </div>
         </section>

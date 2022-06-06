@@ -8,7 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 import TransactionMiniNav from "../components/TransactionMiniNav"
-
+import MiniTips from "../components/MiniTips"
 
 var timeNow = new Date()
 var beginOfMonth, endOfMonth
@@ -118,45 +118,45 @@ function PageTransactionsDaily() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12"><TransactionMiniNav data={{active: "calendar"}} /></div>
-            <div className="col-12 mt-1">
-              <div>
-                <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
-                <button className="ml-1 btn btn-xs text-black" disabled>{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</button>
-                <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
-              </div>
-            </div>
-            <div className="col-12 mt-1">
-              <div className="d-flex justify-content-between">
-                <small className="text-primary">{utils.FormatNumber(grouppedTransactions.income)}</small>
-                <small className="text-danger">{utils.FormatNumber(grouppedTransactions.outcome)}</small>
-                <small>{utils.FormatNumber(grouppedTransactions.total)}</small>
+            <div className="col-12 col-xl-9 mb-4">
+              <div className="row">
+                <div className="col-12"><TransactionMiniNav data={{active: "calendar"}} /></div>
+                <div className="col-12 mt-1">
+                  <div>
+                    <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
+                    <button className="ml-1 btn btn-xs text-black" disabled>{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</button>
+                    <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
+                  </div>
+                </div>
+                <div className="col-12 mt-1">
+                  <div className="d-flex justify-content-between">
+                    <small className="text-primary">{utils.FormatNumber(grouppedTransactions.income)}</small>
+                    <small className="text-danger">{utils.FormatNumber(grouppedTransactions.outcome)}</small>
+                    <small>{utils.FormatNumber(grouppedTransactions.total)}</small>
+                  </div>
+                </div>
+
+                <div className="col-12 mb-4">
+                  <FullCalendar
+                    plugins={[ dayGridPlugin ]}
+                    headerToolbar={{
+                      left: '', center: '', right: ''
+                    }}
+                    initialEvents={formattedFullCalendarEvents}
+                    events={formattedFullCalendarEvents}
+                    eventContent={renderEventContent}
+                    initialView="dayGridMonth"
+                    initialDate={timeNow}
+                    ref={calendarRef}
+                    eventClick={(e) => {console.log(e)}}
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="col-12 mb-4">
-              <FullCalendar
-                plugins={[ dayGridPlugin ]}
-                headerToolbar={{
-                  left: '',
-                  center: '',
-                  right: ''
-                }}
-                initialEvents={formattedFullCalendarEvents}
-                events={formattedFullCalendarEvents}
-                eventContent={renderEventContent}
-                initialView="dayGridMonth"
-                initialDate={timeNow}
-                ref={calendarRef}
-                eventClick={(e) => {console.log(e)}}
-              />
+            <div className="col-12 col-xl-3">
+              <MiniTips />
             </div>
-
-            {/* {grouppedTransactions.groupped_transactions.map((val, k) => (
-              <div className="col-12 mt-2" key={`1-${k}`}>
-                <GrouppedTransactionCard grouppedTransaction={val} />
-              </div>
-            ))} */}
           </div>
         </section>
       </div>
