@@ -90,7 +90,7 @@ function PageInvestation() {
                         <div className="col-md-2 col-12">
                           <div className="form-group">
                             <label>Ujrah Tahunan</label>
-                            <div class="input-group mb-3">
+                            <div className="input-group mb-3">
                               <input type="text" className="form-control" name="alami_yearly_ujrah" value={alamiObject.alami_yearly_ujrah} onChange={(e) => handleAlamiObjectChanges(e)} />
                               <div className="input-group-append">
                                 <span className="input-group-text">%</span>

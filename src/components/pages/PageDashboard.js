@@ -105,26 +105,26 @@ function PageDashboard() {
         <section className="content">
           <div className="row">
             <div className="col-12 col-lg-3">
-              <div class="card card-widget widget-user">
-                <div class="widget-user-header text-white bg-info">
-                  <h5 class="widget-user-desc text-right">{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</h5>
-                  <h3 class="widget-user-username text-right"><i className="fas fa-wallet mr-1"></i> {utils.FormatNumber(dashboardDetail.balance)}</h3>
+              <div className="card card-widget widget-user">
+                <div className="widget-user-header text-white bg-info">
+                  <h5 className="widget-user-desc text-right">{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</h5>
+                  <h3 className="widget-user-username text-right"><i className="fas fa-wallet mr-1"></i> {utils.FormatNumber(dashboardDetail.balance)}</h3>
                 </div>
-                <div class="widget-user-image">
-                  <img class="img-circle" src="/default_avatar.png" alt="User Profile" />
+                <div className="widget-user-image">
+                  <img className="img-circle" src="/default_avatar.png" alt="User Profile" />
                 </div>
-                <div class="card-footer px-1 pt-5 pb-1">
-                  <div class="row">
-                    <div class="col-6 border-right">
-                      <div class="description-block">
-                        <h5 class="description-header">{utils.FormatNumber(dashboardDetail.total_income)}</h5>
-                        <span class="text-sm text-success"><i className="fas fa-reply mr-1"></i> Pemasukan</span>
+                <div className="card-footer px-1 pt-5 pb-1">
+                  <div className="row">
+                    <div className="col-6 border-right">
+                      <div className="description-block">
+                        <h5 className="description-header">{utils.FormatNumber(dashboardDetail.total_income)}</h5>
+                        <span className="text-sm text-success"><i className="fas fa-reply mr-1"></i> Pemasukan</span>
                       </div>
                     </div>
-                    <div class="col-6">
-                      <div class="description-block">
-                        <h5 class="description-header">{utils.FormatNumber(dashboardDetail.total_outcome)}</h5>
-                        <span class="text-sm text-danger"><i className="fas fa-share mr-1"></i> Pengeluaran</span>
+                    <div className="col-6">
+                      <div className="description-block">
+                        <h5 className="description-header">{utils.FormatNumber(dashboardDetail.total_outcome)}</h5>
+                        <span className="text-sm text-danger"><i className="fas fa-share mr-1"></i> Pengeluaran</span>
                       </div>
                     </div>
                   </div>
