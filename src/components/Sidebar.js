@@ -14,6 +14,12 @@ function Sidebar() {
   const [sideBarItems, setSideBarItems] = useState(RefreshSideBarItems())
 
   var activeName = localStorage.getItem("DEXPENSE_SESSION_USERNAME") || "Guest"
+  var activeUser = {}
+  if (localStorage.getItem("DEXPENSE_SESSION_USER")) {
+    activeUser = JSON.parse(localStorage.getItem("DEXPENSE_SESSION_USER"))
+  }
+
+  console.warn(activeUser)
 
   function RefreshSideBarItems() {
     let tempSideBarItems = {}
@@ -43,7 +49,10 @@ function Sidebar() {
               <img src="/default_avatar.png" className="img-circle elevation-2" alt="User" />
             </div>
             <div className="info">
-              <Link to="/dashboard" className="d-block">Hello, <b className="text-teal">{activeName}</b> !</Link>
+              <Link to="/dashboard" className="">Hello, <b className="text-teal">{activeName}</b> !</Link>
+              {
+                (activeUser.account_type === "vip") ? <span className="ml-4 float-right text-warning"><span className="fa fa-star"></span> vip</span> : ''
+              }
             </div>
           </div>
 

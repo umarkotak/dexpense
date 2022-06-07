@@ -35,6 +35,7 @@ function Navbar() {
   function handleLogout() {
     localStorage.removeItem("DEXPENSE_SESSION_TOKEN")
     localStorage.removeItem("DEXPENSE_SESSION_USERNAME")
+    localStorage.removeItem("DEXPENSE_SESSION_USER")
     localStorage.removeItem("DEXPENSE_SESSION_GROUPS")
     localStorage.removeItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")
     history.push("/")
@@ -56,6 +57,7 @@ function Navbar() {
       if (status === 200) {
         localStorage.setItem("DEXPENSE_SESSION_GROUPS", JSON.stringify(body.data.groups))
         localStorage.setItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID", body.data.groups[0].id)
+        localStorage.setItem("DEXPENSE_SESSION_USER", JSON.stringify(body.data))
         setGroups(body.data.groups)
         setGroupsActive({"id": body.data.groups[0].id, "name": body.data.groups[0].name})
       } else {

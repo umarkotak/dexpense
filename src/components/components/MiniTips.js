@@ -49,7 +49,7 @@ function MiniTips(props) {
     <>
       <div className="card card-primary card-outline mb-5">
         <div className="card-header pl-2 py-1">
-          <h3 className="card-title"><i className="fa fa-lightbulb"></i> Quick Tips</h3>
+          <h3 className="card-title text-primary"><i className="fa fa-lightbulb"></i> <a href="/?panelbear_enable">Quick</a> <a href="/?panelbear_disable">Tips</a></h3>
           <div className="card-tools">
             <button type="button" className="btn btn-primary btn-xs" data-card-widget="collapse">
               <i className="fas fa-minus"></i>

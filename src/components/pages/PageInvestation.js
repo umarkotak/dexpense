@@ -1,13 +1,14 @@
 import React, {useState,useEffect} from "react"
 import {Link} from "react-router-dom"
 import Select from 'react-select'
+import NumberFormat from 'react-number-format'
 
 import utils from "../helper/Utils"
 import MiniTips from "../components/MiniTips"
 
 function PageInvestation() {
   const [alamiObject, setAlamiObject] = useState({
-    "alami_initial_amount": 0,
+    "alami_initial_amount": null,
     "alami_yearly_ujrah": 12.5,
     "alami_duration": 30
   })
@@ -71,7 +72,7 @@ function PageInvestation() {
                 <div className="col-12">
                   <div className="card card-default">
                     <div className="card-header">
-                      <h3 className="card-title my-auto">Alami Syariah</h3>
+                      <h3 className="card-title my-auto">Alami</h3><small className="ml-2">peer to peer lending syariah</small>
                       <a href="https://alamisharia.co.id/id" className="ml-2 my-auto"><i className="my-auto fa fa-external-link-alt"></i></a>
 
                       <div className="card-tools">
@@ -81,10 +82,17 @@ function PageInvestation() {
 
                     <div className="card-body">
                       <div className="row">
-                        <div className="col-md-4 col-12">
+                        <div className="col-md-3 col-12">
                           <div className="form-group">
                             <label>Modal Awal</label>
-                            <input type="text" className="form-control" name="alami_initial_amount" value={alamiObject.alami_initial_amount} onChange={(e) => handleAlamiObjectChanges(e)} />
+                            <NumberFormat
+                              name="alami_initial_amount"
+                              className="form-control"
+                              value={alamiObject.alami_initial_amount}
+                              thousandSeparator={true}
+                              prefix={'Rp.'}
+                              onValueChange={(values) => setAlamiObject(alamiObject => ({...alamiObject, "alami_initial_amount": values.value}))}
+                            />
                           </div>
                         </div>
                         <div className="col-md-2 col-12">
@@ -109,14 +117,15 @@ function PageInvestation() {
                             />
                           </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-md-5 col-12">
                           <div className="d-flex justify-content-center p-1" style={{width: "100%"}}>
                             <span>Estimasi Imbal Hasil (Ujrah)</span>
                           </div>
                           <div className="bg-success rounded-pill p-1" style={{width: "100%"}}>
-                            <h3 className="d-flex justify-content-center m-0">{utils.FormatNumber(alamiResult)}</h3>
+                            <h4 className="d-flex justify-content-center m-0">+{utils.FormatNumber(alamiResult)}</h4>
                           </div>
                         </div>
+                        <small>Rumus: modal <b>x</b> %ujrah tahunan <b>x</b> (lama hari pinjaman <b>/</b> 360)</small>
                       </div>
                     </div>
                   </div>
@@ -125,7 +134,7 @@ function PageInvestation() {
                 <div className="col-12">
                   <div className="card card-default">
                     <div className="card-header">
-                      <h3 className="card-title my-auto">Emas</h3>
+                      <h3 className="card-title my-auto">Antam</h3><small className="ml-2">emas</small>
                       <a href="https://www.logammulia.com/id/harga-emas-hari-ini" className="ml-2 my-auto"><i className="my-auto fa fa-external-link-alt"></i></a>
 
                       <div className="card-tools">
