@@ -124,13 +124,15 @@ class Utils {
   }
 
   CompactNumber(number) {
+    if (!number) { number = 0 }
+
     var minus = false
     if (number < 0) {
       minus = true
       number = number * -1
     }
 
-    var newNumber
+    var newNumber = 0
     var suffix
     if (number < 1000) {
       newNumber = number

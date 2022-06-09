@@ -6,7 +6,8 @@ function BlogPost(props) {
   var welcomePosts = [
     {
       id: -1,
-      post_sub_title: `Welcome`,
+      username: "Admin",
+      post_sub_title: `Selamat datang!`,
       post_content: `
 <h1><b className="bg-white rounded"><span className="text-teal">BUKUKAS</span></b> KITA</h1>
 <h5>Group and Familly budgetting anywhere</h5>
@@ -15,7 +16,8 @@ function BlogPost(props) {
     },
     {
       id: -1,
-      post_sub_title: `Features`,
+      username: "Admin",
+      post_sub_title: `Fitur nya bukukas kita`,
       post_content: `
 <h4>Fitur:</h4>
 <pre >
@@ -39,9 +41,16 @@ function BlogPost(props) {
     },
     {
       id: -1,
-      post_sub_title: `Good Reading About Investing`,
+      username: "Admin",
+      post_sub_title: `Kenapa bukukaskita dibuat?`,
       post_content: `
+<span style="font-size:14px;">
+Pernah ga sih, untuk temen - temen yang baru kerja dan sudah ngerasain gaji pertamanya.
 
+kemudian ngerasain gaji kedua, ketida, dan seterusnya. kemudian kalian mulai membeli barang ini dan itu
+
+
+</span>
       `,
     },
   ]
@@ -50,6 +59,7 @@ function BlogPost(props) {
   var blogPosts = [
     {
       id: -1,
+      username: "Admin",
       post_sub_title: `Cerita tentang 5 sahabat`,
       post_content: `
 <span style="font-size:14px;">
@@ -67,7 +77,7 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
     },
   ]
 
-  var storyPosts = []
+  // var storyPosts = []
 
   const[activePosts, setActivePost] = useState([])
 
@@ -83,11 +93,11 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
           <a class="nav-link p-2 mr-1 active" href="#change" data-toggle="tab" onClick={() => setActivePost(welcomePosts)}>Welcome</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link p-2 mr-1" href="#change" data-toggle="tab" onClick={() => setActivePost(blogPosts)}>Blog</a>
+          <a class="nav-link p-2 mr-1" href="#change" data-toggle="tab" onClick={() => setActivePost(blogPosts)}>Latest News!</a>
         </li>
-        <li class="nav-item">
+        {/* <li class="nav-item">
           <a class="nav-link p-2" href="#change" data-toggle="tab" onClick={() => setActivePost(storyPosts)}>Story</a>
-          </li>
+        </li> */}
       </ul>
 
       <div className="card card-primary shadow mb-5">
@@ -98,9 +108,9 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
                 <img className="img-circle img-bordered-sm" src="/images/new_logo.png" alt="User Avatar" />
                 <span className="username">
                   {/* <a href="/">Admin</a> */}
-                  <span className="text-info">Admin</span>
+                  <span className="text-info">{activePost.post_sub_title}</span>
                 </span>
-                <span className="description">{activePost.post_sub_title}</span>
+                <span className="description">By {activePost.username}</span>
               </div>
               <ReactMarkdown rehypePlugins={[rehypeRaw]} children={activePost.post_content} />
               <p className="mb-1 mt-2">
