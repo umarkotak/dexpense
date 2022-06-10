@@ -91,6 +91,9 @@ function Sidebar() {
           <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Investasi</p></Link>
         </li>
         <li className="nav-item">
+          <Link to="/wealth_assets" className={`nav-link ${sideBarItems["wealth_assets"] || ""}`}><i className="nav-icon fa fa-building-columns"></i> <p>Asset</p></Link>
+        </li>
+        <li className="nav-item">
           <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
         </li>
         <li className="nav-item">

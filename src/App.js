@@ -34,6 +34,7 @@ import PageDailyIbadah from "./components/pages/PageDailyIbadah"
 import PageBudgetsIndex from "./components/pages/PageBudgetsIndex"
 import PageBudgetsCreate from "./components/pages/PageBudgetsCreate"
 import PageBudgetsEdit from "./components/pages/PageBudgetsEdit"
+import PageWealthAsset from "./components/pages/PageWealthAsset"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -100,6 +101,7 @@ function App() {
               <Route path="/statistics" exact component={PageStatistics} />
               <Route path="/investation" exact component={PageInvestation} />
               <Route path="/daily_ibadah" exact component={PageDailyIbadah} />
+              <Route path="/wealth_assets" exact component={PageWealthAsset} />
               <Route path="/" component={PageNotFound} />
             </Switch>
 
