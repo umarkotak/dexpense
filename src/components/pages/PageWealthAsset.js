@@ -39,16 +39,69 @@ function PageWealthAsset() {
                     </div>
 
                     <div className="d-flex flex-row align-items-center justify-content-end">
-                      <Link to="." className="btn img-circle btn-outline-primary mr-2"><i className="fa fa-bell"></i></Link>
-                      <Link to="." className="btn img-circle btn-outline-primary"><i className="fa fa-share"></i></Link>
+                      <Link to="." className="btn img-circle btn-outline-primary mr-2">
+                        <i className="fa fa-bell" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
+                        </Link>
+                      <Link to="." className="btn img-circle btn-outline-primary">
+                        <i className="fa fa-share" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
+                        </Link>
                     </div>
                   </span>
                 </div>
               </div>
               <div className="row mt-2" id="total_section">
-                <div className="col-12 px-3">
+                <div className="col-12 px-3 border-bottom">
                   <small>Total Asset</small>
                   <h4><b>Rp 2.000.000.000</b></h4>
+                </div>
+                <div className="col-12 px-3">
+                  <p className="text-center mb-1" style={{color: "#FF844B"}}>lihat asset</p>
+                </div>
+                <div className="col-12 px-3">
+                  <hr />
+                  <h4><b>Tipe Aset</b></h4>
+
+                  <div className="px-2">
+                    <div className="row flex-row flex-nowrap overflow-auto">
+                      {[1,2,3,4,5,6,7,8].map((val) => (
+                        <div className="col-5 col-md-3 mr-2 rounded-lg" style={{backgroundColor: "#9FC9DD"}} key={val}>
+                          <div className="p-1">
+                            <b>Emas</b><br/>
+                            <small>Kamu punya</small><br/>
+                            <b>20 gram</b><br/>
+                            <small>Total</small><br/>
+                            <b>Rp. 20.000.000</b><br/>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-12 px-3 mt-4">
+                  <h4><b>Rekomendasi</b></h4>
+
+                  {[1,2,3,4,5,6,7,8].map((val) => (
+                    <div key={val}>
+                      <div className="d-flex flex-row align-items-center justify-content-between border-bottom mb-2 pb-1">
+                        <div className="d-flex flex-row align-items-center">
+                          <div>
+                            <Link to="." className="btn img-circle btn-outline-primary mr-2">
+                              <i className="fa fa-coins" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
+                            </Link>
+                          </div>
+                          <div>
+                            <b>Emas</b><br/>
+                            <small>Antam</small>
+                          </div>
+                        </div>
+                        <div>
+                          <b>Rp. 9.000.000</b><br/>
+                          <small>tahun 2020</small>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
