@@ -143,6 +143,12 @@ class Utils {
     } else if (number < 1000000000) {
       newNumber = number / 1000000
       suffix = "Jt"
+    } else if (number < 1000000000000) {
+      newNumber = number / 1000000000
+      suffix = "M"
+    } else {
+      newNumber = number / 1000000000000
+      suffix = "T"
     }
 
     return `${minus?"-":""}${newNumber.toFixed(1)} ${suffix}`
