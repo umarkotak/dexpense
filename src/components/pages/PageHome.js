@@ -30,19 +30,18 @@ function PageHome() {
     return(
       <>
         <div className="shadow-sm bg-white rounded p-2">
-          <div className="row">
-            <div className="col-3">
+          <div className="d-flex flex-row align-items-center justify-content-start">
+            <div className="" style={{width: "70px"}}>
               <div className="border border-primary p-1 text-center" style={{borderRadius: "10%"}}>
                 <Link to="/transactions/daily" style={{color: "#FF844B"}}>
-                  <div>
+                  <div className="flex">
                     <i className="fas fa-hand-holding-usd" style={{fontSize: "22px"}}></i>
-                    <br/>
                     <small className="text-primary">Transaksi</small>
                   </div>
                 </Link>
               </div>
             </div>
-            <div className="col-3">
+            <div className="ml-2" style={{width: "70px"}}>
               <div className="border border-primary p-1 text-center" style={{borderRadius: "10%"}}>
                 <Link to="/budgets" style={{color: "#FF844B"}}>
                   <div>
@@ -53,7 +52,7 @@ function PageHome() {
                 </Link>
               </div>
             </div>
-            <div className="col-3">
+            <div className="ml-2" style={{width: "70px"}}>
               <div className="border border-primary p-1 text-center" style={{borderRadius: "10%"}}>
                 <Link to="/wealth_assets" style={{color: "#FF844B"}}>
                   <div>
