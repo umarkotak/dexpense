@@ -59,7 +59,7 @@ function PageBudgetsIndex() {
   return(
     <div>
       <div className="content-wrapper" style={{
-        backgroundColor: "#F7F0F5",
+        backgroundColor: "#E3EDF2",
       }}>
         <div className="content-header">
           <div className="container-fluid">

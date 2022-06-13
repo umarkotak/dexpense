@@ -2,6 +2,7 @@ import React, {useState,useEffect} from "react"
 import {Link} from "react-router-dom"
 import Select from 'react-select'
 import NumberFormat from 'react-number-format'
+import { ComposedChart, Line, XAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 import utils from "../helper/Utils"
 import MiniTips from "../components/MiniTips"
@@ -9,6 +10,7 @@ import MiniTips from "../components/MiniTips"
 function PageInvestation() {
   const [alamiObject, setAlamiObject] = useState({
     "alami_initial_amount": null,
+    "alami_monthly_amount": null,
     "alami_yearly_ujrah": 12.5,
     "alami_duration": 30
   })
@@ -45,11 +47,54 @@ function PageInvestation() {
     calculation_result = Math.floor(calculation_result)
 
     setAlamiResult(calculation_result)
+
+    calculateLongInvestation()
+  }
+
+  const [investationNumbers, setInvestationNumbers] = useState([{
+    year: 0,
+    amount: parseInt(alamiObject.alami_initial_amount || 0),
+    return: 0,
+    amount_no_invest: parseInt(alamiObject.alami_initial_amount || 0),
+    diff: 0,
+  }])
+
+  function calculateLongInvestation() {
+    var temps = [{
+      year: 0,
+      amount: parseInt(alamiObject.alami_initial_amount || 0),
+      return: 0,
+      amount_no_invest: parseInt(alamiObject.alami_initial_amount || 0),
+      diff: 0,
+    }]
+
+    for (let i = 1; i <= 20; i++) {
+      var monthly_amount = parseInt(alamiObject.alami_monthly_amount || 0)
+      var amount = parseInt(temps[i-1].amount) + parseInt(monthly_amount) + parseInt(temps[i-1].amount * alamiObject.alami_yearly_ujrah / 100)
+      var returns = parseInt(amount) - parseInt(temps[i-1].amount) - parseInt(monthly_amount)
+      var amount_no_invest = parseInt(temps[i-1].amount_no_invest) + parseInt(monthly_amount)
+
+      temps.push({
+        year: i,
+        amount: amount,
+        return: returns,
+        amount_no_invest: amount_no_invest,
+        diff: amount - amount_no_invest,
+      })
+    }
+
+    setInvestationNumbers(temps)
+  }
+
+  function toolTipFormatter(value, name, props) {
+    return utils.CompactNumber(value)
   }
 
   return (
     <div>
-      <div className="content-wrapper">
+      <div className="content-wrapper" style={{
+        backgroundColor: "#E3EDF2",
+      }}>
         <div className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">
@@ -82,7 +127,7 @@ function PageInvestation() {
 
                     <div className="card-body">
                       <div className="row">
-                        <div className="col-md-3 col-12">
+                        <div className="col-md-3 col-6">
                           <div className="form-group">
                             <label>Modal Awal</label>
                             <NumberFormat
@@ -95,9 +140,22 @@ function PageInvestation() {
                             />
                           </div>
                         </div>
-                        <div className="col-md-2 col-12">
+                        <div className="col-md-3 col-6">
                           <div className="form-group">
-                            <label>Ujrah Tahunan</label>
+                            <label>Tabung Bulanan</label>
+                            <NumberFormat
+                              name="alami_monthly_amount"
+                              className="form-control"
+                              value={alamiObject.alami_monthly_amount}
+                              thousandSeparator={true}
+                              prefix={'Rp.'}
+                              onValueChange={(values) => setAlamiObject(alamiObject => ({...alamiObject, "alami_monthly_amount": values.value}))}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-3 col-6">
+                          <div className="form-group">
+                            <label>Imbal Hasil</label><small> Tahunan</small>
                             <div className="input-group mb-3">
                               <input type="text" className="form-control" name="alami_yearly_ujrah" value={alamiObject.alami_yearly_ujrah} onChange={(e) => handleAlamiObjectChanges(e)} />
                               <div className="input-group-append">
@@ -106,7 +164,7 @@ function PageInvestation() {
                             </div>
                           </div>
                         </div>
-                        <div className="col-md-2 col-12">
+                        <div className="col-md-3 col-6">
                           <div className="form-group">
                             <label>Durasi</label>
                             <Select
@@ -117,7 +175,7 @@ function PageInvestation() {
                             />
                           </div>
                         </div>
-                        <div className="col-md-5 col-12">
+                        <div className="col-md-6 col-12">
                           <div className="d-flex justify-content-center p-1" style={{width: "100%"}}>
                             <span>Estimasi Imbal Hasil (Ujrah)</span>
                           </div>
@@ -126,6 +184,53 @@ function PageInvestation() {
                           </div>
                         </div>
                         <small>Rumus: modal <b>x</b> %ujrah tahunan <b>x</b> (lama hari pinjaman <b>/</b> 360)</small>
+                      </div>
+                      <div className="row mt-4">
+                        <div className="col-12">
+                          <b>Tabel Penghitungan Investasi</b>
+
+                          <div className="overflow-auto mt-2" style={{height: "220px"}}>
+                            <table className="table">
+                              <thead>
+                                <tr>
+                                  <th className="py-1">Tahun</th>
+                                  <th className="py-1">Total <small>dengan investasi</small></th>
+                                  <th className="py-1">Return</th>
+                                  <th className="py-1">Total <small>tanpa investasi</small></th>
+                                  <th className="py-1">Selisih</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {investationNumbers.map((investationNumber) => (
+                                  <tr>
+                                    <td className="py-1">{investationNumber.year}</td>
+                                    <td className="py-1">{utils.FormatNumber(investationNumber.amount)}</td>
+                                    <td className="py-1">{utils.FormatNumber(investationNumber.return)}</td>
+                                    <td className="py-1">{utils.FormatNumber(investationNumber.amount_no_invest)}</td>
+                                    <td className="py-1">{utils.FormatNumber(investationNumber.diff)}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <ResponsiveContainer width={"100%"} height={300}>
+                            <ComposedChart
+                              data={investationNumbers}
+                              margin={{
+                                bottom: 20,
+                              }}
+                            >
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis dataKey="year" />
+                              <Tooltip formatter={toolTipFormatter} />
+                              <Legend wrapperStyle={{ position: 'relative' }} />
+                              <CartesianGrid stroke="#f5f5f5" />
+                              <Line type="monotone" dataKey="amount" name="dengan invest" stroke="#ff7300" />
+                              <Line type="monotone" dataKey="amount_no_invest" name="tanpa invest" stroke="#387908" />
+                            </ComposedChart>
+                          </ResponsiveContainer>
+                        </div>
                       </div>
                     </div>
                   </div>
