@@ -32,6 +32,7 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/budget")) { tempSideBarItems.budget = "active" }
     else if (window.location.pathname.startsWith("/investation")) { tempSideBarItems.investation = "active" }
     else if (window.location.pathname.startsWith("/daily_ibadah")) { tempSideBarItems.daily_ibadah = "active" }
+    else if (window.location.pathname.startsWith("/wealth_assets")) { tempSideBarItems.wealth_assets = "active" }
     return tempSideBarItems
   }
 
@@ -79,28 +80,29 @@ function Sidebar() {
           <Link to="/home" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/dashboard" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon fas fa-columns"></i> <p>Dashboard</p></Link>
-        </li>
-        <li className="nav-item">
           <Link to="/transactions/daily" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon fas fa-hand-holding-usd"></i> <p>Transaksi</p></Link>
         </li>
         <li className="nav-item">
           <Link to="/budgets" className={`nav-link ${sideBarItems["budget"] || ""}`}><i className="nav-icon fas fa-list-ul"></i> <p>Budgeting</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Investasi</p></Link>
-        </li>
-        <li className="nav-item">
           <Link to="/wealth_assets" className={`nav-link ${sideBarItems["wealth_assets"] || ""}`}><i className="nav-icon fa fa-building-columns"></i> <p>Asset</p></Link>
         </li>
-        <li className="nav-item">
-          <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/groups" className={`nav-link ${sideBarItems["groups"] || ""}`}><i className="nav-icon fas fa-users"></i> <p>Groups</p></Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/daily_ibadah" className={`nav-link ${sideBarItems["daily_ibadah"] || ""}`}><i className="nav-icon fas fa-mosque"></i> <p>Daily Routine</p></Link>
+        <li
+          className={`nav-item ${sideBarItems["investation"] || sideBarItems["statistics"] ? "menu-is-opening menu-open" : ""}`}
+        >
+          <a href="." class="nav-link">
+            <i class="nav-icon fa fa-circle-dot"></i>
+            <p> Lainnya <i class="fas fa-angle-left right"></i></p>
+          </a>
+          <ul class="nav nav-treeview" style={{display: sideBarItems["investation"] || sideBarItems["statistics"] ? "block" : "none"}}>
+            <li class="nav-item">
+              <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Investasi</p></Link>
+            </li>
+            <li class="nav-item">
+              <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
+            </li>
+          </ul>
         </li>
       </ul>
     )

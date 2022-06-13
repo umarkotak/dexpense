@@ -8,6 +8,8 @@ function Navbar() {
   const alert = useAlert()
   const history = useHistory()
 
+  var activeName = localStorage.getItem("DEXPENSE_SESSION_USERNAME") || "Guest"
+
   useEffect(() => {
     checkProfile()
     refreshGroups()
@@ -121,12 +123,12 @@ function Navbar() {
   function OnLoggedIn() {
     return(
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item" id="nav-items-1">
-          <button className="btn btn-sm btn-outline-light mr-2" disabled><i className="fa fa-users"></i> group :</button>
+        <li className="nav-item">
+          <span className="nav-link px-0" disabled><i className="fa fa-users"></i> group:</span>
         </li>
 
-        <li className="nav-item dropdown show" id="nav-items-2">
-          <a className="btn btn-sm btn-primary mr-2" data-toggle="dropdown" href="/#" aria-expanded="false" id="nav-items-2-1">{groupsActive.name}</a>
+        <li className="nav-item dropdown show">
+          <a className="nav-link px-1 text-teal" data-toggle="dropdown" href="." aria-expanded="false" id="nav-items-2-1">{groupsActive.name} <i className="fa fa-angle-down"></i></a>
           <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right" style={{left: "inherit", right: "0px"}}>
             {groups.map((v, k) => (
               <div key={k}>
@@ -144,8 +146,36 @@ function Navbar() {
           </div>
         </li>
 
-        <li className="nav-item" id="nav-items-3">
+        {/* <li className="nav-item" id="nav-items-3">
           <button className="btn btn-sm btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
+        </li> */}
+
+        <li className="nav-item dropdown">
+          <a className="nav-link" data-toggle="dropdown" href="." aria-expanded="false"><i className="far fa-user"></i></a>
+
+          <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right" style={{left: "inherit", right: "0px"}}>
+              <Link to="/dashboard">
+                  <span className="dropdown-item">
+                      <div className="media">
+                          <img src="/default_avatar.png" className="img-size-50 py-1 img-circle mr-3" alt="User" />
+                          <div className="media-body">
+                              <h3 className="dropdown-item-title">Hello, <b>{activeName}</b>!</h3>
+                              <p className="text-sm">profile</p>
+                          </div>
+                      </div>
+                  </span>
+              </Link>
+
+              <div className="dropdown-divider"></div>
+              <Link to="/daily_ibadah">
+                  <span className="dropdown-item dropdown-footer">
+                      <h3 className="dropdown-item-title"><i className="nav-icon fas fa-mosque"></i> Ibadah Harian</h3>
+                  </span>
+              </Link>
+
+              <div className="dropdown-divider"></div>
+              <button className="dropdown-item dropdown-footer bg-danger text-white" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
+          </div>
         </li>
       </ul>
     )

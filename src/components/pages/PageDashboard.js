@@ -91,11 +91,11 @@ function PageDashboard() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1>Dashboard</h1>
+                <h1>Profile</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/dashboard">Dashboard</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/dashboard">Profile</Link></li>
                 </ol>
               </div>
             </div>
@@ -104,7 +104,7 @@ function PageDashboard() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12 col-lg-3">
+            <div className="col-12 col-md-4 col-xl-3">
               <div className="card card-widget widget-user">
                 <div className="widget-user-header text-white bg-info">
                   <h5 className="widget-user-desc text-right">{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</h5>
@@ -132,18 +132,19 @@ function PageDashboard() {
               </div>
 
               <div className="card card-info">
-                <div className="card-header"><h3 className="card-title">Summary</h3></div>
-                <div className="card-body">
+                <div className="card-header"><h3 className="card-title">Setting</h3></div>
+                <div className="card-body py-1 px-0">
                   <div>
-                    <strong className="text-danger"><i className="fas fa-wallet mr-1"></i> Saldo Minus</strong>
+                    <Link to="/groups" className="p-1 btn btn-info btn-block"><i className="nav-icon fas fa-users"></i> Atur Group & Dompet</Link>
+                    {/* <strong className="text-danger"><i className="fas fa-wallet mr-1"></i> Saldo Minus</strong>
                     <p className="text-muted my-1">{utils.FormatNumber(dashboardDetail.minus_balance)}</p>
-                    <hr className="my-2" />
+                    <hr className="my-2" /> */}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-12 col-lg-9">
+            <div className="col-12 col-md-8 col-xl-9">
               <div className="row">
                 <div className="col-12">
                   <div className="row">

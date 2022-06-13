@@ -40,11 +40,11 @@ function PageWealthAsset() {
 
                     <div className="d-flex flex-row align-items-center justify-content-end">
                       <Link to="." className="btn img-circle btn-outline-primary mr-2">
-                        <i className="fa fa-bell" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                        </Link>
-                      <Link to="." className="btn img-circle btn-outline-primary">
                         <i className="fa fa-share" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                        </Link>
+                      </Link>
+                      <Link to="." className="btn img-circle btn-outline-primary">
+                        <i className="fa fa-plus" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
+                      </Link>
                     </div>
                   </span>
                 </div>
@@ -64,7 +64,7 @@ function PageWealthAsset() {
                   <div className="px-2">
                     <div className="row flex-row flex-nowrap overflow-auto">
                       {[1,2,3,4,5,6,7,8].map((val) => (
-                        <div className="col-5 col-md-3 mr-2 rounded-lg" style={{backgroundColor: "#9FC9DD"}} key={val}>
+                        <div className="col-5 col-md-3 mr-2 rounded-lg border border-primary" style={{backgroundColor: "#9FC9DD"}} key={val}>
                           <div className="p-1">
                             <b>Emas</b><br/>
                             <small>Kamu punya</small><br/>
