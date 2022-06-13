@@ -230,6 +230,8 @@ function PageInvestation() {
                               <Line type="monotone" dataKey="amount_no_invest" name="tanpa invest" stroke="#387908" />
                             </ComposedChart>
                           </ResponsiveContainer>
+
+                          <small className="text-danger"><b>Disclaimer!</b> <span className="text-dark">Penghitungan investasi ini dilakukan secara umum tanpa memperhatikan faktor luar lain. Angka total tanpa investasi merupakan asumsi simpanan tanpa adanya bunga (bunga 0%).</span></small>
                         </div>
                       </div>
                     </div>
