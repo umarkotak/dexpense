@@ -99,11 +99,11 @@ function PageInvestation() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1>Investasi</h1>
+                <h1>Kalkulator Investasi</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/investation">Investasi</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/investation">Kalkulator Investasi</Link></li>
                 </ol>
               </div>
             </div>

@@ -97,7 +97,7 @@ function Sidebar() {
           </a>
           <ul class="nav nav-treeview" style={{display: sideBarItems["investation"] || sideBarItems["statistics"] ? "block" : "none"}}>
             <li class="nav-item">
-              <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Investasi</p></Link>
+              <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Kalkulator Investasi</p></Link>
             </li>
             <li class="nav-item">
               <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
