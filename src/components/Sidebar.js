@@ -31,6 +31,7 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/groups")) { tempSideBarItems.groups = "active" }
     else if (window.location.pathname.startsWith("/budget")) { tempSideBarItems.budget = "active" }
     else if (window.location.pathname.startsWith("/investation")) { tempSideBarItems.investation = "active" }
+    else if (window.location.pathname.startsWith("/calculator_budget")) { tempSideBarItems.calculator_budget = "active" }
     else if (window.location.pathname.startsWith("/daily_ibadah")) { tempSideBarItems.daily_ibadah = "active" }
     else if (window.location.pathname.startsWith("/wealth_assets")) { tempSideBarItems.wealth_assets = "active" }
     return tempSideBarItems
@@ -95,9 +96,18 @@ function Sidebar() {
             <i class="nav-icon fa fa-circle-dot"></i>
             <p> Lainnya <i class="fas fa-angle-left right"></i></p>
           </a>
-          <ul class="nav nav-treeview" style={{display: sideBarItems["investation"] || sideBarItems["statistics"] ? "block" : "none"}}>
+          <ul class="nav nav-treeview" style={{
+            display: (
+              sideBarItems["investation"] ||
+              sideBarItems["statistics"] ||
+              sideBarItems["calculator_budget"]
+            ) ? "block" : "none"
+          }}>
             <li class="nav-item">
-              <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Kalkulator Investasi</p></Link>
+              <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Investasi</p></Link>
+            </li>
+            <li class="nav-item">
+              <Link to="/calculator_budget" className={`nav-link ${sideBarItems["calculator_budget"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Budget</p></Link>
             </li>
             <li class="nav-item">
               <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>

@@ -459,6 +459,19 @@ class DexpenseApi {
     })
     return response
   }
+
+  async HfGoldGoldPrices(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/hfgolds/gold/prices`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+      },
+    })
+    return response
+  }
 }
 
 const dexpenseApi = new DexpenseApi()

@@ -4,6 +4,7 @@ import Select from 'react-select'
 import NumberFormat from 'react-number-format'
 import { ComposedChart, Line, XAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
+import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 import MiniTips from "../components/MiniTips"
 
@@ -85,6 +86,37 @@ function PageInvestation() {
 
     setInvestationNumbers(temps)
   }
+
+  const [goldPrices, setGoldPrices] = useState({
+    buyback_price: 0,
+    direction: 'down',
+    price_change: 0,
+    price_date: '',
+    price_source: '',
+    prices: {},
+  })
+
+  async function fetchGoldPrices() {
+    try {
+      const response = await dexpenseApi.HfGoldGoldPrices(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {})
+      const status = response.status
+      const body = await response.json()
+      console.log(body)
+
+      if (status === 200) {
+        setGoldPrices(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
+  useEffect(() => {
+    fetchGoldPrices()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function toolTipFormatter(value, name, props) {
     return utils.CompactNumber(value)
@@ -190,24 +222,24 @@ function PageInvestation() {
                           <b>Tabel Penghitungan Investasi</b>
 
                           <div className="overflow-auto mt-2" style={{height: "220px"}}>
-                            <table className="table">
+                            <table className="table table-bordered">
                               <thead>
                                 <tr>
-                                  <th className="py-1">Tahun</th>
-                                  <th className="py-1">Total <small>dengan investasi</small></th>
-                                  <th className="py-1">Return</th>
-                                  <th className="py-1">Total <small>tanpa investasi</small></th>
-                                  <th className="py-1">Selisih</th>
+                                  <th className="p-1">Tahun</th>
+                                  <th className="p-1">Total <small>dengan investasi</small></th>
+                                  <th className="p-1">Return</th>
+                                  <th className="p-1">Total <small>tanpa investasi</small></th>
+                                  <th className="p-1">Selisih</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {investationNumbers.map((investationNumber) => (
                                   <tr>
-                                    <td className="py-1">{investationNumber.year}</td>
-                                    <td className="py-1">{utils.FormatNumber(investationNumber.amount)}</td>
-                                    <td className="py-1">{utils.FormatNumber(investationNumber.return)}</td>
-                                    <td className="py-1">{utils.FormatNumber(investationNumber.amount_no_invest)}</td>
-                                    <td className="py-1">{utils.FormatNumber(investationNumber.diff)}</td>
+                                    <td className="p-1">{investationNumber.year}</td>
+                                    <td className="p-1">{utils.FormatNumber(investationNumber.amount)}</td>
+                                    <td className="p-1">{utils.FormatNumber(investationNumber.return)}</td>
+                                    <td className="p-1">{utils.FormatNumber(investationNumber.amount_no_invest)}</td>
+                                    <td className="p-1">{utils.FormatNumber(investationNumber.diff)}</td>
                                   </tr>
                                 ))}
                               </tbody>
@@ -250,7 +282,39 @@ function PageInvestation() {
                     </div>
 
                     <div className="card-body">
+                      <h4><i className="fa fa-chart-line"></i> Harga Emas Hari Ini</h4>
+                      <div className="d-flex justify-content-between">
+                        <b>Sumber:</b> <a href={goldPrices.price_source}>{goldPrices.price_source}</a>
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        <b>Harga tanggal:</b> {goldPrices.price_date}
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        <b>Harga Buyback:</b>
+                        <span>{utils.FormatNumber(goldPrices.buyback_price)} ({
+                            goldPrices.direction === "down" ? <i className="fa fa-caret-down text-danger"></i> : <i className="fa fa-caret-up text-success"></i>
+                          } {utils.FormatNumber(goldPrices.price_change)})
+                        </span>
+                      </div>
 
+                      <table className="table table-bordered mt-2">
+                        <thead>
+                          <tr>
+                            <th className="p-1">Jenis</th>
+                            <th className="p-1">Harga</th>
+                            <th className="p-1">Harga Per Gram</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Object.keys(goldPrices.prices).map((key) => (
+                            <tr>
+                              <td className="p-1">{goldPrices.prices[key].size} gram</td>
+                              <td className="p-1">{utils.FormatNumber(goldPrices.prices[key].price)}</td>
+                              <td className="p-1">{utils.FormatNumber(Math.ceil(goldPrices.prices[key].price / goldPrices.prices[key].size))}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
