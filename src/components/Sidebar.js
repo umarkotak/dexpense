@@ -104,13 +104,13 @@ function Sidebar() {
             ) ? "block" : "none"
           }}>
             <li class="nav-item">
+              <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
+            </li>
+            <li class="nav-item">
               <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Investasi</p></Link>
             </li>
             <li class="nav-item">
               <Link to="/calculator_budget" className={`nav-link ${sideBarItems["calculator_budget"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Budget</p></Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
             </li>
           </ul>
         </li>
