@@ -3,12 +3,15 @@ import {Link} from "react-router-dom"
 import Select from 'react-select'
 import NumberFormat from 'react-number-format'
 import { ComposedChart, Line, XAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import {useAlert} from 'react-alert'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 import MiniTips from "../components/MiniTips"
 
 function PageInvestation() {
+  const alert = useAlert()
+
   const [alamiObject, setAlamiObject] = useState({
     "alami_initial_amount": null,
     "alami_monthly_amount": null,
@@ -70,7 +73,7 @@ function PageInvestation() {
     }]
 
     for (let i = 1; i <= 20; i++) {
-      var monthly_amount = parseInt(alamiObject.alami_monthly_amount || 0)
+      var monthly_amount = parseInt(alamiObject.alami_monthly_amount || 0) * 12
       var amount = parseInt(temps[i-1].amount) + parseInt(monthly_amount) + parseInt(temps[i-1].amount * alamiObject.alami_yearly_ujrah / 100)
       var returns = parseInt(amount) - parseInt(temps[i-1].amount) - parseInt(monthly_amount)
       var amount_no_invest = parseInt(temps[i-1].amount_no_invest) + parseInt(monthly_amount)
@@ -221,10 +224,10 @@ function PageInvestation() {
                         <div className="col-12">
                           <b>Tabel Penghitungan Investasi</b>
 
-                          <div className="overflow-auto mt-2" style={{height: "220px"}}>
+                          <div className="overflow-auto mt-2 border" style={{height: "220px"}}>
                             <table className="table table-bordered">
-                              <thead>
-                                <tr>
+                              <thead className="bg-white border" style={{ position: "sticky", top: "0", zindex: "1" }}>
+                                <tr className="shadow-sm">
                                   <th className="p-1">Tahun</th>
                                   <th className="p-1">Total <small>dengan investasi</small></th>
                                   <th className="p-1">Return</th>
@@ -246,24 +249,26 @@ function PageInvestation() {
                             </table>
                           </div>
 
-                          <ResponsiveContainer width={"100%"} height={300}>
-                            <ComposedChart
-                              data={investationNumbers}
-                              margin={{
-                                bottom: 20,
-                              }}
-                            >
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="year" />
-                              <Tooltip formatter={toolTipFormatter} />
-                              <Legend wrapperStyle={{ position: 'relative' }} />
-                              <CartesianGrid stroke="#f5f5f5" />
-                              <Line type="monotone" dataKey="amount" name="dengan invest" stroke="#ff7300" />
-                              <Line type="monotone" dataKey="amount_no_invest" name="tanpa invest" stroke="#387908" />
-                            </ComposedChart>
-                          </ResponsiveContainer>
+                          <div className="p-1">
+                            <ResponsiveContainer width={"100%"} height={300}>
+                              <ComposedChart
+                                data={investationNumbers}
+                                margin={{
+                                  bottom: 20,
+                                }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="year" />
+                                <Tooltip formatter={toolTipFormatter} />
+                                <Legend wrapperStyle={{ position: 'relative' }} />
+                                <CartesianGrid stroke="#f5f5f5" />
+                                <Line type="monotone" dataKey="amount" name="dengan invest" stroke="#ff7300" />
+                                <Line type="monotone" dataKey="amount_no_invest" name="tanpa invest" stroke="#387908" />
+                              </ComposedChart>
+                            </ResponsiveContainer>
+                          </div>
 
-                          <small className="text-danger"><b>Disclaimer!</b> <span className="text-dark">Penghitungan investasi ini dilakukan secara umum tanpa memperhatikan faktor luar lain. Angka total tanpa investasi merupakan asumsi simpanan tanpa adanya bunga (bunga 0%).</span></small>
+                          <small className="text-danger"><b>Note:</b> <span className="text-dark">Penghitungan investasi ini dilakukan secara umum tanpa memperhatikan faktor luar lain. Angka total tanpa investasi merupakan asumsi simpanan tanpa adanya bunga (bunga 0%).</span></small>
                         </div>
                       </div>
                     </div>
