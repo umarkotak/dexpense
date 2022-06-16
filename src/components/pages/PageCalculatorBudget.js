@@ -17,6 +17,8 @@ function PageCalculatorBudget() {
     budgets: [{category: {}}],
   })
 
+  const [budgetMode, setBudgetMode] = useState("percent")
+
   const [categoryOptions, setCategoryOptions] = useState([{}])
   async function fetchCategoryOptions() {
     try {
@@ -72,24 +74,46 @@ function PageCalculatorBudget() {
 
   const [pieChartData, setPieChartData] = useState([{name: "hello", value: 2000}])
   useEffect(() => {
-    var remainingPercent = 100
+    var results
 
-    var results = budgetParams.budgets.map((budget) => {
-      var percentValue = Math.floor(((budget.value || 0) * parseInt(budgetParams.monthly_income)) / 100)
-      remainingPercent = remainingPercent - (budget.value || 0)
+    if (budgetMode === "percent") {
+      var remainingPercent = 100
 
-      return {
-        name: budget.category.value || "unset",
-        value: percentValue
-      }
-    })
-    if (remainingPercent > 0) {
-      results.push({
-        name: "remaining",
-        value: Math.floor(remainingPercent / 100 * parseInt(budgetParams.monthly_income))
+      results = budgetParams.budgets.map((budget) => {
+        var percentValue = Math.floor(((budget.value || 0) * parseInt(budgetParams.monthly_income)) / 100)
+        remainingPercent = remainingPercent - (budget.value || 0)
+
+        return {
+          name: budget.category.value || "unset",
+          value: percentValue
+        }
       })
+      if (remainingPercent > 0) {
+        results.push({
+          name: "remaining",
+          value: Math.floor(remainingPercent / 100 * parseInt(budgetParams.monthly_income))
+        })
+      }
+      setPieChartData(results)
+    } else {
+      var remainingValue = parseInt(budgetParams.monthly_income)
+
+      results = budgetParams.budgets.map((budget) => {
+        remainingValue = remainingValue - (budget.value || 0)
+
+        return {
+          name: budget.category.value || "unset",
+          value: (budget.value || 0)
+        }
+      })
+      if (remainingValue > 0) {
+        results.push({
+          name: "remaining",
+          value: remainingValue
+        })
+      }
+      setPieChartData(results)
     }
-    setPieChartData(results)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [budgetParams])
@@ -147,6 +171,13 @@ function PageCalculatorBudget() {
                   <div className="row">
                     <div className="col-sm-5 col-12">
                       <div className="form-group">
+                        <label>Perhitungan</label>
+                        <div className="d-flex justify-content-between">
+                          <button className="btn btn-success btn-sm w-100 mr-1" onClick={()=>setBudgetMode("percent")}><b className="fa fa-percent"></b> Dengan Persen</button>
+                          <button className="btn btn-success btn-sm w-100 ml-1" onClick={()=>setBudgetMode("amount")}><b>Rp.</b> Dengan Jumlah</button>
+                        </div>
+                      </div>
+                      <div className="form-group">
                         <label>Gaji Bulanan</label>
                         <NumberFormat
                           name="monthly_income"
@@ -173,7 +204,7 @@ function PageCalculatorBudget() {
                             />
                             <div className="input-group mb-3">
                               <div className="input-group-prepend">
-                                <span className="input-group-text"><i className="fa fa-percent"></i></span>
+                                <span className="input-group-text"><i className={budgetMode === "percent" ? "fa fa-percent" : ""}></i>{budgetMode !== "percent" ? "Rp" : ""}</span>
                               </div>
                               <input type="number" name="budget_value" className="form-control" value={budget.value} onChange={(e) => changeBudgetValue(e, idx)} />
                             </div>
