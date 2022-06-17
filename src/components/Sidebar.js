@@ -127,6 +127,9 @@ function Sidebar() {
         <li class="nav-item">
           <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Kalkulator Investasi</p></Link>
         </li>
+        <li class="nav-item">
+          <Link to="/calculator_budget" className={`nav-link ${sideBarItems["calculator_budget"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Budget</p></Link>
+        </li>
         <li className="nav-item">
           <Link to="/daily_ibadah" className={`nav-link ${sideBarItems["daily_ibadah"] || ""}`}><i className="nav-icon fas fa-mosque"></i> <p>Daily Routine</p></Link>
         </li>
