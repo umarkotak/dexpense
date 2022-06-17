@@ -17,6 +17,11 @@ function PageCalculatorBudget() {
     budgets: [{category: {}}],
   })
 
+  const [budgetSummary, setBudgetSummary] = useState({
+    total_budget: 0,
+    over_budget: 0,
+  })
+
   const [budgetMode, setBudgetMode] = useState("percent")
 
   const [categoryOptions, setCategoryOptions] = useState([{}])
@@ -65,7 +70,7 @@ function PageCalculatorBudget() {
   function changeBudgetValue(e, idx) {
     var temps = budgetParams.budgets
     var temp = temps[idx]
-    temp.value = parseInt(e.target.value)
+    temp.value = parseInt(e.target.value || "0")
     temps[idx] = temp
     setBudgetParams(budgetParams => ({...budgetParams, budgets: temps}))
   }
@@ -75,13 +80,18 @@ function PageCalculatorBudget() {
   const [pieChartData, setPieChartData] = useState([{name: "hello", value: 2000}])
   useEffect(() => {
     var results
+    var percentValue
+
+    var totalBudget = 0
+    var overBudget = 0
 
     if (budgetMode === "percent") {
       var remainingPercent = 100
 
       results = budgetParams.budgets.map((budget) => {
-        var percentValue = Math.floor(((budget.value || 0) * parseInt(budgetParams.monthly_income)) / 100)
+        percentValue = Math.floor(((budget.value || 0) * parseInt(budgetParams.monthly_income)) / 100)
         remainingPercent = remainingPercent - (budget.value || 0)
+        totalBudget = totalBudget + percentValue
 
         return {
           name: budget.category.value || "unset",
@@ -94,12 +104,15 @@ function PageCalculatorBudget() {
           value: Math.floor(remainingPercent / 100 * parseInt(budgetParams.monthly_income))
         })
       }
+
+
       setPieChartData(results)
     } else {
       var remainingValue = parseInt(budgetParams.monthly_income)
 
       results = budgetParams.budgets.map((budget) => {
         remainingValue = remainingValue - (budget.value || 0)
+        totalBudget = totalBudget + (budget.value || 0)
 
         return {
           name: budget.category.value || "unset",
@@ -112,8 +125,19 @@ function PageCalculatorBudget() {
           value: remainingValue
         })
       }
+
+
       setPieChartData(results)
     }
+
+    if (totalBudget > parseInt(budgetParams.monthly_income)) {
+      overBudget = totalBudget - parseInt(budgetParams.monthly_income)
+    }
+
+    setBudgetSummary({
+      total_budget: totalBudget,
+      over_budget: overBudget,
+    })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [budgetParams])
@@ -213,28 +237,44 @@ function PageCalculatorBudget() {
                       </div>
                     </div>
                     <div className="col-sm-7 col-12">
-                      <ResponsiveContainer height={300}>
-                        <PieChart>
-                          <Pie
-                            data={pieChartData}
-                            dataKey="value"
-                            nameKey="name"
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={50}
-                            outerRadius={90}
-                            fill="#8884d8"
-                            labelLine={false}
-                            label={renderCustomizedLabel}
-                          >
-                            {pieChartData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                          </Pie>
-                          <Tooltip formatter={toolTipFormatter} />
-                          <Legend />
-                        </PieChart>
-                      </ResponsiveContainer>
+                      <div>
+                        <ResponsiveContainer height={300}>
+                          <PieChart>
+                            <Pie
+                              data={pieChartData}
+                              dataKey="value"
+                              nameKey="name"
+                              cx="50%"
+                              cy="50%"
+                              innerRadius={50}
+                              outerRadius={90}
+                              fill="#8884d8"
+                              labelLine={false}
+                              label={renderCustomizedLabel}
+                            >
+                              {pieChartData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                              ))}
+                            </Pie>
+                            <Tooltip formatter={toolTipFormatter} />
+                            <Legend />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      </div>
+                      <div className="p-1">
+                        <table className="table table-bordered">
+                          <tbody>
+                            <tr>
+                              <td className="p-1">Total Budget</td>
+                              <td className="p-1">{utils.FormatNumber(budgetSummary.total_budget)}</td>
+                            </tr>
+                            <tr>
+                              <td className="p-1">Over Budget</td>
+                              <td className="p-1 text-danger">{utils.FormatNumber(budgetSummary.over_budget)}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
