@@ -168,6 +168,19 @@ class DexpenseApi {
     return response
   }
 
+  async TransactionsSummary(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/transactions/summary?` + new URLSearchParams(params)
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    })
+    return response
+  }
+
   async GroupsShow(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}`
     const response = await fetch(uri, {

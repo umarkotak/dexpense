@@ -15,7 +15,7 @@ function BlogPost(props) {
       `,
     },
     {
-      id: -1,
+      id: -2,
       username: "Admin",
       post_sub_title: `Fitur nya bukukas kita`,
       post_content: `
@@ -40,7 +40,7 @@ function BlogPost(props) {
       `,
     },
     {
-      id: -1,
+      id: -3,
       username: "Admin",
       post_sub_title: `Kenapa bukukaskita dibuat?`,
       post_content: `
@@ -88,15 +88,15 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
 
   return(
     <>
-      <ul class="nav nav-pills">
-        <li class="nav-item">
-          <a class="nav-link p-2 mr-1 active" href="#change" data-toggle="tab" onClick={() => setActivePost(welcomePosts)}>Welcome</a>
+      <ul className="nav nav-pills">
+        <li className="nav-item">
+          <a className="nav-link p-2 mr-1 active" href="#change" data-toggle="tab" onClick={() => setActivePost(welcomePosts)}>Welcome</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link p-2 mr-1" href="#change" data-toggle="tab" onClick={() => setActivePost(blogPosts)}>Latest News!</a>
+        <li className="nav-item">
+          <a className="nav-link p-2 mr-1" href="#change" data-toggle="tab" onClick={() => setActivePost(blogPosts)}>Latest News!</a>
         </li>
-        {/* <li class="nav-item">
-          <a class="nav-link p-2" href="#change" data-toggle="tab" onClick={() => setActivePost(storyPosts)}>Story</a>
+        {/* <li className="nav-item">
+          <a className="nav-link p-2" href="#change" data-toggle="tab" onClick={() => setActivePost(storyPosts)}>Story</a>
         </li> */}
       </ul>
 

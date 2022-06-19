@@ -19,8 +19,6 @@ function Sidebar() {
     activeUser = JSON.parse(localStorage.getItem("DEXPENSE_SESSION_USER"))
   }
 
-  console.warn(activeUser)
-
   function RefreshSideBarItems() {
     let tempSideBarItems = {}
     if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
@@ -92,24 +90,24 @@ function Sidebar() {
         <li
           className={`nav-item ${sideBarItems["investation"] || sideBarItems["statistics"] ? "menu-is-opening menu-open" : ""}`}
         >
-          <a href="." class="nav-link">
-            <i class="nav-icon fa fa-circle-dot"></i>
-            <p> Lainnya <i class="fas fa-angle-left right"></i></p>
+          <a href="." className="nav-link">
+            <i className="nav-icon fa fa-circle-dot"></i>
+            <p> Lainnya <i className="fas fa-angle-left right"></i></p>
           </a>
-          <ul class="nav nav-treeview" style={{
+          <ul className="nav nav-treeview" style={{
             display: (
               sideBarItems["investation"] ||
               sideBarItems["statistics"] ||
               sideBarItems["calculator_budget"]
             ) ? "block" : "none"
           }}>
-            <li class="nav-item">
+            <li className="nav-item">
               <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Investasi</p></Link>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <Link to="/calculator_budget" className={`nav-link ${sideBarItems["calculator_budget"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Budget</p></Link>
             </li>
           </ul>
@@ -124,10 +122,10 @@ function Sidebar() {
         <li className="nav-item">
           <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
         </li>
-        <li class="nav-item">
+        <li className="nav-item">
           <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Kalkulator Investasi</p></Link>
         </li>
-        <li class="nav-item">
+        <li className="nav-item">
           <Link to="/calculator_budget" className={`nav-link ${sideBarItems["calculator_budget"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Budget</p></Link>
         </li>
         <li className="nav-item">

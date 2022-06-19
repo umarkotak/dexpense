@@ -12,8 +12,8 @@ var beginOfMonth, endOfMonth
 function RecalculateBeginAndEndOfMonth(timeObj) {
   beginOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth(), 1)
   endOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth() + 1, 1)
-  beginOfMonth.setMinutes(beginOfMonth.getMinutes() - (-new Date().getTimezoneOffset()/60))
-  endOfMonth.setMinutes(endOfMonth.getMinutes() - (-new Date().getTimezoneOffset()/60))
+  beginOfMonth.setHours(beginOfMonth.getHours() - (-new Date().getTimezoneOffset()/60))
+  endOfMonth.setHours(endOfMonth.getHours() - (-new Date().getTimezoneOffset()/60))
 }
 RecalculateBeginAndEndOfMonth(timeNow)
 
@@ -29,10 +29,12 @@ function PageTransactionsDaily() {
     max_date: utils.FormatDateInput(endOfMonth),
     group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))
   })
+  const[transactionSummary, setTransactionSummary] = useState([])
 
   useEffect(() => {
     fetchTransactionsDaily()
     fetchTransactionsDailyLastMonth()
+    fetchTransactionsSummary()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryParams])
 
@@ -41,7 +43,6 @@ function PageTransactionsDaily() {
       const response = await dexpenseApi.TransactionsListDaily(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams)
       const status = response.status
       const body = await response.json()
-      console.log(body)
 
       if (status === 200) {
         setGroupedTransactions(body.data)
@@ -56,19 +57,38 @@ function PageTransactionsDaily() {
   async function fetchTransactionsDailyLastMonth() {
     try {
       var timeObj = timeNow
-      console.log(timeObj)
-      var lastMonthParams = queryParams
       var tempBeginOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth() - 1)
       var tempEndOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth(), 1)
-      lastMonthParams.min_date = utils.FormatDateInput(tempBeginOfMonth)
-      lastMonthParams.max_date = utils.FormatDateInput(tempEndOfMonth)
+      var lastMonthParams = {
+        limit: 1000,
+        offset: 0,
+        min_date: utils.FormatDateInput(tempBeginOfMonth),
+        max_date: utils.FormatDateInput(tempEndOfMonth),
+        group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))
+      }
       const response = await dexpenseApi.TransactionsListDaily(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), lastMonthParams)
       const status = response.status
       const body = await response.json()
-      // console.log(body)
 
       if (status === 200) {
         setGroupedTransactionsLastMonth(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
+  async function fetchTransactionsSummary() {
+    try {
+      const response = await dexpenseApi.TransactionsSummary(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams)
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        console.warn("TX SUM",body.data)
+        setTransactionSummary(body.data)
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -97,18 +117,24 @@ function PageTransactionsDaily() {
 
   const downloadFileRef = useRef(null)
   async function downloadTransactions() {
+    var newQ = {
+      limit: 1000,
+      offset: 0,
+      min_date: utils.FormatDateInput(beginOfMonth),
+      max_date: utils.FormatDateInput(endOfMonth),
+      group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID"))
+    }
+
     try {
-      const response = await dexpenseApi.TransactionsDownload(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams)
+      const response = await dexpenseApi.TransactionsDownload(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), newQ)
       const status = response.status
 
       if (status === 200) {
         const blob = await response.blob()
         const href = window.URL.createObjectURL(blob)
         const link = downloadFileRef.current
-        console.log(link)
         link.download = 'summary.csv'
         link.href = href
-        console.log("hello")
         link.click()
         link.href = '.'
       } else {
@@ -190,6 +216,29 @@ function PageTransactionsDaily() {
                   <button className="btn btn-sm btn-block btn-primary" style={{borderRadius: "23px"}} onClick={() => downloadTransactions()}>
                     <i className="fa fa-download"></i> Download Summary
                   </button>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-12">
+                  <table className="table table-bordered mt-2">
+                    <thead>
+                      <tr>
+                        <th className="p-1">Kategori</th>
+                        <th className="p-1">Jumlah</th>
+                        <th className="p-1">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {transactionSummary.map((oneTransaction, idx) => (
+                        <tr key={idx}>
+                          <td className="p-1">{oneTransaction.category}</td>
+                          <td className="p-1">{oneTransaction.count}</td>
+                          <td className={`p-1 ${oneTransaction.direction_type === "outcome" ? "text-danger" : "text-success"}`}>{utils.FormatNumber(oneTransaction.amount)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
