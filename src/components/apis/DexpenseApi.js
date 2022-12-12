@@ -1,9 +1,9 @@
 class DexpenseApi {
   constructor() {
     if (window.location.protocol === "https:") {
-      this.DexpenseApiHost = "https://dexpense-api.herokuapp.com"
+      this.DexpenseApiHost = "https://bukukaskita-api.animapu.site"
     } else {
-      this.DexpenseApiHost = "https://dexpense-api.herokuapp.com"
+      this.DexpenseApiHost = "https://bukukaskita-api.animapu.site"
       this.DexpenseApiHost = "http://localhost:4000"
     }
   }

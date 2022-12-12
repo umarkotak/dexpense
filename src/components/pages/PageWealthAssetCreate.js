@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 
 import MiniTips from "../components/MiniTips"
 
-function PageWealthAsset() {
+function PageWealthAssetCreate() {
   return (
     <div>
       <div className="content-wrapper" style={{
@@ -27,37 +27,38 @@ function PageWealthAsset() {
         <section className="content">
           <div className="row">
             <div className="col-12 col-xl-9 mb-4">
-              <div className="p-2 bg-white rounded shadow-sm">
-                <div className="row" id="profile_section">
-                  <div className="col-12 px-3">
-                    <span className="d-flex flex-row align-items-center justify-content-between">
-                      <div className="d-flex flex-row align-items-center">
-                        <img src="/default_avatar.png" alt="bukukas kita Logo" className="img-circle" style={{width: "50px", height: "50px"}} />
-                        <span className="ml-2 d-flex flex-column">
-                          <small className="mb-0">Halo!</small>
-                          <b style={{marginTop: "-7px"}}>{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</b>
-                        </span>
-                      </div>
+              <div className="row" id="profile_section">
+                <div className="col-12 px-3">
+                  <span className="d-flex flex-row align-items-center justify-content-between">
+                    <div className="d-flex flex-row align-items-center">
+                      <img src="/default_avatar.png" alt="bukukas kita Logo" className="img-circle" style={{width: "50px", height: "50px"}} />
+                      <span className="ml-2 d-flex flex-column">
+                        <small className="mb-0">Halo!</small>
+                        <b style={{marginTop: "-7px"}}>{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</b>
+                      </span>
+                    </div>
 
-                      <div className="d-flex flex-row align-items-center justify-content-end">
-                        <Link to="." className="btn img-circle btn-outline-primary mr-2">
-                          <i className="fa fa-share" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                        </Link>
-                        <Link to="/wealth_assets/create" className="btn img-circle btn-outline-primary">
-                          <i className="fa fa-plus" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                        </Link>
-                      </div>
-                    </span>
-                  </div>
-                  <div className="col-12 px-3">
-                    <small>Total Asset</small>
-                    <h4><b>Rp 2.000.000.000</b></h4>
-                  </div>
+                    <div className="d-flex flex-row align-items-center justify-content-end">
+                      <Link to="." className="btn img-circle btn-outline-primary mr-2">
+                        <i className="fa fa-share" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
+                      </Link>
+                      <Link to="." className="btn img-circle btn-outline-primary">
+                        <i className="fa fa-plus" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
+                      </Link>
+                    </div>
+                  </span>
                 </div>
               </div>
-
               <div className="row mt-2" id="total_section">
+                <div className="col-12 px-3 border-bottom">
+                  <small>Total Asset</small>
+                  <h4><b>Rp 2.000.000.000</b></h4>
+                </div>
                 <div className="col-12 px-3">
+                  <p className="text-center mb-1" style={{color: "#FF844B"}}>lihat asset</p>
+                </div>
+                <div className="col-12 px-3">
+                  <hr />
                   <h4><b>Tipe Aset</b></h4>
 
                   <div className="px-2">
@@ -115,4 +116,4 @@ function PageWealthAsset() {
   )
 }
 
-export default PageWealthAsset
+export default PageWealthAssetCreate
