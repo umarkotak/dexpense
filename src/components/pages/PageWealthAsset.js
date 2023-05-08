@@ -58,7 +58,7 @@ function PageWealthAsset() {
 
               <div className="row mt-2" id="total_section">
                 <div className="col-12 px-3">
-                  <h4><b>Tipe Aset</b></h4>
+                  <h4><b>Summary</b></h4>
 
                   <div className="px-2">
                     <div className="row flex-row flex-nowrap overflow-auto">
@@ -78,7 +78,7 @@ function PageWealthAsset() {
                 </div>
 
                 <div className="col-12 px-3 mt-4">
-                  <h4><b>Rekomendasi</b></h4>
+                  <h4><b>Daftar Asset</b></h4>
 
                   {[1,2,3,4,5,6,7,8].map((val) => (
                     <div key={val}>

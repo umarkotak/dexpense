@@ -102,7 +102,7 @@ function PageTransactionsDaily() {
       <div className="content-wrapper">
         <div className="content-header">
           <div className="container-fluid">
-            <div className="row mb-2">
+            {/* <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Transactions</h1>
               </div>
@@ -112,7 +112,7 @@ function PageTransactionsDaily() {
                   <li className="breadcrumb-item active"><Link to="/transactions/calendar">Calendar</Link></li>
                 </ol>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
