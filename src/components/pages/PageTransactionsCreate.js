@@ -142,11 +142,21 @@ function PageTransactionsCreate() {
                 <div className="card-body">
                   <div className="form-group">
                     <label>Jenis</label> <small className="text-danger"><b>*</b></small>
-                    <Select
+                    {/* <Select
                       defaultValue={utils.Global()["TRANSACTION_DIRECTION_OPTS"][0]}
                       options={utils.Global()["TRANSACTION_DIRECTION_OPTS"]}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
-                    />
+                    /> */}
+                    <div>
+                      <button
+                        className={`btn btn-outline-primary p-2 rounded-xl mr-2 ${transactionsCreateParams["direction_type"] === "outcome" ? "active" : ""}`}
+                        onClick={()=>setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, "direction_type": "outcome"}))}
+                      >Pengeluaran</button>
+                      <button
+                        className={`btn btn-outline-primary p-2 rounded-xl mr-2 ${transactionsCreateParams["direction_type"] === "income" ? "active" : ""}`}
+                        onClick={()=>setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, "direction_type": "income"}))}
+                      >Pemasukan</button>
+                    </div>
                   </div>
                   <div className="form-group" data-select2-id="29">
                     <label>Kategori</label> <small className="text-danger"><b>*</b></small>
@@ -162,6 +172,7 @@ function PageTransactionsCreate() {
                       name="group_wallet_id"
                       options={walletOptions}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
+                      value={walletOptions.length === 1 ? walletOptions[0] : null }
                     />
                   </div>
                   <div className="input-group mb-3">
