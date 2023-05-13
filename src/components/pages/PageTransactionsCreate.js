@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import {useHistory, Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
@@ -9,6 +10,8 @@ import utils from "../helper/Utils"
 function PageTransactionsCreate() {
   const alert = useAlert()
   const history = useHistory()
+  var now = new Date()
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
 
   const [selectedWalletBalance, setSelectedWalletBalance] = useState("")
   const [transactionsCreateParams, setTransactionsCreateParams] = useState({
@@ -61,6 +64,15 @@ function PageTransactionsCreate() {
     fetchWalletOptions()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {
+    if (walletOptions.length === 1) {
+      setTransactionsCreateParams({
+        ...transactionsCreateParams,
+        "group_wallet_id": walletOptions[0].value,
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [walletOptions])
 
   const [categoryOptions, setCategoryOptions] = useState([{}])
   async function fetchCategoryOptions() {
@@ -106,6 +118,49 @@ function PageTransactionsCreate() {
     }
   }
 
+  const [selectedCategoryIdx, setSelectedCategoryIdx] = useState(null)
+
+  const commands = [
+    {
+      command: 'pengeluaran * berupa * sejumlah *',
+      callback: (category, description, amount) => {
+        setVoiceInput(`kamu habis ${category} untuk ${description} sejumlah ${amount}`)
+
+        var selectedIdx = categoryOptions.length - 1
+        if (selectedIdx < 0) { selectedIdx = 0}
+        categoryOptions.forEach((opt, idx)=>{
+          if (opt["label"].toLowerCase().includes(category)) {
+            selectedIdx = idx
+          }
+        })
+        setSelectedCategoryIdx(selectedIdx)
+
+        setTransactionsCreateParams({
+          ...transactionsCreateParams,
+          "category": categoryOptions[selectedIdx].value,
+          "name": description,
+          "amount": parseInt(`${amount}`.replace(/\D/g,''), 10),
+        })
+      }
+    },
+  ]
+
+  const {
+    transcript,
+    listening,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition({ commands })
+
+  if (!browserSupportsSpeechRecognition) {
+    console.log(`Browser doesn't support speech recognition.`)
+  }
+
+  const [voiceInput, setVoiceInput] = useState("")
+  useEffect(() => {
+    console.log(voiceInput)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voiceInput])
+
   return (
     <div>
       <div className="content-wrapper">
@@ -141,6 +196,17 @@ function PageTransactionsCreate() {
                 </div>
                 <div className="card-body">
                   <div className="form-group">
+                    <label>Voice Input</label> <small className="text-danger"><b>beta</b></small>
+                    <div>
+                      <button className='btn btn-outline-primary p-2' onClick={()=>SpeechRecognition.startListening({ language: 'id' })} disabled={listening}>
+                        {listening ? 'Mendegarkan. . .' : 'Bicara'}
+                      </button>
+                      <p>{transcript}</p>
+                      <small>format: pengeluaran [category] berupa [nama] sejumlah [biaya]<br/></small>
+                      <code>contoh: pengeluaran makanan berupa sate ayam sejumlah lima puluh ribu rupiah</code>
+                    </div>
+                  </div>
+                  <div className="form-group">
                     <label>Jenis</label> <small className="text-danger"><b>*</b></small>
                     {/* <Select
                       defaultValue={utils.Global()["TRANSACTION_DIRECTION_OPTS"][0]}
@@ -164,6 +230,7 @@ function PageTransactionsCreate() {
                       name="category"
                       options={categoryOptions}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
+                      value={selectedCategoryIdx === null ? null : categoryOptions[selectedCategoryIdx]}
                     />
                   </div>
                   <div className="form-group">
@@ -188,15 +255,20 @@ function PageTransactionsCreate() {
                   </div>
                   <div className="form-group">
                     <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
-                    <input type="number" className="form-control form-control-sm" name="amount" onChange={(e) => handleTransactionsParamsChanges(e)} />
+                    <input type="number" className="form-control form-control-sm" name="amount"
+                      onChange={(e) => handleTransactionsParamsChanges(e)} value={transactionsCreateParams["amount"]}
+                    />
                   </div>
                   <div className="form-group">
                     <label>Waktu Transaksi</label> <small className="text-danger"><b>*</b></small>
-                    <input type="datetime-local" className="form-control form-control-sm" name="transaction_at" onChange={(e) => handleTransactionsParamsChanges(e)} />
+                    <input type="datetime-local" className="form-control form-control-sm" name="transaction_at"
+                      onChange={(e) => handleTransactionsParamsChanges(e)} defaultValue={now.toISOString().slice(0, -1)}
+                    />
                   </div>
                   <div className="form-group">
                     <label>Nama</label> <small className="text-danger"><b>*</b></small>
-                    <input type="text" className="form-control form-control-sm" name="name" onChange={(e) => handleTransactionsParamsChanges(e)} />
+                    <input type="text" className="form-control form-control-sm" name="name"
+                      onChange={(e) => handleTransactionsParamsChanges(e)} value={transactionsCreateParams["name"]}/>
                   </div>
                   <div className="form-group">
                     <label>Deskripsi</label>
