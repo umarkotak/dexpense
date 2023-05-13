@@ -3,6 +3,7 @@ import {useHistory, Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import NumberFormat from 'react-number-format'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
@@ -139,7 +140,7 @@ function PageTransactionsCreate() {
           ...transactionsCreateParams,
           "category": categoryOptions[selectedIdx].value,
           "name": description,
-          "amount": parseInt(`${amount}`.replace(/\D/g,''), 10),
+          "amount": parseInt(`${amount}`.toLowerCase().replace('juta','000000').replace(/\D/g,''), 10),
         })
       }
     },
@@ -255,8 +256,16 @@ function PageTransactionsCreate() {
                   </div>
                   <div className="form-group">
                     <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
-                    <input type="number" className="form-control form-control-sm" name="amount"
+                    {/* <input type="number" className="form-control form-control-sm" name="amount"
                       onChange={(e) => handleTransactionsParamsChanges(e)} value={transactionsCreateParams["amount"]}
+                    /> */}
+                    <NumberFormat
+                      name="amount"
+                      className="form-control form-control-sm"
+                      value={transactionsCreateParams["amount"]}
+                      thousandSeparator={true}
+                      prefix={'Rp.'}
+                      onValueChange={(values) => setTransactionsCreateParams({...transactionsCreateParams,"amount": values.value})}
                     />
                   </div>
                   <div className="form-group">
