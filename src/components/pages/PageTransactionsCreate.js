@@ -125,8 +125,6 @@ function PageTransactionsCreate() {
     {
       command: 'pengeluaran * berupa * sejumlah *',
       callback: (category, description, amount) => {
-        setVoiceInput(`kamu habis ${category} untuk ${description} sejumlah ${amount}`)
-
         var selectedIdx = categoryOptions.length - 1
         if (selectedIdx < 0) { selectedIdx = 0}
         categoryOptions.forEach((opt, idx)=>{
@@ -155,12 +153,6 @@ function PageTransactionsCreate() {
   if (!browserSupportsSpeechRecognition) {
     console.log(`Browser doesn't support speech recognition.`)
   }
-
-  const [voiceInput, setVoiceInput] = useState("")
-  useEffect(() => {
-    console.log(voiceInput)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [voiceInput])
 
   return (
     <div>
@@ -242,6 +234,7 @@ function PageTransactionsCreate() {
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                       value={walletOptions.length === 1 ? walletOptions[0] : null }
                     />
+                    <small><Link to="/groups">+ tambah dompet</Link></small>
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">

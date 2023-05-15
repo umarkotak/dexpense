@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from "react"
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
+import utils from "../helper/Utils"
+import {Link} from "react-router-dom"
 
 function BlogPost(props) {
   var welcomePosts = [
@@ -82,7 +84,7 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
   const[activePosts, setActivePost] = useState([])
 
   useEffect(() => {
-    setActivePost(welcomePosts)
+    setActivePost([])
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -90,7 +92,10 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
     <>
       <ul className="nav nav-pills">
         <li className="nav-item">
-          <a className="nav-link p-2 mr-1 active" href="#change" data-toggle="tab" onClick={() => setActivePost(welcomePosts)}>Welcome</a>
+          <a className="nav-link p-2 mr-1 active" href="#change" data-toggle="tab" onClick={() => setActivePost([])}>Transaksi</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link p-2 mr-1" href="#change" data-toggle="tab" onClick={() => setActivePost(welcomePosts)}>Welcome</a>
         </li>
         <li className="nav-item">
           <a className="nav-link p-2 mr-1" href="#change" data-toggle="tab" onClick={() => setActivePost(blogPosts)}>Latest News!</a>
@@ -121,10 +126,52 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
               </p>
             </div>
           ))}
+
+          <MiniTransactionsDaily />
         </div>
       </div>
     </>
   )
+
+  function MiniTransactionsDaily() {
+    if (activePosts.length !== 0) { return(<div></div>) }
+
+    return(<div>
+
+    </div>)
+  }
+
+  function GrouppedTransactionCard(props) {
+    return(
+      <div className="bg-light">
+        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
+          <h6 className="my-auto">
+            {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
+            <small> {props.grouppedTransaction.month}.{props.grouppedTransaction.year}</small>
+          </h6>
+          <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
+          <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
+        </div>
+        <div className="px-1">
+          {props.grouppedTransaction.transactions.map((val, k) => (
+            <div className="border-bottom d-flex justify-content-between py-0" key={`2-${k}`}>
+              <small className="my-auto" style={{width: "25%"}}>{val.category}</small>
+              <small className="my-auto text-left" style={{width: "50%"}}>
+                {val.name}
+                <br />
+                {val.account.username} . {val.group_wallet.name}
+              </small>
+              <Link to={`/transactions/${val.id}/edit`} className="my-auto text-right" style={{width: "25%"}}>
+                <small className={`${val.direction_type === "income" ? "text-primary" : "text-danger"}`}>
+                  {utils.FormatNumber(val.amount)}
+                </small>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
 }
 
 export default BlogPost

@@ -143,6 +143,18 @@ function Navbar() {
                 <div className="dropdown-divider"></div>
               </div>
             ))}
+              <div key={"manage-on-last"}>
+                <Link to="/groups">
+                  <button className="dropdown-item">
+                    <div className="media">
+                      <div className="media-body">
+                        <h3 className="dropdown-item-title text-info"><i className="fa fa-angle-double-right"></i> <b>Manage</b></h3>
+                      </div>
+                    </div>
+                  </button>
+                </Link>
+                <div className="dropdown-divider"></div>
+              </div>
           </div>
         </li>
 
