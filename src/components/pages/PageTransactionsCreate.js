@@ -8,6 +8,8 @@ import NumberFormat from 'react-number-format'
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
 
+var varCategoryOptions = [{}]
+
 function PageTransactionsCreate() {
   const alert = useAlert()
   const history = useHistory()
@@ -33,6 +35,12 @@ function PageTransactionsCreate() {
       setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, [e.name]: e.value}))
       if (e.name === "group_wallet_id") {
         setSelectedWalletBalance(e.balance)
+      } else if (e.name === "category") {
+        var selectedIdx = 0
+        varCategoryOptions.forEach((opt, idx)=>{
+          if (`${opt["value"]}`.includes(e.value)) { selectedIdx = idx }
+        })
+        setSelectedCategoryIdx(selectedIdx)
       }
     }
   }
@@ -86,6 +94,7 @@ function PageTransactionsCreate() {
 
       if (status === 200) {
         setCategoryOptions(body.data)
+        varCategoryOptions = body.data
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -125,9 +134,9 @@ function PageTransactionsCreate() {
     {
       command: 'pengeluaran * berupa * sejumlah *',
       callback: (category, description, amount) => {
-        var selectedIdx = categoryOptions.length - 1
+        var selectedIdx = varCategoryOptions.length - 1
         if (selectedIdx < 0) { selectedIdx = 0}
-        categoryOptions.forEach((opt, idx)=>{
+        varCategoryOptions.forEach((opt, idx)=>{
           if (opt["label"].toLowerCase().includes(category)) {
             selectedIdx = idx
           }
@@ -136,7 +145,7 @@ function PageTransactionsCreate() {
 
         setTransactionsCreateParams({
           ...transactionsCreateParams,
-          "category": categoryOptions[selectedIdx].value,
+          "category": varCategoryOptions[selectedIdx].value,
           "name": description,
           "amount": parseInt(`${amount}`.toLowerCase().replace('juta','000000').replace(/\D/g,''), 10),
         })
@@ -224,6 +233,12 @@ function PageTransactionsCreate() {
                       options={categoryOptions}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                       value={selectedCategoryIdx === null ? null : categoryOptions[selectedCategoryIdx]}
+                      formatOptionLabel={oneCategory => (
+                        <div className="">
+                          <img src={oneCategory.icon_url} height="30px" width="30px" alt="category-icon" />
+                          <span className="ml-2">{oneCategory.label}</span>
+                        </div>
+                      )}
                     />
                   </div>
                   <div className="form-group">

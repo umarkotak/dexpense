@@ -3,6 +3,17 @@ import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import utils from "../helper/Utils"
 import {Link} from "react-router-dom"
+import dexpenseApi from "../apis/DexpenseApi"
+
+var timeNow = new Date()
+var beginOfMonth, endOfMonth
+function RecalculateBeginAndEndOfMonth(timeObj) {
+  beginOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth(), 1)
+  endOfMonth = new Date(timeObj.getFullYear(), timeObj.getMonth() + 1, 1)
+  beginOfMonth.setHours(beginOfMonth.getHours() - (-new Date().getTimezoneOffset()/60))
+  endOfMonth.setHours(endOfMonth.getHours() - (-new Date().getTimezoneOffset()/60))
+}
+RecalculateBeginAndEndOfMonth(timeNow)
 
 function BlogPost(props) {
   var welcomePosts = [
@@ -88,6 +99,34 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  var queryParams = {
+    limit: 1000,
+    offset: 0,
+    min_date: utils.FormatDateInput(beginOfMonth),
+    max_date: utils.FormatDateInput(endOfMonth),
+    group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
+    "category": "all",
+    "group_wallet_id": 0,
+    "direction_type": "all"
+  }
+  const[grouppedTransactions, setGroupedTransactions] = useState({groupped_transactions: [{transactions: []}]})
+  async function fetchTransactionsDaily() {
+    try {
+      const response = await dexpenseApi.TransactionsListDaily(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), queryParams)
+      const status = response.status
+      const body = await response.json()
+      // console.log(body)
+
+      if (status === 200) {
+        setGroupedTransactions(body.data)
+      }
+    } catch (e) {}
+  }
+  useEffect(() => {
+    fetchTransactionsDaily()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return(
     <>
       <ul className="nav nav-pills">
@@ -137,7 +176,12 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
     if (activePosts.length !== 0) { return(<div></div>) }
 
     return(<div>
-
+      <div className="ml-2 text-bold">{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</div>
+      {grouppedTransactions.groupped_transactions.map((val, k) => (
+        <div className="col-12 mt-2" key={`1-${k}`}>
+          <GrouppedTransactionCard grouppedTransaction={val} />
+        </div>
+      ))}
     </div>)
   }
 
@@ -147,7 +191,7 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
         <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
           <h6 className="my-auto">
             {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
-            <small> {props.grouppedTransaction.month}.{props.grouppedTransaction.year}</small>
+            <small> {props.grouppedTransaction.month} . {props.grouppedTransaction.year}</small>
           </h6>
           <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
           <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
