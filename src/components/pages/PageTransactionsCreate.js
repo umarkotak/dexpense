@@ -94,6 +94,11 @@ function PageTransactionsCreate() {
 
       if (status === 200) {
         setCategoryOptions(body.data)
+        // setCategoryOptions(
+        //   [
+        //     {label:"Kategori", options: body.data}
+        //   ]
+        // )
         varCategoryOptions = body.data
       } else {
         alert.error(`There is some error: ${body.error}`)

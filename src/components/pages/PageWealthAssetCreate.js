@@ -1,9 +1,103 @@
-import React from "react"
-import {Link} from "react-router-dom"
+import React, {useState, useEffect} from "react"
+import {useHistory, Link} from "react-router-dom"
+import {useAlert} from 'react-alert'
+import Select from 'react-select'
 
+import dexpenseApi from "../apis/DexpenseApi"
+import utils from "../helper/Utils"
 import MiniTips from "../components/MiniTips"
 
 function PageWealthAssetCreate() {
+  const alert = useAlert()
+  const history = useHistory()
+  var now = new Date()
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
+
+  const [categories, setCategories] = useState([])
+  const [subCategories, setSubCategories] = useState([])
+  const [assetsCreateParams, setAssetsCreateParams] = useState({
+    "group_id": parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
+    "name": "",
+    "description": "",
+    "sub_description": "",
+    "amount": 0,
+    "amount_unit": "",
+    "quantity": 0,
+    "price": 0,
+    "category": "",
+    "sub_category": "",
+    "transaction_at": "",
+    "for_sale": "",
+    "sell_price": "",
+    "cod_only": "",
+    "cod_place": "",
+    "cod_place_description": "",
+  })
+  const [subCategoriesObj, setSubCategoriesObj] = useState(null)
+  function handleTransactionsParamsChanges(e) {
+    try {
+      const { name, value } = e.target
+      setAssetsCreateParams(assetsCreateParams => ({...assetsCreateParams, [name]: value}))
+    } catch (err) {
+      setAssetsCreateParams(assetsCreateParams => ({...assetsCreateParams, [e.name]: e.value}))
+      if (e.name === "category") {
+        setSubCategories(e.sub_categories_map)
+        setSubCategoriesObj(null)
+        if (e.sub_categories_map.length === 1) {
+          setSubCategoriesObj(e.sub_categories_map[0])
+        }
+        setAssetsCreateParams(assetsCreateParams => ({...assetsCreateParams, "sub_category": e.sub_categories_map[0].value}))
+      } else if (e.name === "sub_category") {
+        setSubCategoriesObj(e)
+      }
+    }
+  }
+
+  async function handleAssetSubmit() {
+    try {
+      var tempAssetsCreateParams = assetsCreateParams
+      var transactionAtUTC = utils.ConvertLocalTimeToUTC(tempAssetsCreateParams["transaction_at"])
+      tempAssetsCreateParams["transaction_at"] = utils.FormatDateInput(transactionAtUTC)
+
+      console.log(tempAssetsCreateParams)
+
+      // const response = await dexpenseApi.AssetsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempAssetsCreateParams)
+      // const status = response.status
+      // const body = await response.json()
+
+      // if (status === 200) {
+      //   alert.info("Add new asset success!")
+      //   history.push("/wealth_assets")
+      // } else {
+      //   alert.error(`There is some error: ${body.error}`)
+      // }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
+  async function fetchCategories() {
+    try {
+      const response = await dexpenseApi.AssetsCategoryList(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {}
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        setCategories(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  useEffect(() => {
+    fetchCategories()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div>
       <div className="content-wrapper" style={{
@@ -17,7 +111,8 @@ function PageWealthAssetCreate() {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/wealth_assets">Asset</Link></li>
+                  <li className="breadcrumb-item"><Link to="/wealth_assets">Asset</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/wealth_assets/create">New</Link></li>
                 </ol>
               </div>
             </div>
@@ -26,92 +121,83 @@ function PageWealthAssetCreate() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12 col-xl-9 mb-4">
-              <div className="row" id="profile_section">
-                <div className="col-12 px-3">
-                  <span className="d-flex flex-row align-items-center justify-content-between">
-                    <div className="d-flex flex-row align-items-center">
-                      <img src="/default_avatar.png" alt="bukukas kita Logo" className="img-circle" style={{width: "50px", height: "50px"}} />
-                      <span className="ml-2 d-flex flex-column">
-                        <small className="mb-0">Halo!</small>
-                        <b style={{marginTop: "-7px"}}>{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</b>
-                      </span>
-                    </div>
-
-                    <div className="d-flex flex-row align-items-center justify-content-end">
-                      <Link to="." className="btn img-circle btn-outline-primary mr-2">
-                        <i className="fa fa-share" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                      </Link>
-                      <Link to="." className="btn img-circle btn-outline-primary">
-                        <i className="fa fa-plus" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                      </Link>
-                    </div>
-                  </span>
-                </div>
-              </div>
-              <div className="row mt-2" id="total_section">
-                <div className="col-12 px-3 border-bottom">
-                  <small>Total Asset</small>
-                  <h4><b>Rp 2.000.000.000</b></h4>
-                </div>
-                <div className="col-12 px-3">
-                  <p className="text-center mb-1" style={{color: "#FF844B"}}>lihat asset</p>
-                </div>
-                <div className="col-12 px-3">
-                  <hr />
-                  <h4><b>Tipe Aset</b></h4>
-
-                  <div className="px-2">
-                    <div className="row flex-row flex-nowrap overflow-auto">
-                      {[1,2,3,4,5,6,7,8].map((val) => (
-                        <div className="col-5 col-md-3 mr-2 rounded-lg border border-primary" style={{backgroundColor: "#9FC9DD"}} key={val}>
-                          <div className="p-1">
-                            <b>Emas</b><br/>
-                            <small>Kamu punya</small><br/>
-                            <b>20 gram</b><br/>
-                            <small>Total</small><br/>
-                            <b>Rp. 20.000.000</b><br/>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+            <div className="col-12 col-lg-6 col-xl-9 mb-4">
+              <div className="card card-primary card-outline">
+                <div className="card-header">
+                  <div className="card-tools">
+                    <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
+                      <i className="fas fa-minus"></i>
+                    </button>
                   </div>
                 </div>
 
-                <div className="col-12 px-3 mt-4">
-                  <h4><b>Rekomendasi</b></h4>
-
-                  {[1,2,3,4,5,6,7,8].map((val) => (
-                    <div key={val}>
-                      <div className="d-flex flex-row align-items-center justify-content-between border-bottom mb-2 pb-1">
-                        <div className="d-flex flex-row align-items-center">
-                          <div>
-                            <Link to="." className="btn img-circle btn-outline-primary mr-2">
-                              <i className="fa fa-coins" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                            </Link>
-                          </div>
-                          <div>
-                            <b>Emas</b><br/>
-                            <small>Antam</small>
-                          </div>
+                <div className="card-body">
+                  <div className="form-group">
+                    <label>Nama</label> <small className="text-danger"><b>*</b></small>
+                    <input type="text" className="form-control form-control-sm" name="name"
+                      onChange={(e) => handleTransactionsParamsChanges(e)} value={assetsCreateParams["name"]}/>
+                  </div>
+                  <div className="form-group">
+                    <label>Deskripsi</label>
+                    <input type="text" className="form-control form-control-sm" name="description"
+                      onChange={(e) => handleTransactionsParamsChanges(e)} value={assetsCreateParams["description"]}/>
+                  </div>
+                  <div className="form-group" data-select2-id="29">
+                    <label>Kategori</label> <small className="text-danger"><b>*</b></small>
+                    <Select
+                      name="category"
+                      options={categories}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                      formatOptionLabel={oneCategory => (
+                        <div className="">
+                          <img src={oneCategory.icon_url} height="30px" width="30px" alt="category-icon" />
+                          <span className="ml-2">{oneCategory.label}</span>
                         </div>
-                        <div>
-                          <b>Rp. 9.000.000</b><br/>
-                          <small>tahun 2020</small>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                      )}
+                    />
+                  </div>
+                  <div className="form-group" data-select2-id="29">
+                    <label>Sub Kategori</label> <small className="text-danger"><b>*</b></small>
+                    <Select
+                      name="category"
+                      options={subCategories}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                      value={subCategoriesObj}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Catatan</label>
+                    <textarea className="form-control" rows="2" name="sub_description" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-12 col-xl-3">
-              <MiniTips />
+            <div className="col-12 col-lg-3 col-xl-3">
+              {/* <MiniTips /> */}
             </div>
           </div>
         </section>
       </div>
+
+      <Link
+        to="/wealth_assets/create"
+        className="bg-primary"
+        onClick={() => handleAssetSubmit()}
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"70px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center",
+          boxShadow:" 2px 2px 2px #999"
+        }}
+      >
+        <i className="fa fa-save my-float" style={{marginTop:"17px"}}></i>
+      </Link>
     </div>
   )
 }
