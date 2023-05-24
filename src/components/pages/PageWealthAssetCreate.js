@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import {useHistory, Link} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
+import NumberFormat from 'react-number-format'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
@@ -61,16 +62,16 @@ function PageWealthAssetCreate() {
 
       console.log(tempAssetsCreateParams)
 
-      // const response = await dexpenseApi.AssetsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempAssetsCreateParams)
-      // const status = response.status
-      // const body = await response.json()
+      const response = await dexpenseApi.AssetsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempAssetsCreateParams)
+      const status = response.status
+      const body = await response.json()
 
-      // if (status === 200) {
-      //   alert.info("Add new asset success!")
-      //   history.push("/wealth_assets")
-      // } else {
-      //   alert.error(`There is some error: ${body.error}`)
-      // }
+      if (status === 200) {
+        alert.info("Add new asset success!")
+        history.push("/wealth_assets")
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
     } catch (e) {
       alert.error(`There is some error: ${e.message}`)
     }
@@ -163,6 +164,17 @@ function PageWealthAssetCreate() {
                       options={subCategories}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                       value={subCategoriesObj}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Harga</label> <small className="text-danger"><b>*</b></small>
+                    <NumberFormat
+                      name="price"
+                      className="form-control form-control-sm"
+                      value={assetsCreateParams["price"]}
+                      thousandSeparator={true}
+                      prefix={'Rp.'}
+                      onValueChange={(values) => setAssetsCreateParams({...assetsCreateParams,"price": values.value})}
                     />
                   </div>
                   <div className="form-group">

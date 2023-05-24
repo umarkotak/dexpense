@@ -1,9 +1,39 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
+import {useAlert} from 'react-alert'
 
 import MiniTips from "../components/MiniTips"
+import dexpenseApi from "../apis/DexpenseApi"
 
 function PageWealthAsset() {
+  const alert = useAlert()
+
+  const [wealthAssets, setWealthAssets] = useState([])
+
+  async function handleAssetSubmit() {
+    try {
+      const response = await dexpenseApi.AssetsList(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {
+        group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
+      })
+      const status = response.status
+      const body = await response.json()
+
+      console.log(body)
+
+      if (status === 200) {
+        setWealthAssets(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  useEffect(() => {
+    handleAssetSubmit()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div>
       <div className="content-wrapper" style={{
@@ -80,8 +110,8 @@ function PageWealthAsset() {
                 <div className="col-12 px-3 mt-4">
                   <h4><b>Daftar Asset</b></h4>
 
-                  {[1,2,3,4,5,6,7,8].map((val) => (
-                    <div key={val}>
+                  {wealthAssets.map((oneWealth) => (
+                    <div key={oneWealth.id}>
                       <div className="d-flex flex-row align-items-center justify-content-between border-bottom mb-2 pb-1">
                         <div className="d-flex flex-row align-items-center">
                           <div>
@@ -90,8 +120,8 @@ function PageWealthAsset() {
                             </Link>
                           </div>
                           <div>
-                            <b>Emas</b><br/>
-                            <small>Antam</small>
+                            <b>{oneWealth.name}</b><br/>
+                            <small>{oneWealth.sub_category}</small>
                           </div>
                         </div>
                         <div>
