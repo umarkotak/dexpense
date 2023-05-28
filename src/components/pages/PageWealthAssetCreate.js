@@ -6,7 +6,7 @@ import NumberFormat from 'react-number-format'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
-import MiniTips from "../components/MiniTips"
+// import MiniTips from "../components/MiniTips"
 
 function PageWealthAssetCreate() {
   const alert = useAlert()
