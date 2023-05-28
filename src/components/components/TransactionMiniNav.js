@@ -5,7 +5,7 @@ function TransactionMiniNav(props) {
   var activeClass = "text-bold text-primary border-top border-left border-right"
 
   return(
-    <div className="rounded d-flex justify-content-between py-0 border-bottom" >
+    <div className="rounded d-flex justify-content-between py-0" style={{borderWidth: "1px 1px 2px 1px", borderStyle: "solid"}} >
       <Link to="/transactions/daily" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "daily" ? activeClass : "text-dark"}`}>Harian</Link>
       <Link to="/transactions/calendar" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "calendar" ? activeClass : "text-dark"}`}>Kalender</Link>
       <Link to="/transactions/monthly" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "monthly" ? activeClass : "text-dark"}`}>Bulanan</Link>

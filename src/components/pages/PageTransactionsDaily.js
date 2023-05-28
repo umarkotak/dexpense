@@ -117,10 +117,12 @@ function PageTransactionsDaily() {
 
   return (
     <div>
-      <div className="content-wrapper">
+      <div className="content-wrapper pt-2" style={{
+        backgroundColor: "#E3EDF2",
+      }}>
         <div className="content-header">
           <div className="container-fluid">
-            {/* <div className="row mb-2">
+            <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Transactions</h1>
               </div>
@@ -130,7 +132,7 @@ function PageTransactionsDaily() {
                   <li className="breadcrumb-item active"><Link to="/transactions/daily">Daily</Link></li>
                 </ol>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
 
@@ -149,9 +151,9 @@ function PageTransactionsDaily() {
                 </div>
                 <div className="col-12 mt-1">
                   <div className="d-flex justify-content-between">
-                    <small className="text-primary">{utils.FormatNumber(grouppedTransactions.income)}</small>
-                    <small className="text-danger">{utils.FormatNumber(grouppedTransactions.outcome)}</small>
-                    <small>{utils.FormatNumber(grouppedTransactions.total)}</small>
+                    <div className="bg-white rounded p-1 border"><small className="text-primary">{utils.FormatNumber(grouppedTransactions.income)}</small></div>
+                    <div className="bg-white rounded p-1 border"><small className="text-danger">{utils.FormatNumber(grouppedTransactions.outcome)}</small></div>
+                    <div className="bg-white rounded p-1 border"><small>{utils.FormatNumber(grouppedTransactions.total)}</small></div>
                   </div>
                 </div>
 
@@ -238,7 +240,7 @@ function PageTransactionsDaily() {
   function GrouppedTransactionCard(props) {
     return(
       <div className="bg-light">
-        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
+        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1 bg-white">
           <h6 className="my-auto">
             {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
             <small> {props.grouppedTransaction.month} . {props.grouppedTransaction.year}</small>
@@ -246,11 +248,14 @@ function PageTransactionsDaily() {
           <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
           <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
         </div>
-        <div className="px-1">
+        <div className="px-1 bg-white">
           {props.grouppedTransaction.transactions.map((val, k) => (
             <div className="border-bottom d-flex justify-content-between py-0" key={`2-${k}`}>
-              <small className="my-auto" style={{width: "25%"}}>{val.category}</small>
-              <small className="my-auto text-left" style={{width: "50%"}}>
+              <div className="flex align-items-center my-auto" style={{width: "35%"}}>
+                <img src={val.icon_url} alt={"category_icon"} style={{width: "24px", height: "24px"}} />
+                <small className="ml-1">{val.category}</small>
+              </div>
+              <small className="my-auto text-left" style={{width: "40%"}}>
                 {val.name}
                 <br />
                 {val.account.username} . {val.group_wallet.name}

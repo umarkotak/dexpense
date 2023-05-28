@@ -23,8 +23,8 @@ function PageWealthAssetCreate() {
     "sub_description": "",
     "amount": 0,
     "amount_unit": "",
-    "quantity": 0,
-    "price": 0,
+    "quantity": 1,
+    "price": null,
     "category": "",
     "sub_category": "",
     "transaction_at": "",
@@ -35,7 +35,7 @@ function PageWealthAssetCreate() {
     "cod_place_description": "",
   })
   const [subCategoriesObj, setSubCategoriesObj] = useState(null)
-  function handleTransactionsParamsChanges(e) {
+  function handleAssetsParamsChanges(e) {
     try {
       const { name, value } = e.target
       setAssetsCreateParams(assetsCreateParams => ({...assetsCreateParams, [name]: value}))
@@ -136,19 +136,19 @@ function PageWealthAssetCreate() {
                   <div className="form-group">
                     <label>Nama</label> <small className="text-danger"><b>*</b></small>
                     <input type="text" className="form-control form-control-sm" name="name"
-                      onChange={(e) => handleTransactionsParamsChanges(e)} value={assetsCreateParams["name"]}/>
+                      onChange={(e) => handleAssetsParamsChanges(e)} value={assetsCreateParams["name"]}/>
                   </div>
                   <div className="form-group">
                     <label>Deskripsi</label>
                     <input type="text" className="form-control form-control-sm" name="description"
-                      onChange={(e) => handleTransactionsParamsChanges(e)} value={assetsCreateParams["description"]}/>
+                      onChange={(e) => handleAssetsParamsChanges(e)} value={assetsCreateParams["description"]}/>
                   </div>
                   <div className="form-group" data-select2-id="29">
                     <label>Kategori</label> <small className="text-danger"><b>*</b></small>
                     <Select
                       name="category"
                       options={categories}
-                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                      onChange={(e) => handleAssetsParamsChanges(e)}
                       formatOptionLabel={oneCategory => (
                         <div className="">
                           <img src={oneCategory.icon_url} height="30px" width="30px" alt="category-icon" />
@@ -162,7 +162,7 @@ function PageWealthAssetCreate() {
                     <Select
                       name="category"
                       options={subCategories}
-                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                      onChange={(e) => handleAssetsParamsChanges(e)}
                       value={subCategoriesObj}
                     />
                   </div>
@@ -178,8 +178,14 @@ function PageWealthAssetCreate() {
                     />
                   </div>
                   <div className="form-group">
+                    <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
+                    <input type="number" className="form-control form-control-sm" name="quantity"
+                      onChange={(e) => handleAssetsParamsChanges(e)} value={assetsCreateParams["quantity"]}
+                    />
+                  </div>
+                  <div className="form-group">
                     <label>Catatan</label>
-                    <textarea className="form-control" rows="2" name="sub_description" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
+                    <textarea className="form-control" rows="2" name="sub_description" onChange={(e) => handleAssetsParamsChanges(e)}></textarea>
                   </div>
                 </div>
               </div>

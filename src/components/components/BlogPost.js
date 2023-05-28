@@ -188,7 +188,7 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
   function GrouppedTransactionCard(props) {
     return(
       <div className="bg-light">
-        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
+        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1 bg-white">
           <h6 className="my-auto">
             {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
             <small> {props.grouppedTransaction.month} . {props.grouppedTransaction.year}</small>
@@ -196,11 +196,14 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
           <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
           <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
         </div>
-        <div className="px-1">
+        <div className="px-1 bg-white">
           {props.grouppedTransaction.transactions.map((val, k) => (
             <div className="border-bottom d-flex justify-content-between py-0" key={`2-${k}`}>
-              <small className="my-auto" style={{width: "25%"}}>{val.category}</small>
-              <small className="my-auto text-left" style={{width: "50%"}}>
+              <div className="flex align-items-center my-auto" style={{width: "35%"}}>
+                <img src={val.icon_url} alt={"category_icon"} style={{width: "24px", height: "24px"}} />
+                <small className="ml-1">{val.category}</small>
+              </div>
+              <small className="my-auto text-left" style={{width: "40%"}}>
                 {val.name}
                 <br />
                 {val.account.username} . {val.group_wallet.name}

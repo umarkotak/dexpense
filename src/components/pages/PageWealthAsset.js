@@ -4,6 +4,7 @@ import {useAlert} from 'react-alert'
 
 import MiniTips from "../components/MiniTips"
 import dexpenseApi from "../apis/DexpenseApi"
+import utils from "../helper/Utils"
 
 function PageWealthAsset() {
   const alert = useAlert()
@@ -56,7 +57,7 @@ function PageWealthAsset() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12 col-xl-9 mb-4">
+            <div className="col-12 col-xl-6 mb-4">
               <div className="p-2 bg-white rounded shadow-sm">
                 <div className="row" id="profile_section">
                   <div className="col-12 px-3">
@@ -115,24 +116,27 @@ function PageWealthAsset() {
                       <div className="d-flex flex-row align-items-center justify-content-between border-bottom mb-2 pb-1">
                         <div className="d-flex flex-row align-items-center">
                           <div>
-                            <Link to="." className="btn img-circle btn-outline-primary mr-2">
+                            <Link to="#" className="btn img-circle btn-outline-primary mr-2">
                               <i className="fa fa-coins" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
                             </Link>
                           </div>
                           <div>
                             <b>{oneWealth.name}</b><br/>
-                            <small>{oneWealth.sub_category}</small>
+                            <small>{oneWealth.category} - {oneWealth.sub_category}</small>
                           </div>
                         </div>
-                        <div>
-                          <b>Rp. 9.000.000</b><br/>
-                          <small>tahun 2020</small>
+                        <div className="text-end">
+                          <b>{utils.FormatNumber(oneWealth.price)}</b><br/>
+                          <small>{utils.FormatDateTime(oneWealth.transaction_at)}</small>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+            </div>
+
+            <div className="col-12 col-xl-3 mb-4">
             </div>
 
             <div className="col-12 col-xl-3">
