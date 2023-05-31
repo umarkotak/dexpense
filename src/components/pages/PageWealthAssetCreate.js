@@ -167,7 +167,30 @@ function PageWealthAssetCreate() {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Harga</label> <small className="text-danger"><b>*</b></small>
+                    <label>Waktu Transaksi</label> <small className="text-danger"><b>*</b></small>
+                    <input type="datetime-local" className="form-control form-control-sm" name="transaction_at"
+                      onChange={(e) => handleAssetsParamsChanges(e)} defaultValue={now.toISOString().slice(0, -1)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
+                    <input type="number" className="form-control form-control-sm" name="quantity"
+                      onChange={(e) => handleAssetsParamsChanges(e)} value={assetsCreateParams["quantity"]}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Harga Rata - Rata</label> <small className="text-danger"><b>*</b></small>
+                    <NumberFormat
+                      name="average_price"
+                      className="form-control form-control-sm"
+                      value={assetsCreateParams["price"] / assetsCreateParams["quantity"]}
+                      thousandSeparator={true}
+                      prefix={'Rp.'}
+                      readOnly
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Harga Total</label> <small className="text-danger"><b>*</b></small>
                     <NumberFormat
                       name="price"
                       className="form-control form-control-sm"
@@ -175,12 +198,6 @@ function PageWealthAssetCreate() {
                       thousandSeparator={true}
                       prefix={'Rp.'}
                       onValueChange={(values) => setAssetsCreateParams({...assetsCreateParams,"price": values.value})}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
-                    <input type="number" className="form-control form-control-sm" name="quantity"
-                      onChange={(e) => handleAssetsParamsChanges(e)} value={assetsCreateParams["quantity"]}
                     />
                   </div>
                   <div className="form-group">

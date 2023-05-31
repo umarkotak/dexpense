@@ -120,14 +120,17 @@ function PageWealthAsset() {
                               <i className="fa fa-coins" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
                             </Link>
                           </div>
-                          <div>
+                          <div className="">
                             <b>{oneWealth.name}</b><br/>
-                            <small>{oneWealth.category} - {oneWealth.sub_category}</small>
+                            <small>{oneWealth.category} - {oneWealth.sub_category} x {oneWealth.quantity || 1}</small>
+                            <br/>
+                            <small>{utils.FormatDateTime(oneWealth.transaction_at)}</small>
                           </div>
                         </div>
                         <div className="text-end">
                           <b>{utils.FormatNumber(oneWealth.price)}</b><br/>
-                          <small>{utils.FormatDateTime(oneWealth.transaction_at)}</small>
+                          <span>Total Buyback: {utils.FormatNumber(oneWealth.total_buyback_price)}</span><br/>
+                          <span>Profit: <span className={`${oneWealth.profit > 0 ? "text-success" : "text-danger"}`}>{utils.FormatNumber(oneWealth.profit)}</span></span><br/>
                         </div>
                       </div>
                     </div>
