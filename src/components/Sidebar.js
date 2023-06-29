@@ -30,6 +30,7 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/budget")) { tempSideBarItems.budget = "active" }
     else if (window.location.pathname.startsWith("/investation")) { tempSideBarItems.investation = "active" }
     else if (window.location.pathname.startsWith("/calculator_budget")) { tempSideBarItems.calculator_budget = "active" }
+    else if (window.location.pathname.startsWith("/gold_price")) { tempSideBarItems.gold_price = "active" }
     else if (window.location.pathname.startsWith("/daily_ibadah")) { tempSideBarItems.daily_ibadah = "active" }
     else if (window.location.pathname.startsWith("/wealth_assets")) { tempSideBarItems.wealth_assets = "active" }
     return tempSideBarItems
@@ -98,11 +99,15 @@ function Sidebar() {
             display: (
               sideBarItems["investation"] ||
               sideBarItems["statistics"] ||
-              sideBarItems["calculator_budget"]
+              sideBarItems["calculator_budget"] ||
+              sideBarItems["gold_price"]
             ) ? "block" : "none"
           }}>
             <li className="nav-item">
               <Link to="/statistics" className={`nav-link ${sideBarItems["statistics"] || ""}`}><i className="nav-icon fas fa-chart-line"></i> <p>Statistik</p></Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/gold_price" className={`nav-link ${sideBarItems["gold_price"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Harga Emas</p></Link>
             </li>
             <li className="nav-item">
               <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Investasi</p></Link>
@@ -123,7 +128,10 @@ function Sidebar() {
           <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Kalkulator Investasi</p></Link>
+          <Link to="/gold_price" className={`nav-link ${sideBarItems["gold_price"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Harga Emas</p></Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/investation" className={`nav-link ${sideBarItems["investation"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Investasi</p></Link>
         </li>
         <li className="nav-item">
           <Link to="/calculator_budget" className={`nav-link ${sideBarItems["calculator_budget"] || ""}`}><i className="nav-icon fa fa-calculator"></i> <p>Kalkulator Budget</p></Link>

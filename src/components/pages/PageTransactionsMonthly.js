@@ -71,7 +71,9 @@ function PageTransactionsDaily() {
 
   return (
     <div>
-      <div className="content-wrapper">
+      <div className="content-wrapper pt-2" style={{
+        backgroundColor: "#E3EDF2",
+      }}>
         <div className="content-header">
           <div className="container-fluid">
             {/* <div className="row mb-2">
@@ -94,9 +96,9 @@ function PageTransactionsDaily() {
               <div className="row">
                 <div className="col-12"><TransactionMiniNav data={{active: "monthly"}} /></div>
                 <div className="col-12 mt-1">
-                  <div>
+                  <div className="text-dark p-1">
                     <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
-                    <button className="ml-1 btn btn-xs text-black" disabled>{`${timeNow.getFullYear()}`}</button>
+                    <b className="mx-1 p-1">{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</b>
                     <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
                   </div>
                 </div>

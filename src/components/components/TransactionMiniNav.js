@@ -2,14 +2,14 @@ import React from "react"
 import {Link} from "react-router-dom"
 
 function TransactionMiniNav(props) {
-  var activeClass = "text-bold text-primary border-top border-left border-right"
+  var activeClass = "bg-primary text-light"
 
   return(
-    <div className="rounded d-flex justify-content-between py-0" style={{borderWidth: "1px 1px 2px 1px", borderStyle: "solid"}} >
-      <Link to="/transactions/daily" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "daily" ? activeClass : "text-dark"}`}>Harian</Link>
-      <Link to="/transactions/calendar" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "calendar" ? activeClass : "text-dark"}`}>Kalender</Link>
-      <Link to="/transactions/monthly" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "monthly" ? activeClass : "text-dark"}`}>Bulanan</Link>
-      <Link to="/transactions/total" className={`pb-0 pt-1 px-1 rounded ${props.data.active === "total" ? activeClass : "text-dark"}`}>Summary</Link>
+    <div className="rounded-pill d-flex justify-content-between px-3 py-1" style={{borderWidth: "1px 1px 2px 1px", borderStyle: "solid", backgroundColor: "white"}} >
+      <Link to="/transactions/daily" className={`py-1 px-2 rounded-pill ${props.data.active === "daily" ? activeClass : ""}`}>Harian</Link>
+      <Link to="/transactions/calendar" className={`py-1 px-2 rounded-pill ${props.data.active === "calendar" ? activeClass : ""}`}>Kalender</Link>
+      <Link to="/transactions/monthly" className={`py-1 px-2 rounded-pill ${props.data.active === "monthly" ? activeClass : ""}`}>Bulanan</Link>
+      <Link to="/transactions/total" className={`py-1 px-2 rounded-pill ${props.data.active === "total" ? activeClass : ""}`}>Summary</Link>
     </div>
   )
 }

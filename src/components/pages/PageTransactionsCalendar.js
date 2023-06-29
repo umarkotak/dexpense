@@ -4,6 +4,7 @@ import {useAlert} from 'react-alert'
 
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
@@ -99,7 +100,9 @@ function PageTransactionsDaily() {
 
   return (
     <div>
-      <div className="content-wrapper">
+      <div className="content-wrapper pt-2" style={{
+        backgroundColor: "#E3EDF2",
+      }}>
         <div className="content-header">
           <div className="container-fluid">
             {/* <div className="row mb-2">
@@ -122,9 +125,9 @@ function PageTransactionsDaily() {
               <div className="row">
                 <div className="col-12"><TransactionMiniNav data={{active: "calendar"}} /></div>
                 <div className="col-12 mt-1">
-                  <div>
+                  <div className="text-dark p-1">
                     <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
-                    <button className="ml-1 btn btn-xs text-black" disabled>{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</button>
+                    <b className="mx-1 p-1">{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</b>
                     <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
                   </div>
                 </div>
@@ -137,19 +140,22 @@ function PageTransactionsDaily() {
                 </div>
 
                 <div className="col-12 mb-4">
-                  <FullCalendar
-                    plugins={[ dayGridPlugin ]}
-                    headerToolbar={{
-                      left: '', center: '', right: ''
-                    }}
-                    initialEvents={formattedFullCalendarEvents}
-                    events={formattedFullCalendarEvents}
-                    eventContent={renderEventContent}
-                    initialView="dayGridMonth"
-                    initialDate={timeNow}
-                    ref={calendarRef}
-                    eventClick={(e) => {console.log(e)}}
-                  />
+                  <div className="mt-1" style={{backgroundColor: "white"}}>
+                    <FullCalendar
+                      plugins={[ dayGridPlugin,bootstrap5Plugin ]}
+                      themeSystem='bootstrap5'
+                      headerToolbar={{
+                        left: '', center: '', right: ''
+                      }}
+                      initialEvents={formattedFullCalendarEvents}
+                      events={formattedFullCalendarEvents}
+                      eventContent={renderEventContent}
+                      initialView="dayGridMonth"
+                      initialDate={timeNow}
+                      ref={calendarRef}
+                      eventClick={(e) => {console.log(e)}}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

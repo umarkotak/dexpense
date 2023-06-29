@@ -122,17 +122,17 @@ function PageTransactionsDaily() {
       }}>
         <div className="content-header">
           <div className="container-fluid">
-            <div className="row mb-2">
+            {/* <div className="row mb-2">
               <div className="col-sm-6">
-                <h1>Transactions</h1>
+                <h1>Transaksi</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Transaction</Link></li>
-                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Daily</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Transaksi</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/daily">Harian</Link></li>
                 </ol>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -142,9 +142,9 @@ function PageTransactionsDaily() {
               <div className="row">
                 <div className="col-12"><TransactionMiniNav data={{active: "daily"}} /></div>
                 <div className="col-12 mt-1">
-                  <div>
+                  <div className="text-dark p-1">
                     <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
-                    <button className="ml-1 btn btn-xs text-black" disabled>{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</button>
+                    <b className="mx-1 p-1">{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</b>
                     <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
                     <button className="btn btn-xs btn-primary float-right" data-toggle="modal" data-target="#modal-default"><i className="fa fa-bars"></i></button>
                   </div>

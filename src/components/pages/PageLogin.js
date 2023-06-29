@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {useHistory, Link} from "react-router-dom"
+import {useHistory} from "react-router-dom"
 import {useAlert} from 'react-alert'
 
 import dexpenseApi from "../apis/DexpenseApi"
@@ -44,20 +44,20 @@ function PageLogin() {
         <div className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">
-              <div className="col-sm-6">
+              {/* <div className="col-sm-6">
                 <h1>Login</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item active"><Link to="/login">Login</Link></li>
                 </ol>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
 
         <section className="content">
-          <div className="card card-outline card-primary">
+          <div className="card card-outline card-primary mx-auto" style={{"max-width": "480px", "margin-top": "100px"}}>
             <div className="card-header text-center">
               <a href="/#" className="h1"><b>BUKUKAS</b>KITA</a>
             </div>

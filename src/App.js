@@ -38,6 +38,7 @@ import PageWealthAsset from "./components/pages/PageWealthAsset"
 import PageWealthAssetCreate from "./components/pages/PageWealthAssetCreate"
 import PageCalculatorBudget from "./components/pages/PageCalculatorBudget"
 import PageIconList from "./components/pages/PageIconList"
+import PageGoldPrice from "./components/pages/PageGoldPrice"
 
 const options = {
   position: positions.TOP_RIGHT,
@@ -107,6 +108,7 @@ function App() {
               <Route path="/wealth_assets" exact component={PageWealthAsset} />
               <Route path="/wealth_assets/create" exact component={PageWealthAssetCreate} />
               <Route path="/calculator_budget" exact component={PageCalculatorBudget} />
+              <Route path="/gold_price" exact component={PageGoldPrice} />
               <Route path="/icon_list" exact component={PageIconList} />
               <Route path="/" component={PageNotFound} />
             </Switch>
