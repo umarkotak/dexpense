@@ -82,14 +82,18 @@ function PageWealthAsset() {
                   </div>
                   <div className="col-12 px-3">
                     <small>Total Asset</small>
-                    <h4><b>Rp 2.000.000.000</b></h4>
+                    <h5><b>Rp 2.000.000.000</b></h5>
+                  </div>
+                  <div className="col-12 px-3">
+                    <small>Zakat maal emas</small>
+                    <h5><b>Rp 2.000.000.000</b></h5>
                   </div>
                 </div>
               </div>
 
               <div className="row mt-2" id="total_section">
                 <div className="col-12 px-3">
-                  <h4><b>Summary</b></h4>
+                  <h4><b>Rangkuman</b></h4>
 
                   <div className="px-2">
                     <div className="row flex-row flex-nowrap overflow-auto">
@@ -116,15 +120,14 @@ function PageWealthAsset() {
                       <div className="d-flex flex-row align-items-center justify-content-between border-bottom mb-2 pb-1">
                         <div className="d-flex flex-row align-items-center">
                           <div>
-                            <Link to="#" className="btn img-circle btn-outline-primary mr-2">
-                              <i className="fa fa-coins" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                            </Link>
+                            <img src="https://static.moneylover.me/img/icon/icon_95.png" alt="ico" style={{width:"48px", height:"48px"}}></img>
                           </div>
-                          <div className="">
-                            <b>{oneWealth.name}</b><br/>
-                            <small>{oneWealth.category} - {oneWealth.sub_category} x {oneWealth.quantity || 1}</small>
+                          <div className="ml-2">
+                            <b>{oneWealth.sub_category}</b> x {oneWealth.quantity || 1}
                             <br/>
                             <small>{utils.FormatDateTime(oneWealth.transaction_at)}</small>
+                            <br/>
+                            {/* <small>sudah 1 tahun mengendap</small> */}
                           </div>
                         </div>
                         <div className="text-end">
