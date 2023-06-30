@@ -17,6 +17,14 @@ function PageGoldPrice() {
     price_source: '',
     prices: {},
   })
+  const [antamGoldPrices, setAntamGoldPrices] = useState({
+    buyback_price: 0,
+    direction: 'down',
+    price_change: 0,
+    price_date: '',
+    price_source: '',
+    prices: {},
+  })
 
   async function fetchGoldPrices() {
     try {
@@ -35,8 +43,26 @@ function PageGoldPrice() {
     }
   }
 
+  async function fetchAntamGoldPrices() {
+    try {
+      const response = await dexpenseApi.AntamGoldPrices(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {})
+      const status = response.status
+      const body = await response.json()
+      console.log(body)
+
+      if (status === 200) {
+        setAntamGoldPrices(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
   useEffect(() => {
     fetchGoldPrices()
+    fetchAntamGoldPrices()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -94,7 +120,7 @@ function PageGoldPrice() {
                           <tr>
                             <td className="p-1 align-middle"><b>Buyback</b></td>
                             <td className="p-1"><b>{utils.FormatNumber(goldPrices.buyback_price)}</b></td>
-                            <td className="p-1"><b>TBD</b></td>
+                            <td className="p-1"><b>{utils.FormatNumber(antamGoldPrices.buyback_price)}</b></td>
                           </tr>
                           {Object.keys(goldPrices.prices).map((key) => (
                             <tr>
@@ -104,8 +130,8 @@ function PageGoldPrice() {
                                 <small className="ml-2">{utils.FormatNumber(Math.ceil(goldPrices.prices[key].price / goldPrices.prices[key].size))} / gr</small>
                               </div></td>
                               <td className="p-1"><div className="d-flex flex-column">
-                                <b>{utils.FormatNumber(goldPrices.prices[key].price)}</b>
-                                <small className="ml-2">{utils.FormatNumber(Math.ceil(goldPrices.prices[key].price / goldPrices.prices[key].size))} / gr</small>
+                                <b>{utils.FormatNumber(antamGoldPrices.prices[key]?.price)}</b>
+                                <small className="ml-2">{utils.FormatNumber(Math.ceil(antamGoldPrices.prices[key]?.price / antamGoldPrices.prices[key]?.size))} / gr</small>
                               </div></td>
                             </tr>
                           ))}

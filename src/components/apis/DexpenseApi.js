@@ -486,6 +486,19 @@ class DexpenseApi {
     return response
   }
 
+  async AntamGoldPrices(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/antam/gold/prices`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+      },
+    })
+    return response
+  }
+
   async AssetsCategoryList(token, params) {
     var uri = new URL(`${this.DexpenseApiHost}/api/v1/wealth_assets/categories`)
     uri.search = new URLSearchParams(params).toString()
