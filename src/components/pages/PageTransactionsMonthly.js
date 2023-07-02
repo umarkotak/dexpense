@@ -98,7 +98,7 @@ function PageTransactionsDaily() {
                 <div className="col-12 mt-1">
                   <div className="text-dark p-1">
                     <button className="btn btn-xs btn-primary" onClick={()=>prevMonth()}><i className="fa fa-arrow-circle-left"></i></button>
-                    <b className="mx-1 p-1">{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</b>
+                    <b className="mx-1 p-1">{`${timeNow.getFullYear()}`}</b>
                     <button className="btn btn-xs btn-primary ml-1" onClick={()=>nextMonth()}><i className="fa fa-arrow-circle-right"></i></button>
                   </div>
                 </div>

@@ -64,6 +64,7 @@ class Utils {
   }
 
   FormatNumber(number) {
+    number = number ? number : 0
     var formatter = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR'

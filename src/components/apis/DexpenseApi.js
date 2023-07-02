@@ -526,6 +526,34 @@ class DexpenseApi {
     return response
   }
 
+  async AssetsDashboard(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/wealth_assets/dashboard`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
+
+  async AssetsGroupped(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/wealth_assets/groupped`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
+
   async AssetsCreate(token, params) {
     var uri = new URL(`${this.DexpenseApiHost}/api/v1/wealth_assets`)
     uri.search = new URLSearchParams(params).toString()

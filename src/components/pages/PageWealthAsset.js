@@ -10,8 +10,10 @@ function PageWealthAsset() {
   const alert = useAlert()
 
   const [wealthAssets, setWealthAssets] = useState([])
+  const [wealthAssetDashboard, setWealthAssetDashboard] = useState({})
+  const [wealthAssetGroupped, setWealthAssetGroupped] = useState([])
 
-  async function handleAssetSubmit() {
+  async function handleGetAssetList() {
     try {
       const response = await dexpenseApi.AssetsList(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {
         group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
@@ -30,8 +32,51 @@ function PageWealthAsset() {
       alert.error(`There is some error: ${e.message}`)
     }
   }
+
+  async function handleGetAssetDashboard() {
+    try {
+      const response = await dexpenseApi.AssetsDashboard(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {
+        group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
+      })
+      const status = response.status
+      const body = await response.json()
+
+      console.log(body)
+
+      if (status === 200) {
+        setWealthAssetDashboard(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
+  async function handleGetAssetGroupped() {
+    try {
+      const response = await dexpenseApi.AssetsGroupped(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {
+        group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
+      })
+      const status = response.status
+      const body = await response.json()
+
+      console.log(body)
+
+      if (status === 200) {
+        setWealthAssetGroupped(body.data)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+
   useEffect(() => {
-    handleAssetSubmit()
+    handleGetAssetDashboard()
+    handleGetAssetList()
+    handleGetAssetGroupped()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -41,7 +86,7 @@ function PageWealthAsset() {
         backgroundColor: "#E3EDF2",
       }}>
         <div className="content-header">
-          <div className="container-fluid">
+          {/* <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Asset</h1>
@@ -52,12 +97,12 @@ function PageWealthAsset() {
                 </ol>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <section className="content">
           <div className="row">
-            <div className="col-12 col-xl-6 mb-4">
+            <div className="col-12 col-xl-5 mb-4">
               <div className="p-2 bg-white rounded shadow-sm">
                 <div className="row" id="profile_section">
                   <div className="col-12 px-3">
@@ -82,11 +127,11 @@ function PageWealthAsset() {
                   </div>
                   <div className="col-12 px-3">
                     <small>Total Asset</small>
-                    <h5><b>Rp 2.000.000.000</b></h5>
+                    <h5><b>{utils.FormatNumber(wealthAssetDashboard.total_asset)}</b></h5>
                   </div>
                   <div className="col-12 px-3">
                     <small>Zakat maal emas</small>
-                    <h5><b>Rp 2.000.000.000</b></h5>
+                    <h5><b>{utils.FormatNumber(wealthAssetDashboard.zakat_maal)}</b></h5>
                   </div>
                 </div>
               </div>
@@ -95,24 +140,24 @@ function PageWealthAsset() {
                 <div className="col-12 px-3">
                   <h4><b>Rangkuman</b></h4>
 
-                  <div className="px-2">
-                    <div className="row flex-row flex-nowrap overflow-auto">
-                      {[1,2,3,4,5,6,7,8].map((val) => (
-                        <div className="col-5 col-md-3 mr-2 rounded-lg border border-primary" style={{backgroundColor: "#9FC9DD"}} key={val}>
+                  <>
+                    <div className="d-flex flex-row flex-nowrap overflow-auto">
+                      {wealthAssetGroupped.map((oneAssetGroupped) => (
+                        <div className="mr-2 px-2 rounded-lg border border-primary" style={{backgroundColor: "#9FC9DD"}} key={wealthAssetGroupped.category}>
                           <div className="p-1">
-                            <b>Emas</b><br/>
+                            <b>{oneAssetGroupped.title}</b><br/>
                             <small>Kamu punya</small><br/>
-                            <b>20 gram</b><br/>
+                            <b>{oneAssetGroupped.total_amount} {oneAssetGroupped.amount_unit}</b><br/>
                             <small>Total</small><br/>
-                            <b>Rp. 20.000.000</b><br/>
+                            <b>{utils.FormatNumber(oneAssetGroupped.total_price)}</b><br/>
                           </div>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </>
                 </div>
 
-                <div className="col-12 px-3 mt-4">
+                <div className="col-12 px-3 mt-2">
                   <h4><b>Daftar Asset</b></h4>
 
                   {wealthAssets.map((oneWealth) => (
@@ -120,21 +165,26 @@ function PageWealthAsset() {
                       <div className="d-flex flex-row align-items-center justify-content-between border-bottom mb-2 pb-1">
                         <div className="d-flex flex-row align-items-center">
                           <div>
-                            <img src="https://static.moneylover.me/img/icon/icon_95.png" alt="ico" style={{width:"48px", height:"48px"}}></img>
+                            <img src={oneWealth.icon_url} alt="ico" style={{width:"48px", height:"48px"}}></img>
                           </div>
                           <div className="ml-2">
-                            <b>{oneWealth.sub_category}</b> x {oneWealth.quantity || 1}
+                            <b>{oneWealth.title}</b> x {oneWealth.quantity || 1}
                             <br/>
                             <small>{utils.FormatDateTime(oneWealth.transaction_at)}</small>
                             <br/>
                             {/* <small>sudah 1 tahun mengendap</small> */}
                           </div>
                         </div>
-                        <div className="text-end">
-                          <b>{utils.FormatNumber(oneWealth.price)}</b><br/>
-                          <span>Total Buyback: {utils.FormatNumber(oneWealth.total_buyback_price)}</span><br/>
-                          <span>Profit: <span className={`${oneWealth.profit > 0 ? "text-success" : "text-danger"}`}>{utils.FormatNumber(oneWealth.profit)}</span></span><br/>
-                        </div>
+                          <div className="text-end">
+                            <b>{utils.FormatNumber(oneWealth.price)}</b><br/>
+
+                            {oneWealth.category === "gold" ?
+                              <div>
+                                <span>Buyback: {utils.FormatNumber(oneWealth.total_buyback_price)}</span><br/>
+                                <span>Profit: <span className={`${oneWealth.profit > 0 ? "text-success" : "text-danger"}`}>{utils.FormatNumber(oneWealth.profit)}</span></span><br/>
+                              </div>
+                            : null}
+                          </div>
                       </div>
                     </div>
                   ))}
@@ -142,7 +192,7 @@ function PageWealthAsset() {
               </div>
             </div>
 
-            <div className="col-12 col-xl-3 mb-4">
+            <div className="col-12 col-xl-4 mb-4">
             </div>
 
             <div className="col-12 col-xl-3">
