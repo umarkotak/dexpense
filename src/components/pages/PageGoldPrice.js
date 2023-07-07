@@ -75,7 +75,7 @@ function PageGoldPrice() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1>Harga Emas</h1>
+                <h1>Harga Emas Antam</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
@@ -102,41 +102,62 @@ function PageGoldPrice() {
                     </div> */}
 
                     <div className="card-body">
-                      <table className="table table-bordered mt-2">
-                        <thead>
-                          <tr>
-                            <th className="p-1 align-middle">Jenis</th>
-                            <th className="p-1 align-middle">
-                              <div>HF Gold</div>
-                              <small><a href={goldPrices.price_source} target="_blank" rel="noreferrer">link</a></small>
-                            </th>
-                            <th className="p-1 align-middle">
-                              <div>Antam</div>
-                              <small><a href="https://www.logammulia.com/id/harga-emas-hari-ini" target="_blank" rel="noreferrer">link</a></small>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="p-1 align-middle"><b>Buyback</b></td>
-                            <td className="p-1"><b>{utils.FormatNumber(goldPrices.buyback_price)}</b></td>
-                            <td className="p-1"><b>{utils.FormatNumber(antamGoldPrices.buyback_price)}</b></td>
-                          </tr>
-                          {Object.keys(goldPrices.prices).map((key) => (
+                      <div className="table-responsive">
+                        <table className="table table-bordered mt-2">
+                          <thead>
                             <tr>
-                              <td className="p-1">{goldPrices.prices[key].size} gram</td>
-                              <td className="p-1"><div className="d-flex flex-column">
-                                <b>{utils.FormatNumber(goldPrices.prices[key].price)}</b>
-                                <small className="ml-2">{utils.FormatNumber(Math.ceil(goldPrices.prices[key].price / goldPrices.prices[key].size))} / gr</small>
-                              </div></td>
-                              <td className="p-1"><div className="d-flex flex-column">
-                                <b>{utils.FormatNumber(antamGoldPrices.prices[key]?.price)}</b>
-                                <small className="ml-2">{utils.FormatNumber(Math.ceil(antamGoldPrices.prices[key]?.price / antamGoldPrices.prices[key]?.size))} / gr</small>
-                              </div></td>
+                              <th className="p-1 align-middle">Daftar Harga</th>
+                              <th className="p-1 align-middle">
+                                <div>Antam</div>
+                                <small><a href="https://www.logammulia.com/id/harga-emas-hari-ini" target="_blank" rel="noreferrer">link</a></small>
+                              </th>
+                              <th className="p-1 align-middle">
+                                <div>HF Gold</div>
+                                <small><a href={goldPrices.price_source} target="_blank" rel="noreferrer">link</a></small>
+                              </th>
+                              <th className="p-1 align-middle">
+                                <div>Bukukas<br/>kita</div>
+                              </th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="p-1 align-middle"><b>Buyback</b></td>
+                              <td className="p-1"><b>{utils.FormatNumber(goldPrices.buyback_price)}</b></td>
+                              <td className="p-1"><b>{utils.FormatNumber(antamGoldPrices.buyback_price)}</b></td>
+                              <td className="p-1"><b>TBA</b></td>
+                            </tr>
+                            {Object.keys(goldPrices.prices).map((key) => (
+                              <tr>
+                                <td className="p-1">{goldPrices.prices[key].size} gram</td>
+                                <td className="p-1"><div className="d-flex flex-column">
+                                  <b>{utils.FormatNumber(antamGoldPrices.prices[key]?.price)}</b>
+                                  <small className="ml-2">{utils.FormatNumber(Math.ceil(antamGoldPrices.prices[key]?.price / antamGoldPrices.prices[key]?.size))} / gr</small>
+                                </div></td>
+                                <td className="p-1"><div className="d-flex flex-column">
+                                  <b>{utils.FormatNumber(goldPrices.prices[key].price)}</b>
+                                  <small className="ml-2">{utils.FormatNumber(Math.ceil(goldPrices.prices[key].price / goldPrices.prices[key].size))} / gr</small>
+                                  <small className="ml-2 text-danger">diff {utils.FormatNumber(Math.ceil(goldPrices.prices[key].price - antamGoldPrices.prices[key]?.price))}</small>
+                                </div></td>
+                                <td className="p-1"><div className="d-flex flex-column">
+                                  <b>{utils.FormatNumber(
+                                    antamGoldPrices.prices[key]?.price + Math.ceil((goldPrices.prices[key].price - antamGoldPrices.prices[key]?.price)/2) + 3000
+                                  )}</b>
+                                  <small className="ml-2">{utils.FormatNumber(
+                                    Math.ceil((antamGoldPrices.prices[key]?.price + Math.ceil((goldPrices.prices[key].price - antamGoldPrices.prices[key]?.price)/2)) / antamGoldPrices.prices[key]?.size) + 3000
+                                  )} / gr</small>
+                                  <small className="ml-2 text-success">diff {utils.FormatNumber(
+                                    (antamGoldPrices.prices[key]?.price + Math.ceil((goldPrices.prices[key].price - antamGoldPrices.prices[key]?.price)/2)) + 3000 - antamGoldPrices.prices[key]?.price
+                                  )}</small>
+                                </div></td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <br/>
+                      <b>Notes:</b> keuntungan beli emas di bukukaskita: harga bersaing, barang asli, cod sesuai syariat, dan gratis ongkir untuk sekitar depok.
                     </div>
                   </div>
                 </div>
