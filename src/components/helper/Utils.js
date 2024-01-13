@@ -109,6 +109,7 @@ class Utils {
   GetArrOptsIndexByValue(arrOptsSource, value) {
     var selectedIdx
     arrOptsSource.forEach((val, index) => {
+      // eslint-disable-next-line
       if (val.value == value) {
         selectedIdx = index
         return
