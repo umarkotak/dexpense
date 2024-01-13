@@ -63,6 +63,10 @@ class Utils {
     return `${timeObj.getFullYear()}-${timeObj.getMonth()+1}-${timeObj.getDate()}T${timeObj.getHours()}:${timeObj.getMinutes()}`
   }
 
+  FormatDate(timeObj) {
+    return `${timeObj.getFullYear()}-${timeObj.getMonth()+1}-${timeObj.getDate()}`
+  }
+
   FormatNumber(number) {
     number = number ? number : 0
     var formatter = new Intl.NumberFormat('id-ID', {
@@ -105,7 +109,7 @@ class Utils {
   GetArrOptsIndexByValue(arrOptsSource, value) {
     var selectedIdx
     arrOptsSource.forEach((val, index) => {
-      if (val.value === value) {
+      if (val.value == value) {
         selectedIdx = index
         return
       }
@@ -152,7 +156,38 @@ class Utils {
       suffix = "T"
     }
 
-    return `${minus?"-":""}${newNumber.toFixed(1)} ${suffix}`
+    return `${minus?"-":""}${newNumber.toFixed(1)}${suffix}`
+  }
+
+  CompactNumberRound(number) {
+    if (!number) { number = 0 }
+
+    var minus = false
+    if (number < 0) {
+      minus = true
+      number = number * -1
+    }
+
+    var newNumber = 0
+    var suffix
+    if (number < 1000) {
+      newNumber = number
+      suffix = ""
+    } else if (number < 1000000) {
+      newNumber = number / 1000
+      suffix = "Rb"
+    } else if (number < 1000000000) {
+      newNumber = number / 1000000
+      suffix = "Jt"
+    } else if (number < 1000000000000) {
+      newNumber = number / 1000000000
+      suffix = "M"
+    } else {
+      newNumber = number / 1000000000000
+      suffix = "T"
+    }
+
+    return `${minus?"-":""}${newNumber.toFixed(0)}${suffix}`
   }
 }
 

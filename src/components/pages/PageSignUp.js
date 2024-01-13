@@ -57,14 +57,14 @@ function PageSignUp() {
           </div>
         </div>
 
-        <section className="content">
-          <div className="card card-outline card-primary">
+        <section className="content flex justify-center">
+          <div className="card card-outline card-primary w-full max-w-md">
             <div className="card-header text-center">
               <a href="/#" className="h1"><b>BUKUKAS</b>KITA</a>
             </div>
 
             <div className="card-body">
-              <p className="login-box-msg">Register a new membership</p>
+              <p className="login-box-msg">Daftar sebagai anggota baru! Gratis!</p>
 
               <div className="input-group mb-3">
                 <input

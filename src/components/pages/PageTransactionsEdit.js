@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import {useHistory, Link, useParams} from "react-router-dom"
 import {useAlert} from 'react-alert'
 import Select from 'react-select'
+import NumberFormat from 'react-number-format'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
@@ -138,6 +139,46 @@ function PageTransactionsEdit() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const [specificBudgetList, setSpecificBudgetList] = useState([])
+  async function fetchSpecificBudgetList() {
+    try {
+      const response = await dexpenseApi.MonthlyBudgetIndex(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {
+          group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
+          mode: "specific"
+        }
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        var budgetSelect = [{
+          name: "monthly_budget_id",
+          value: null,
+          label: "Select...",
+        }]
+        if (body.data) {
+          body.data.forEach ((v) => {
+            budgetSelect.push({
+              name: "monthly_budget_id",
+              value: v.id,
+              label: v.name,
+            })
+          })
+        }
+        setSpecificBudgetList(budgetSelect)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  useEffect(() => {
+    fetchSpecificBudgetList()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div>
       <div className="content-wrapper">
@@ -190,6 +231,15 @@ function PageTransactionsEdit() {
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
                   </div>
+                  <div className="form-group" data-select2-id="29">
+                    <label>Untuk Budget?</label>
+                    <Select
+                      name="monthly_budget_id"
+                      options={specificBudgetList}
+                      value={specificBudgetList[utils.GetArrOptsIndexByValue(specificBudgetList, transactionsEditParams.monthly_budget_id)]}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                    />
+                  </div>
                   <div className="form-group">
                     <label>Wallet</label> <small className="text-danger"><b>*</b></small>
                     <Select
@@ -201,7 +251,15 @@ function PageTransactionsEdit() {
                   </div>
                   <div className="form-group">
                     <label>Jumlah</label> <small className="text-danger"><b>*</b></small>
-                    <input type="number" className="form-control form-control-sm" name="amount" onChange={(e) => handleTransactionsParamsChanges(e)} value={transactionsEditParams.amount} />
+                    {/* <input type="number" className="form-control form-control-sm" name="amount" onChange={(e) => handleTransactionsParamsChanges(e)} value={transactionsEditParams.amount} /> */}
+                    <NumberFormat
+                      name="amount"
+                      className="form-control form-control-sm"
+                      value={transactionsEditParams.amount}
+                      thousandSeparator={true}
+                      prefix={'Rp.'}
+                      onValueChange={(values) => setTransactionsEditParams({...transactionsEditParams,"amount": values.value})}
+                    />
                   </div>
                   <div className="form-group">
                     <label>Waktu Transaksi</label> <small className="text-danger"><b>*</b></small>

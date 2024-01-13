@@ -294,7 +294,7 @@ function PageStatistics() {
 
             <div className="col-12 mt-1">
               <div className="border border-primary rounded p-1">
-                <h4><span className="badge badge-pill badge-primary"><i className="fa fa-chart-line" /> Whealth Log</span></h4>
+                <h4><span className="badge badge-pill badge-primary"><i className="fa fa-chart-line" /> Wealth Log</span></h4>
                 <ResponsiveContainer width={"100%"} height={300}>
                   <ComposedChart
                     data={statisticsData}

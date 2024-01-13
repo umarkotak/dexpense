@@ -95,7 +95,7 @@ function App() {
               <Route path="/transactions/:id/edit" exact component={PageTransactionsEdit} />
               <Route path="/budgets" exact component={PageBudgetsIndex} />
               <Route path="/budgets/create" exact component={PageBudgetsCreate} />
-              <Route path="/budgets/:category/edit" exact component={PageBudgetsEdit} />
+              <Route path="/budgets/:id/edit" exact component={PageBudgetsEdit} />
               <Route path="/groups" exact component={PageGroups} />
               <Route path="/groups/create" exact component={PageGroupsCreate} />
               <Route path="/groups/:id" exact component={PageGroupsDetail} />

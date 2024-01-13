@@ -9,6 +9,18 @@ import dexpenseApi from "../apis/DexpenseApi"
 function PageBudgetsCreate() {
   const alert = useAlert()
   const history = useHistory()
+  const monthlyBudgetModes = [
+    {
+      "label": "Generic",
+      "name": "mode",
+      "value": "generic",
+    },
+    {
+      "label": "Spesifik",
+      "name": "mode",
+      "value": "specific",
+    }
+  ]
 
   const [monthlyBudgetParams, setMonthlyBudgetParams] = useState({
     "group_id": parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
@@ -88,34 +100,66 @@ function PageBudgetsCreate() {
         <section className="content">
           <div className="row">
             <div className="col-12">
-              <div className="card card-primary card-outline">
-                <div className="card-header">
-                  <div className="card-tools">
-                    <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
-                      <i className="fas fa-minus"></i>
-                    </button>
+              <div className="flex justify-center">
+                <div className="card card-primary card-outline w-full max-w-md">
+                  <div className="card-header">
+                    <div className="card-tools">
+                      <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
+                        <i className="fas fa-minus"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="card-body">
-                  <div className="form-group" data-select2-id="29">
-                    <label>Kategori</label> <small className="text-danger"><b>*</b></small>
-                    <Select
-                      name="category"
-                      options={categoryOptions}
-                      onChange={(e) => handleMonthlyBudgetParamsChanges(e)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Jumlah Budget</label> <small className="text-danger"><b>*</b></small>
-                    {/* <input type="number" className="form-control form-control-sm" name="total_budget" onChange={(e) => handleMonthlyBudgetParamsChanges(e)} /> */}
-                    <NumberFormat
-                      name="total_budget"
-                      className="form-control form-control-sm"
-                      value={monthlyBudgetParams.total_budget}
-                      thousandSeparator={true}
-                      prefix={'Rp.'}
-                      onValueChange={(values) => setMonthlyBudgetParams(monthlyBudgetParams => ({...monthlyBudgetParams, "total_budget": values.value}))}
-                    />
+                  <div className="card-body">
+                    <div className="form-group" data-select2-id="29">
+                      <label>Kategori</label> <small className="text-danger"><b>*</b></small>
+                      <Select
+                        name="category"
+                        options={categoryOptions}
+                        onChange={(e) => handleMonthlyBudgetParamsChanges(e)}
+                        formatOptionLabel={oneCategory => (
+                          <div className="flex items-center">
+                            <img src={oneCategory.icon_url} height="30px" width="30px" alt="category-icon" />
+                            <span className="ml-2">{oneCategory.label}</span>
+                          </div>
+                        )}
+                      />
+                    </div>
+                    <div className="form-group" data-select2-id="29">
+                      <label>Mode</label> <small className="text-danger"><b>*</b></small>
+                      <Select
+                        name="mode"
+                        options={monthlyBudgetModes}
+                        onChange={(e) => handleMonthlyBudgetParamsChanges(e)}
+                      />
+                      <div className="text-xs">
+                        <span><b>generic</b>: untuk penggunaan umum - seperti makanan</span>
+                        <br/>
+                        <span><b>spesifik</b>: untuk penggunaan khusus - kebutuhan rumah, bayar listrik</span>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label>Nama Budget</label>
+                      {/* <input type="number" className="form-control form-control-sm" name="total_budget" onChange={(e) => handleMonthlyBudgetParamsChanges(e)} /> */}
+                      <input
+                        name="name"
+                        type="text"
+                        className="form-control form-control-sm"
+                        value={monthlyBudgetParams.name}
+                        onChange={(e) => handleMonthlyBudgetParamsChanges(e)}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Jumlah Budget Bulanan</label> <small className="text-danger"><b>*</b></small>
+                      {/* <input type="number" className="form-control form-control-sm" name="total_budget" onChange={(e) => handleMonthlyBudgetParamsChanges(e)} /> */}
+                      <NumberFormat
+                        name="total_budget"
+                        className="form-control form-control-sm"
+                        value={monthlyBudgetParams.total_budget}
+                        thousandSeparator={true}
+                        prefix={'Rp.'}
+                        onValueChange={(values) => setMonthlyBudgetParams(monthlyBudgetParams => ({...monthlyBudgetParams, "total_budget": values.value}))}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

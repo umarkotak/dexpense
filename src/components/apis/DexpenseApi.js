@@ -235,6 +235,20 @@ class DexpenseApi {
     return response
   }
 
+  async GroupsAddSallaryInfo(token, params) {
+    var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}/sallary_info`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
   async GroupsDelete(token, params) {
     var uri = `${this.DexpenseApiHost}/api/v1/groups/${params.id}`
     const response = await fetch(uri, {
@@ -387,6 +401,20 @@ class DexpenseApi {
     return response
   }
 
+  async MonthlyBudgetIndex(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    })
+    return response
+  }
+
   async MonthlyBudgetIndexCurrent(token, params) {
     var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/current`)
     uri.search = new URLSearchParams(params).toString()
@@ -402,7 +430,7 @@ class DexpenseApi {
   }
 
   async MonthlyBudgetShow(token, params) {
-    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.category}`)
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.id}`)
     uri.search = new URLSearchParams(params).toString()
     const response = await fetch(uri, {
       method: 'GET',
@@ -431,8 +459,8 @@ class DexpenseApi {
   }
 
   async MonthlyBudgetEdit(token, params) {
-    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.category}`)
-    uri.search = new URLSearchParams(params).toString()
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.id}`)
+    // uri.search = new URLSearchParams(params).toString()
     const response = await fetch(uri, {
       method: 'PATCH',
       headers: {
@@ -446,7 +474,7 @@ class DexpenseApi {
   }
 
   async MonthlyBudgetDelete(token, params) {
-    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.category}`)
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/monthly_budgets/${params.id}`)
     uri.search = new URLSearchParams(params).toString()
     const response = await fetch(uri, {
       method: 'DELETE',

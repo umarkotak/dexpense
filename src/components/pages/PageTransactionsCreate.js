@@ -83,6 +83,46 @@ function PageTransactionsCreate() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletOptions])
 
+  const [specificBudgetList, setSpecificBudgetList] = useState([])
+  async function fetchSpecificBudgetList() {
+    try {
+      const response = await dexpenseApi.MonthlyBudgetIndex(
+        localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {
+          group_id: parseInt(localStorage.getItem("DEXPENSE_SESSION_GROUPS_ACTIVE_ID")),
+          mode: "specific"
+        }
+      )
+      const status = response.status
+      const body = await response.json()
+
+      if (status === 200) {
+        var budgetSelect = [{
+          name: "monthly_budget_id",
+          value: null,
+          label: "Select...",
+        }]
+        if (body.data) {
+          body.data.forEach ((v) => {
+            budgetSelect.push({
+              name: "monthly_budget_id",
+              value: v.id,
+              label: v.name,
+            })
+          })
+        }
+        setSpecificBudgetList(budgetSelect)
+      } else {
+        alert.error(`There is some error: ${body.error}`)
+      }
+    } catch (e) {
+      alert.error(`There is some error: ${e.message}`)
+    }
+  }
+  useEffect(() => {
+    fetchSpecificBudgetList()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const [categoryOptions, setCategoryOptions] = useState([{}])
   async function fetchCategoryOptions() {
     try {
@@ -239,11 +279,19 @@ function PageTransactionsCreate() {
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                       value={selectedCategoryIdx === null ? null : categoryOptions[selectedCategoryIdx]}
                       formatOptionLabel={oneCategory => (
-                        <div className="">
+                        <div className="flex items-center">
                           <img src={oneCategory.icon_url} height="30px" width="30px" alt="category-icon" />
                           <span className="ml-2">{oneCategory.label}</span>
                         </div>
                       )}
+                    />
+                  </div>
+                  <div className="form-group" data-select2-id="29">
+                    <label>Untuk Budget?</label>
+                    <Select
+                      name="monthly_budget_id"
+                      options={specificBudgetList}
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
                   </div>
                   <div className="form-group">

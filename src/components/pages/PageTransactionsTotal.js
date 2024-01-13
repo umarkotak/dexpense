@@ -151,9 +151,9 @@ function PageTransactionsDaily() {
       <div className="content-wrapper pt-2" style={{
         backgroundColor: "#E3EDF2",
       }}>
-        <div className="content-header">
+        {/* <div className="content-header">
           <div className="container-fluid">
-            {/* <div className="row mb-2">
+            <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Transactions</h1>
               </div>
@@ -163,14 +163,14 @@ function PageTransactionsDaily() {
                   <li className="breadcrumb-item active"><Link to="/transactions/total">Summary</Link></li>
                 </ol>
               </div>
-            </div> */}
+            </div>
           </div>
-        </div>
+        </div> */}
 
         <section className="content">
           <div className="row">
             <div className="col-12 col-xl-9 mb-4">
-              <div className="row">
+              <div className="row max-w-md mx-auto">
                 <div className="col-12"><TransactionMiniNav data={{active: "total"}} /></div>
                 <div className="col-12 mt-1">
                   <div className="text-dark p-1">
@@ -180,9 +180,7 @@ function PageTransactionsDaily() {
                     <a className="float-right" style={{display: "none"}} href="." ref={downloadFileRef} target="_blank">_</a>
                   </div>
                 </div>
-              </div>
 
-              <div className="row">
                 <div className="col-12 mt-2">
                   <div className="border rounded p-1">
                     <p className="d-flex justify-content-between mb-1">
@@ -199,6 +197,7 @@ function PageTransactionsDaily() {
                     </p>
                   </div>
                 </div>
+
                 <div className="col-12 mt-2">
                   <div className="border rounded p-1">
                     <p className="d-flex justify-content-between mb-1">
@@ -207,21 +206,15 @@ function PageTransactionsDaily() {
                     </p>
                   </div>
                 </div>
-              </div>
 
-              <div className="row">
-                <div className="col-lg-4 col-12 mt-2">
+                <div className="col-12 mt-2">
+                  <div className="flex justify-end">
+                    <button className="btn btn-sm btn-primary" style={{borderRadius: "23px"}} onClick={() => downloadTransactions()}>
+                      <i className="fa fa-download"></i> Download Summary
+                    </button>
+                  </div>
                 </div>
-                <div className="col-lg-4 col-12 mt-2">
-                </div>
-                <div className="col-lg-4 col-12 mt-2">
-                  <button className="btn btn-sm btn-block btn-primary" style={{borderRadius: "23px"}} onClick={() => downloadTransactions()}>
-                    <i className="fa fa-download"></i> Download Summary
-                  </button>
-                </div>
-              </div>
 
-              <div className="row">
                 <div className="col-12">
                   <table className="table table-bordered mt-2">
                     <thead>

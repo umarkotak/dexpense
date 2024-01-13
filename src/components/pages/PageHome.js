@@ -12,12 +12,14 @@ function PageHome() {
       }}>
         <section className="content">
           <div className="row">
-            <div className="col-12 col-xl-9 mb-4">
-              <MainMenu />
-              <div className="mb-2"></div>
-              <HomeContent />
+            <div className="col-12 col-xl-9 mb-4 flex justify-center">
+              <div className="w-full max-w-md">
+                <MainMenu />
+                <div className="mb-2"></div>
+                <HomeContent />
+              </div>
             </div>
-            <div className="col-12 col-xl-3">
+            <div className="col-12 col-xl-3 flex justify-center">
               <MiniTips />
             </div>
           </div>

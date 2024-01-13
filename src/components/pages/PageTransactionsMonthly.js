@@ -74,9 +74,9 @@ function PageTransactionsDaily() {
       <div className="content-wrapper pt-2" style={{
         backgroundColor: "#E3EDF2",
       }}>
-        <div className="content-header">
+        {/* <div className="content-header">
           <div className="container-fluid">
-            {/* <div className="row mb-2">
+            <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Transactions</h1>
               </div>
@@ -86,14 +86,14 @@ function PageTransactionsDaily() {
                   <li className="breadcrumb-item active"><Link to="/transactions/monthly">Monthly</Link></li>
                 </ol>
               </div>
-            </div> */}
+            </div>
           </div>
-        </div>
+        </div> */}
 
         <section className="content">
           <div className="row">
             <div className="col-12 col-xl-9 mb-4">
-              <div className="row">
+              <div className="row max-w-md mx-auto">
                 <div className="col-12"><TransactionMiniNav data={{active: "monthly"}} /></div>
                 <div className="col-12 mt-1">
                   <div className="text-dark p-1">

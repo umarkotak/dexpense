@@ -115,17 +115,17 @@ function PageGoldPrice() {
                                 <div>HF Gold</div>
                                 <small><a href={goldPrices.price_source} target="_blank" rel="noreferrer">link</a></small>
                               </th>
-                              <th className="p-1 align-middle">
+                              {/* <th className="p-1 align-middle">
                                 <div>Bukukas<br/>kita</div>
-                              </th>
+                              </th> */}
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td className="p-1 align-middle"><b>Buyback</b></td>
-                              <td className="p-1"><b>{utils.FormatNumber(goldPrices.buyback_price)}</b></td>
                               <td className="p-1"><b>{utils.FormatNumber(antamGoldPrices.buyback_price)}</b></td>
-                              <td className="p-1"><b>TBA</b></td>
+                              <td className="p-1"><b>{utils.FormatNumber(goldPrices.buyback_price)}</b></td>
+                              {/* <td className="p-1"><b>TBA</b></td> */}
                             </tr>
                             {Object.keys(goldPrices.prices).map((key) => (
                               <tr>
@@ -139,7 +139,7 @@ function PageGoldPrice() {
                                   <small className="ml-2">{utils.FormatNumber(Math.ceil(goldPrices.prices[key].price / goldPrices.prices[key].size))} / gr</small>
                                   <small className="ml-2 text-danger">diff {utils.FormatNumber(Math.ceil(goldPrices.prices[key].price - antamGoldPrices.prices[key]?.price))}</small>
                                 </div></td>
-                                <td className="p-1"><div className="d-flex flex-column">
+                                {/* <td className="p-1"><div className="d-flex flex-column">
                                   <b>{utils.FormatNumber(
                                     antamGoldPrices.prices[key]?.price + Math.ceil((goldPrices.prices[key].price - antamGoldPrices.prices[key]?.price)/2) + 3000
                                   )}</b>
@@ -149,7 +149,7 @@ function PageGoldPrice() {
                                   <small className="ml-2 text-success">diff {utils.FormatNumber(
                                     (antamGoldPrices.prices[key]?.price + Math.ceil((goldPrices.prices[key].price - antamGoldPrices.prices[key]?.price)/2)) + 3000 - antamGoldPrices.prices[key]?.price
                                   )}</small>
-                                </div></td>
+                                </div></td> */}
                               </tr>
                             ))}
                           </tbody>
