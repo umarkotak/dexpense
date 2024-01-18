@@ -239,7 +239,9 @@ function PageTransactionsDaily() {
             </div>
 
             <div className="col-12 col-xl-3">
-              <MiniTips />
+              <div className="w-full flex justify-center">
+                <MiniTips />
+              </div>
             </div>
           </div>
         </section>

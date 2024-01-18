@@ -131,21 +131,21 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
     <>
       <ul className="nav nav-pills">
         <li className="nav-item">
-          <a className="nav-link p-2 mr-1 active" href="#change" data-toggle="tab" onClick={() => setActivePost([])}>Transaksi</a>
+          <a className="nav-link p-2 mr-1 active text-xs" href="#change" data-toggle="tab" onClick={() => setActivePost([])}>Transaksi</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link p-2 mr-1" href="#change" data-toggle="tab" onClick={() => setActivePost(welcomePosts)}>Welcome</a>
+          <a className="nav-link p-2 mr-1 text-xs" href="#change" data-toggle="tab" onClick={() => setActivePost(welcomePosts)}>Welcome</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link p-2 mr-1" href="#change" data-toggle="tab" onClick={() => setActivePost(blogPosts)}>Latest News!</a>
+          <a className="nav-link p-2 mr-1 text-xs" href="#change" data-toggle="tab" onClick={() => setActivePost(blogPosts)}>Latest News!</a>
         </li>
         {/* <li className="nav-item">
           <a className="nav-link p-2" href="#change" data-toggle="tab" onClick={() => setActivePost(storyPosts)}>Story</a>
         </li> */}
       </ul>
 
-      <div className="card card-primary shadow mb-5">
-        <div className="card-body bg-white px-1 pt-1 pb-1">
+      <div className="">
+        <div className="card-body px-1 pt-1 pb-1">
           {activePosts.map(activePost => (
             <div className="post bg-white px-2 pt-2 pb-2" key={activePost.id}>
               <div className="user-block bg-white mb-1">
@@ -175,20 +175,22 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
   function MiniTransactionsDaily() {
     if (activePosts.length !== 0) { return(<div></div>) }
 
-    return(<div>
-      <div className="ml-2 text-bold">{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</div>
-      {grouppedTransactions.groupped_transactions.map((val, k) => (
-        <div className="col-12 mt-2" key={`1-${k}`}>
-          <GrouppedTransactionCard grouppedTransaction={val} />
-        </div>
-      ))}
-    </div>)
+    return(
+      <div className="">
+        <div className="ml-2 text-bold">{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</div>
+        {grouppedTransactions.groupped_transactions.map((val, k) => (
+          <div className="mt-2" key={`1-${k}`}>
+            <GrouppedTransactionCard grouppedTransaction={val} />
+          </div>
+        ))}
+      </div>
+    )
   }
 
   function GrouppedTransactionCard(props) {
     return(
-      <div className="bg-light">
-        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1 bg-white">
+      <div className="bg-white">
+        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
           <h6 className="my-auto">
             {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
             <small> {props.grouppedTransaction.month} . {props.grouppedTransaction.year}</small>
@@ -196,7 +198,7 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
           <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
           <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
         </div>
-        <div className="px-1 bg-white">
+        <div className="px-1">
           {props.grouppedTransaction.transactions.map((val, k) => (
             <div className="border-bottom d-flex justify-content-between py-0" key={`2-${k}`}>
               <div className="flex align-items-center my-auto" style={{width: "35%"}}>
