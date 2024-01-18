@@ -193,7 +193,7 @@ function PageBudgetsIndex() {
                   <span style={{fontSize: "14px"}}>
                     <b>Pengeluaran</b> <span className="text-xs">({`${utils.FormatDate(activeMinDate)}`} - {`${utils.FormatDate(activeMaxDate)}`})</span>
                   </span>
-                  <span style={{fontSize: "10px"}}>{utils.CompactNumberRound(650000)} ({utils.CompactNumberRound(10000)}/hari)</span>
+                  <span style={{fontSize: "10px"}}>{utils.CompactNumberRound(monthlyBudgets.monthly_sallary-monthlyBudgets.total_expense)} ({utils.CompactNumberRound((monthlyBudgets.monthly_sallary-monthlyBudgets.total_expense)/sallaryInfoParams.payout_date)}/hari)</span>
                 </div>
               </div>
             </div>

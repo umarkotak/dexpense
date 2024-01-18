@@ -243,14 +243,14 @@ function PageTransactionsCreate() {
                 </div>
                 <div className="card-body">
                   <div className="form-group">
-                    <label>Voice Input</label> <small className="text-danger"><b>beta</b></small>
+                    <label>Voice Input</label>
                     <div>
                       <button className='btn btn-outline-primary p-2' onClick={()=>SpeechRecognition.startListening({ language: 'id' })} disabled={listening}>
                         {listening ? 'Mendegarkan. . .' : 'Bicara'}
                       </button>
                       <p>{transcript}</p>
-                      <small>format: pengeluaran [category] berupa [nama] sejumlah [biaya]<br/></small>
-                      <code>contoh: pengeluaran makanan berupa sate ayam sejumlah lima puluh ribu rupiah</code>
+                      <small>format: pengeluaran [category] berupa [nama] sejumlah [biaya] rupiah<br/></small>
+                      <code>contoh: pengeluaran <b>makanan</b> berupa <b>sate ayam</b> sejumlah <b>lima puluh ribu</b> rupiah</code>
                     </div>
                   </div>
                   <div className="form-group">
@@ -293,6 +293,7 @@ function PageTransactionsCreate() {
                       options={specificBudgetList}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
+                    <div className="text-xs mt-1">apabila sudah memilih budget, tidak perlu lagi memilih kategori</div>
                   </div>
                   <div className="form-group">
                     <label>Wallet</label> <small className="text-danger"><b>*</b></small>
