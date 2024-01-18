@@ -151,9 +151,9 @@ function PageTransactionsDaily() {
                 </div>
                 <div className="col-12 mt-1">
                   <div className="d-flex justify-content-between">
-                    <div className="bg-white rounded p-1 border"><small className="text-primary">{utils.FormatNumber(grouppedTransactions.income)}</small></div>
-                    <div className="bg-white rounded p-1 border"><small className="text-danger">{utils.FormatNumber(grouppedTransactions.outcome)}</small></div>
-                    <div className="bg-white rounded p-1 border"><small>{utils.FormatNumber(grouppedTransactions.total)}</small></div>
+                    <div className="bg-white rounded-xl p-1 border"><small className="text-primary">{utils.FormatNumber(grouppedTransactions.income)}</small></div>
+                    <div className="bg-white rounded-xl p-1 border"><small className="text-danger">{utils.FormatNumber(grouppedTransactions.outcome)}</small></div>
+                    <div className="bg-white rounded-xl p-1 border"><small>{utils.FormatNumber(grouppedTransactions.total)}</small></div>
                   </div>
                 </div>
 
@@ -241,8 +241,8 @@ function PageTransactionsDaily() {
 
   function GrouppedTransactionCard(props) {
     return(
-      <div className="bg-light">
-        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1 bg-white">
+      <div className="bg-white rounded-xl overflow-none p-1">
+        <div className="border-bottom d-flex justify-content-between py-1 px-1">
           <h6 className="my-auto">
             {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
             <small> {props.grouppedTransaction.month} . {props.grouppedTransaction.year}</small>
@@ -250,7 +250,7 @@ function PageTransactionsDaily() {
           <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
           <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
         </div>
-        <div className="px-1 bg-white">
+        <div className="px-1">
           {props.grouppedTransaction.transactions.map((val, k) => (
             <div className="border-bottom d-flex justify-content-between py-0" key={`2-${k}`}>
               <div className="flex align-items-center my-auto" style={{width: "35%"}}>

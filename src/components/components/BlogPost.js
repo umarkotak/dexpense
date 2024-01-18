@@ -189,8 +189,8 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
 
   function GrouppedTransactionCard(props) {
     return(
-      <div className="bg-white">
-        <div className="border-top border-bottom d-flex justify-content-between py-1 px-1">
+      <div className="bg-white rounded-xl p-1">
+        <div className="border-bottom d-flex justify-content-between py-1 px-1">
           <h6 className="my-auto">
             {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
             <small> {props.grouppedTransaction.month} . {props.grouppedTransaction.year}</small>
