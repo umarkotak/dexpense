@@ -5,6 +5,7 @@ import {useAlert} from 'react-alert'
 import MiniTips from "../components/MiniTips"
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
+import AssetListElem from "../components/AssetListElem"
 
 function PageWealthAsset() {
   const alert = useAlert()
@@ -20,8 +21,6 @@ function PageWealthAsset() {
       })
       const status = response.status
       const body = await response.json()
-
-      console.log(body)
 
       if (status === 200) {
         setWealthAssets(body.data)
@@ -41,8 +40,6 @@ function PageWealthAsset() {
       const status = response.status
       const body = await response.json()
 
-      console.log(body)
-
       if (status === 200) {
         setWealthAssetDashboard(body.data)
       } else {
@@ -60,8 +57,6 @@ function PageWealthAsset() {
       })
       const status = response.status
       const body = await response.json()
-
-      console.log(body)
 
       if (status === 200) {
         setWealthAssetGroupped(body.data)
@@ -142,8 +137,8 @@ function PageWealthAsset() {
                     <div className="text-lg mb-2">Rangkuman</div>
 
                     <div className="d-flex flex-row flex-nowrap overflow-x-auto">
-                      {wealthAssetGroupped.map((oneAssetGroupped) => (
-                        <div className="mr-2 px-2 rounded-xl bg-blue-200 shadow-sm" key={wealthAssetGroupped.category}>
+                      {wealthAssetGroupped.map((oneAssetGroupped, idx) => (
+                        <div className="mr-2 px-2 rounded-xl bg-blue-200 shadow-sm" key={`${wealthAssetGroupped.category}-${idx}`}>
                           <div className="p-1">
                             <b>{oneAssetGroupped.title}</b><br/>
                             {/* <small>Kamu punya</small><br/> */}
@@ -159,31 +154,8 @@ function PageWealthAsset() {
                   <div className="col-12 px-3 mt-2">
                     <div className="text-lg mb-2">Daftar Aset</div>
 
-                    {wealthAssets.map((oneWealth) => (
-                      <div key={oneWealth.id}>
-                        <div className="flex items-center justify-content-between border-bottom mb-2 pb-1">
-                          <div className="flex items-center">
-                            <div>
-                              <img src={oneWealth.icon_url} alt="ico" style={{width:"36px", height:"36px"}}></img>
-                            </div>
-                            <div className="ml-2">
-                              <div className="mb-0"><b>{oneWealth.title}</b> <span className="text-sm">x {oneWealth.quantity || 1}</span></div>
-                              <div className="text-xs">{utils.FormatDateTime(oneWealth.transaction_at)}</div>
-                              {/* <small>sudah 1 tahun mengendap</small> */}
-                            </div>
-                          </div>
-                            <div className="text-end">
-                              <span className="text-md text-bold">{utils.FormatNumber(oneWealth.price)}</span><br/>
-
-                              {oneWealth.category === "gold" ?
-                                <div className="text-xs">
-                                  <span>Buyback: {utils.FormatNumber(oneWealth.total_buyback_price)}</span><br/>
-                                  <span>Profit: <span className={`${oneWealth.profit > 0 ? "text-success" : "text-danger"}`}>{utils.FormatNumber(oneWealth.profit)}</span></span><br/>
-                                </div>
-                              : null}
-                            </div>
-                        </div>
-                      </div>
+                    {wealthAssets.map((oneWealth, idx) => (
+                      <AssetListElem oneWealth={oneWealth} key={`${oneWealth.id}-${idx}`} />
                     ))}
                   </div>
                 </div>

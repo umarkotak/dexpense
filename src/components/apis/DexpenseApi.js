@@ -596,6 +596,21 @@ class DexpenseApi {
     })
     return response
   }
+
+  async AssetsDelete(token, params) {
+    var uri = new URL(`${this.DexpenseApiHost}/api/v1/wealth_assets/${params.id}`)
+    uri.search = new URLSearchParams(params).toString()
+    const response = await fetch(uri, {
+      method: 'DELETE',
+      headers: {
+        'Time-Zone': -new Date().getTimezoneOffset()/60,
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
 }
 
 const dexpenseApi = new DexpenseApi()
