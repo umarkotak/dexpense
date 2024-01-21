@@ -205,7 +205,7 @@ function PageInvestation() {
                               </thead>
                               <tbody>
                                 {investationNumbers.map((investationNumber) => (
-                                  <tr>
+                                  <tr key={investationNumber.year}>
                                     <td className="p-1">{investationNumber.year}</td>
                                     <td className="p-1">{utils.FormatNumber(investationNumber.amount)}</td>
                                     <td className="p-1">{utils.FormatNumber(investationNumber.return)}</td>

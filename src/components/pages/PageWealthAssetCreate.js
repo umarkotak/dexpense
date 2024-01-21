@@ -150,7 +150,7 @@ function PageWealthAssetCreate() {
                       options={categories}
                       onChange={(e) => handleAssetsParamsChanges(e)}
                       formatOptionLabel={oneCategory => (
-                        <div className="">
+                        <div className="flex items-center">
                           <img src={oneCategory.icon_url} height="30px" width="30px" alt="category-icon" />
                           <span className="ml-2">{oneCategory.label}</span>
                         </div>

@@ -109,11 +109,11 @@ function PageGoldPrice() {
                               <th className="p-1 align-middle">Daftar Harga</th>
                               <th className="p-1 align-middle">
                                 <div>Antam</div>
-                                <small><a href="https://www.logammulia.com/id/harga-emas-hari-ini" target="_blank" rel="noreferrer">link</a></small>
+                                <small><a href="https://www.logammulia.com/id/harga-emas-hari-ini" target="_blank" rel="noopener noreferrer">link</a></small>
                               </th>
                               <th className="p-1 align-middle">
                                 <div>HF Gold</div>
-                                <small><a href={goldPrices.price_source} target="_blank" rel="noreferrer">link</a></small>
+                                <small><a href={goldPrices.price_source} target="_blank" rel="noopener noreferrer">link</a></small>
                               </th>
                               {/* <th className="p-1 align-middle">
                                 <div>Bukukas<br/>kita</div>
@@ -127,8 +127,8 @@ function PageGoldPrice() {
                               <td className="p-1"><b>{utils.FormatNumber(goldPrices.buyback_price)}</b></td>
                               {/* <td className="p-1"><b>TBA</b></td> */}
                             </tr>
-                            {Object.keys(goldPrices.prices).map((key) => (
-                              <tr>
+                            {Object.keys(goldPrices.prices).map((key, idx) => (
+                              <tr key={`${key.size}-${idx}`}>
                                 <td className="p-1">{goldPrices.prices[key].size} gram</td>
                                 <td className="p-1"><div className="d-flex flex-column">
                                   <b>{utils.FormatNumber(antamGoldPrices.prices[key]?.price)}</b>

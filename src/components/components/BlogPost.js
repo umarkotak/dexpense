@@ -1,9 +1,8 @@
 import React, {useState,useEffect} from "react"
-import ReactMarkdown from 'react-markdown'
-import rehypeRaw from 'rehype-raw'
 import utils from "../helper/Utils"
 import {Link} from "react-router-dom"
 import dexpenseApi from "../apis/DexpenseApi"
+import ReactHtmlParser from 'react-html-parser'
 
 var timeNow = new Date()
 var beginOfMonth, endOfMonth
@@ -156,7 +155,7 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
                 </span>
                 <span className="description">By {activePost.username}</span>
               </div>
-              <ReactMarkdown rehypePlugins={[rehypeRaw]} children={activePost.post_content} />
+              {ReactHtmlParser(activePost.post_content)}
               <p className="mb-1 mt-2">
                 <span href="/" className="link-black text-sm mr-2"><i className="fas fa-share mr-1"></i> Share</span>
                 <span className="float-right">

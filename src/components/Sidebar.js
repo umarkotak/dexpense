@@ -124,9 +124,9 @@ function Sidebar() {
   function OnPublic() {
     return(
       <ul className="nav nav-pills nav-sidebar flex-column nav-compact" data-widget="treeview" role="menu" data-accordion="false">
-        <li className="nav-item">
-          <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
-        </li>
+        {/* <li className="nav-item">
+          <Link to="/home" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
+        </li> */}
         <li className="nav-item">
           <Link to="/gold_price" className={`nav-link ${sideBarItems["gold_price"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Harga Emas</p></Link>
         </li>
