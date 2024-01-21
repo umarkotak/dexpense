@@ -218,7 +218,7 @@ function PageCalculatorBudget() {
                         <hr/>
 
                         {budgetParams.budgets.map((budget, idx) => (
-                          <div className="form-group">
+                          <div className="form-group" key={idx}>
                             <button className="float-right btn btn-danger btn-xs" onClick={()=>removeBudget(idx)}><i className="fa fa-trash"></i></button>
                             <label>{idx+1}</label>
                             <Select

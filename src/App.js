@@ -1,5 +1,5 @@
-import React from "react"
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import { Switch, Route, useLocation, withRouter} from "react-router-dom"
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 
 import Navbar from "./components/Navbar"
@@ -7,6 +7,7 @@ import Sidebar from "./components/Sidebar"
 import Footer from "./components/Footer"
 
 import PageHome from "./components/pages/PageHome"
+import PageLandingPage from "./components/pages/PageLandingPage"
 import PageLogin from "./components/pages/PageLogin"
 import PageSignUp from "./components/pages/PageSignUp"
 import PageDashboard from "./components/pages/PageDashboard"
@@ -67,58 +68,70 @@ const AlertTemplate = ({ style, options, message, close }) => (
 )
 
 function App() {
+  const reLoc = useLocation()
+  const [showAdminLteTempl, setShowAdminLteTempl] = useState(false)
+
+  useEffect(() => {
+    if (reLoc.pathname === "/") {
+      setShowAdminLteTempl(false)
+    } else {
+      setShowAdminLteTempl(true)
+    }
+    // eslint-disable-next-line
+  }, [reLoc])
+
   return (
-    <Router>
-      <div className="sidebar-mini layout-fixed">
-        <div className="wrapper">
-          <AlertProvider template={AlertTemplate} {...options}>
-            <Navbar />
+    // <BrowserRouter>
+        <div className="sidebar-mini layout-fixed">
+          <div className="wrapper">
+            <AlertProvider template={AlertTemplate} {...options}>
+              {showAdminLteTempl ? <Navbar /> : null}
 
-            <Sidebar />
+              {showAdminLteTempl ? <Sidebar /> : null}
 
-            <Switch>
-              <Route path="/" exact component={PageHome} />
-              <Route path="/home" exact component={PageHome} />
-              <Route path="/login" exact component={PageLogin} />
-              <Route path="/sign_up" exact component={PageSignUp} />
-              <Route path="/dashboard" exact component={PageDashboard} />
-              <Route path="/transactions" exact component={PageTransactionsCompact} />
-              <Route path="/transactions/detailed" exact component={PageTransactionsDetailed} />
-              <Route path="/transactions/daily" exact component={PageTransactionsDaily} />
-              <Route path="/transactions/create" exact component={PageTransactionsCreate} />
-              <Route path="/transactions/calendar" exact component={PageTransactionsCalendar} />
-              <Route path="/transactions/weekly" exact component={PageTransactionsWeekly} />
-              <Route path="/transactions/monthly" exact component={PageTransactionsMonthly} />
-              <Route path="/transactions/total" exact component={PageTransactionsTotal} />
-              <Route path="/transactions/transfer" exact component={PageTransactionsTransfer} />
-              <Route path="/transactions/adjust" exact component={PageTransactionsAdjust} />
-              <Route path="/transactions/:id/edit" exact component={PageTransactionsEdit} />
-              <Route path="/budgets" exact component={PageBudgetsIndex} />
-              <Route path="/budgets/create" exact component={PageBudgetsCreate} />
-              <Route path="/budgets/:id/edit" exact component={PageBudgetsEdit} />
-              <Route path="/groups" exact component={PageGroups} />
-              <Route path="/groups/create" exact component={PageGroupsCreate} />
-              <Route path="/groups/:id" exact component={PageGroupsDetail} />
-              <Route path="/groups/:id/wallets/create" exact component={PageGroupWalletsCreate} />
-              <Route path="/groups/:id/wallets/:wallet_id/edit" exact component={PageGroupWalletsEdit} />
-              <Route path="/groups/:id/members/invite" exact component={PageGroupsMemberInvite} />
-              <Route path="/statistics" exact component={PageStatistics} />
-              <Route path="/investation" exact component={PageInvestation} />
-              <Route path="/daily_ibadah" exact component={PageDailyIbadah} />
-              <Route path="/wealth_assets" exact component={PageWealthAsset} />
-              <Route path="/wealth_assets/create" exact component={PageWealthAssetCreate} />
-              <Route path="/calculator_budget" exact component={PageCalculatorBudget} />
-              <Route path="/gold_price" exact component={PageGoldPrice} />
-              <Route path="/icon_list" exact component={PageIconList} />
-              <Route path="/" component={PageNotFound} />
-            </Switch>
+              <Switch>
+                <Route exact path="/" component={withRouter(PageLandingPage)} />
+                <Route exact path="/home" component={withRouter(PageHome)} />
+                <Route exact path="/login" component={withRouter(PageLogin)} />
+                <Route exact path="/sign_up" component={withRouter(PageSignUp)} />
+                <Route exact path="/dashboard" component={withRouter(PageDashboard)} />
+                <Route exact path="/transactions" component={withRouter(PageTransactionsCompact)} />
+                <Route exact path="/transactions/detailed" component={withRouter(PageTransactionsDetailed)} />
+                <Route exact path="/transactions/daily" component={withRouter(PageTransactionsDaily)} />
+                <Route exact path="/transactions/create" component={withRouter(PageTransactionsCreate)} />
+                <Route exact path="/transactions/calendar" component={withRouter(PageTransactionsCalendar)} />
+                <Route exact path="/transactions/weekly" component={withRouter(PageTransactionsWeekly)} />
+                <Route exact path="/transactions/monthly" component={withRouter(PageTransactionsMonthly)} />
+                <Route exact path="/transactions/total" component={withRouter(PageTransactionsTotal)} />
+                <Route exact path="/transactions/transfer" component={withRouter(PageTransactionsTransfer)} />
+                <Route exact path="/transactions/adjust" component={withRouter(PageTransactionsAdjust)} />
+                <Route exact path="/transactions/:id/edit" component={withRouter(PageTransactionsEdit)} />
+                <Route exact path="/budgets" component={withRouter(PageBudgetsIndex)} />
+                <Route exact path="/budgets/create" component={withRouter(PageBudgetsCreate)} />
+                <Route exact path="/budgets/:id/edit" component={withRouter(PageBudgetsEdit)} />
+                <Route exact path="/groups" component={withRouter(PageGroups)} />
+                <Route exact path="/groups/create" component={withRouter(PageGroupsCreate)} />
+                <Route exact path="/groups/:id" component={withRouter(PageGroupsDetail)} />
+                <Route exact path="/groups/:id/wallets/create" component={withRouter(PageGroupWalletsCreate)} />
+                <Route exact path="/groups/:id/wallets/:wallet_id/edit" component={withRouter(PageGroupWalletsEdit)} />
+                <Route exact path="/groups/:id/members/invite" component={withRouter(PageGroupsMemberInvite)} />
+                <Route exact path="/statistics" component={withRouter(PageStatistics)} />
+                <Route exact path="/investation" component={withRouter(PageInvestation)} />
+                <Route exact path="/daily_ibadah" component={withRouter(PageDailyIbadah)} />
+                <Route exact path="/wealth_assets" component={withRouter(PageWealthAsset)} />
+                <Route exact path="/wealth_assets/create" component={withRouter(PageWealthAssetCreate)} />
+                <Route exact path="/calculator_budget" component={withRouter(PageCalculatorBudget)} />
+                <Route exact path="/gold_price" component={withRouter(PageGoldPrice)} />
+                <Route exact path="/icon_list" component={withRouter(PageIconList)} />
+                <Route path="/" component={withRouter(PageNotFound)} />
+              </Switch>
 
-            <Footer />
-          </AlertProvider>
+              {showAdminLteTempl ? <Footer /> : null }
+            </AlertProvider>
+          </div>
         </div>
-      </div>
-    </Router>
+    // </BrowserRouter>
   )
 }
 
-export default App;
+export default App

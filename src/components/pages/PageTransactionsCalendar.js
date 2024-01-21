@@ -124,7 +124,7 @@ function PageTransactionsDaily() {
             <div className="col-12 col-xl-9 mb-4">
               <div className="row">
                 <div className="col-12 flex justify-center">
-                  <div className="w-full max-w-md">
+                  <div className="w-full max-w-md px-2">
                     <TransactionMiniNav data={{active: "calendar"}} />
                   </div>
                 </div>

@@ -86,7 +86,7 @@ function PageWealthAsset() {
         backgroundColor: "#E3EDF2",
       }}>
         <div className="content-header">
-          {/* <div className="container-fluid">
+          <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Asset</h1>
@@ -97,102 +97,97 @@ function PageWealthAsset() {
                 </ol>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
 
         <section className="content">
           <div className="row">
-            <div className="col-12 col-xl-5 mb-4">
-              <div className="p-2 bg-white rounded shadow-sm">
-                <div className="row" id="profile_section">
-                  <div className="col-12 px-3">
-                    <span className="d-flex flex-row align-items-center justify-content-between">
-                      <div className="d-flex flex-row align-items-center">
-                        <img src="/default_avatar.png" alt="bukukas kita Logo" className="img-circle" style={{width: "50px", height: "50px"}} />
-                        <span className="ml-2 d-flex flex-column">
-                          <small className="mb-0">Halo!</small>
-                          <b style={{marginTop: "-7px"}}>{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</b>
-                        </span>
-                      </div>
+            <div className="col-12 col-xl-9 mb-4 flex justify-center">
+              <div className="w-full max-w-md">
+                <div className="p-2 bg-white rounded-xl shadow-sm">
+                  <div className="row" id="profile_section">
+                    <div className="col-12 px-3">
+                      <span className="d-flex flex-row align-items-center justify-content-between">
+                        <div className="d-flex flex-row align-items-center">
+                          <img src="/default_avatar.png" alt="bukukas kita Logo" className="img-circle" style={{width: "50px", height: "50px"}} />
+                          <span className="ml-2 d-flex flex-column">
+                            <small className="mb-0">Halo!</small>
+                            <b style={{marginTop: "-7px"}}>{localStorage.getItem("DEXPENSE_SESSION_USERNAME")}</b>
+                          </span>
+                        </div>
 
-                      <div className="d-flex flex-row align-items-center justify-content-end">
-                        <Link to="." className="btn img-circle btn-outline-primary mr-2">
-                          <i className="fa fa-share" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                        </Link>
-                        <Link to="/wealth_assets/create" className="btn img-circle btn-outline-primary">
-                          <i className="fa fa-plus" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
-                        </Link>
-                      </div>
-                    </span>
-                  </div>
-                  <div className="col-12 px-3">
-                    <small>Total Asset</small>
-                    <h5><b>{utils.FormatNumber(wealthAssetDashboard.total_asset)}</b></h5>
-                  </div>
-                  <div className="col-12 px-3">
-                    <small>Zakat maal emas</small>
-                    <h5><b>{utils.FormatNumber(wealthAssetDashboard.zakat_maal)}</b></h5>
+                        <div className="d-flex flex-row align-items-center justify-content-end">
+                          {/* <Link to="." className="btn img-circle btn-outline-primary mr-2">
+                            <i className="fa fa-share" style={{color: "#FF844B", height: "13px", width: "13px"}}></i>
+                          </Link> */}
+                          <Link to="/wealth_assets/create" className="rounded-xl shadow-md py-1 px-2 border text-sm hover:bg-gray-100">
+                            <i className="fa fa-plus mr-2" style={{color: "#FF844B", height: "13px", width: "13px"}}></i> Tambah Asset
+                          </Link>
+                        </div>
+                      </span>
+                    </div>
+                    <div className="col-12 px-3">
+                      <small>Total Asset</small>
+                      <div className="text-lg">{utils.FormatNumber(wealthAssetDashboard.total_asset)}</div>
+                    </div>
+                    <div className="col-12 px-3">
+                      <small>Zakat maal emas</small>
+                      <div className="text-lg">{utils.FormatNumber(wealthAssetDashboard.zakat_maal)}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="row mt-2" id="total_section">
-                <div className="col-12 px-3">
-                  <h4><b>Rangkuman</b></h4>
+                <div className="row mt-2" id="total_section">
+                  <div className="col-12 px-3">
+                    <div className="text-lg mb-2">Rangkuman</div>
 
-                  <>
-                    <div className="d-flex flex-row flex-nowrap overflow-auto">
+                    <div className="d-flex flex-row flex-nowrap overflow-x-auto">
                       {wealthAssetGroupped.map((oneAssetGroupped) => (
-                        <div className="mr-2 px-2 rounded-lg border border-primary" style={{backgroundColor: "#9FC9DD"}} key={wealthAssetGroupped.category}>
+                        <div className="mr-2 px-2 rounded-xl bg-blue-200 shadow-sm" key={wealthAssetGroupped.category}>
                           <div className="p-1">
                             <b>{oneAssetGroupped.title}</b><br/>
-                            <small>Kamu punya</small><br/>
-                            <b>{oneAssetGroupped.total_amount} {oneAssetGroupped.amount_unit}</b><br/>
+                            {/* <small>Kamu punya</small><br/> */}
+                            <span className="text-lg">{oneAssetGroupped.total_amount} {oneAssetGroupped.amount_unit}</span><br/>
                             <small>Total</small><br/>
                             <b>{utils.FormatNumber(oneAssetGroupped.total_price)}</b><br/>
                           </div>
                         </div>
                       ))}
                     </div>
-                  </>
-                </div>
+                  </div>
 
-                <div className="col-12 px-3 mt-2">
-                  <h4><b>Daftar Asset</b></h4>
+                  <div className="col-12 px-3 mt-2">
+                    <div className="text-lg mb-2">Daftar Aset</div>
 
-                  {wealthAssets.map((oneWealth) => (
-                    <div key={oneWealth.id}>
-                      <div className="d-flex flex-row align-items-center justify-content-between border-bottom mb-2 pb-1">
-                        <div className="d-flex flex-row align-items-center">
-                          <div>
-                            <img src={oneWealth.icon_url} alt="ico" style={{width:"48px", height:"48px"}}></img>
+                    {wealthAssets.map((oneWealth) => (
+                      <div key={oneWealth.id}>
+                        <div className="flex items-center justify-content-between border-bottom mb-2 pb-1">
+                          <div className="flex items-center">
+                            <div>
+                              <img src={oneWealth.icon_url} alt="ico" style={{width:"36px", height:"36px"}}></img>
+                            </div>
+                            <div className="ml-2">
+                              <div className="mb-0"><b>{oneWealth.title}</b> <span className="text-sm">x {oneWealth.quantity || 1}</span></div>
+                              <div className="text-xs">{utils.FormatDateTime(oneWealth.transaction_at)}</div>
+                              {/* <small>sudah 1 tahun mengendap</small> */}
+                            </div>
                           </div>
-                          <div className="ml-2">
-                            <b>{oneWealth.title}</b> x {oneWealth.quantity || 1}
-                            <br/>
-                            <small>{utils.FormatDateTime(oneWealth.transaction_at)}</small>
-                            <br/>
-                            {/* <small>sudah 1 tahun mengendap</small> */}
-                          </div>
+                            <div className="text-end">
+                              <span className="text-md text-bold">{utils.FormatNumber(oneWealth.price)}</span><br/>
+
+                              {oneWealth.category === "gold" ?
+                                <div className="text-xs">
+                                  <span>Buyback: {utils.FormatNumber(oneWealth.total_buyback_price)}</span><br/>
+                                  <span>Profit: <span className={`${oneWealth.profit > 0 ? "text-success" : "text-danger"}`}>{utils.FormatNumber(oneWealth.profit)}</span></span><br/>
+                                </div>
+                              : null}
+                            </div>
                         </div>
-                          <div className="text-end">
-                            <b>{utils.FormatNumber(oneWealth.price)}</b><br/>
-
-                            {oneWealth.category === "gold" ?
-                              <div>
-                                <span>Buyback: {utils.FormatNumber(oneWealth.total_buyback_price)}</span><br/>
-                                <span>Profit: <span className={`${oneWealth.profit > 0 ? "text-success" : "text-danger"}`}>{utils.FormatNumber(oneWealth.profit)}</span></span><br/>
-                              </div>
-                            : null}
-                          </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="col-12 col-xl-4 mb-4">
             </div>
 
             <div className="col-12 col-xl-3">

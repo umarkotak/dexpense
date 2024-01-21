@@ -1,9 +1,9 @@
 import React, {useState,useEffect} from "react"
-import ReactMarkdown from 'react-markdown'
-import rehypeRaw from 'rehype-raw'
 import utils from "../helper/Utils"
-import {Link} from "react-router-dom"
+// import {Link} from "react-router-dom"
 import dexpenseApi from "../apis/DexpenseApi"
+import ReactHtmlParser from 'react-html-parser'
+import HomeTransactionBar from "./HomeTransactionBar"
 
 var timeNow = new Date()
 var beginOfMonth, endOfMonth
@@ -156,7 +156,7 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
                 </span>
                 <span className="description">By {activePost.username}</span>
               </div>
-              <ReactMarkdown rehypePlugins={[rehypeRaw]} children={activePost.post_content} />
+              {ReactHtmlParser(activePost.post_content)}
               <p className="mb-1 mt-2">
                 <span href="/" className="link-black text-sm mr-2"><i className="fas fa-share mr-1"></i> Share</span>
                 <span className="float-right">
@@ -180,44 +180,9 @@ continue: <a href="https://www.linkedin.com/feed/update/urn:li:activity:69377840
         <div className="ml-2 text-bold">{`${utils.months[timeNow.getMonth()]} ${timeNow.getFullYear()}`}</div>
         {grouppedTransactions.groupped_transactions.map((val, k) => (
           <div className="mt-2" key={`1-${k}`}>
-            <GrouppedTransactionCard grouppedTransaction={val} />
+            <HomeTransactionBar grouppedTransaction={val} />
           </div>
         ))}
-      </div>
-    )
-  }
-
-  function GrouppedTransactionCard(props) {
-    return(
-      <div className="bg-white rounded-xl p-1">
-        <div className="border-bottom d-flex justify-content-between py-1 px-1">
-          <h6 className="my-auto">
-            {props.grouppedTransaction.day} <span className="bg-secondary rounded px-1">{props.grouppedTransaction.day_name}</span>
-            <small> {props.grouppedTransaction.month} . {props.grouppedTransaction.year}</small>
-          </h6>
-          <small className="my-auto text-primary">{utils.FormatNumber(props.grouppedTransaction.income)}</small>
-          <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
-        </div>
-        <div className="px-1">
-          {props.grouppedTransaction.transactions.map((val, k) => (
-            <div className="border-bottom d-flex justify-content-between py-0" key={`2-${k}`}>
-              <div className="flex align-items-center my-auto" style={{width: "35%"}}>
-                <img src={val.icon_url} alt={"category_icon"} style={{width: "24px", height: "24px"}} />
-                <small className="ml-1">{val.category}</small>
-              </div>
-              <small className="my-auto text-left" style={{width: "40%"}}>
-                {val.name}
-                <br />
-                {val.account.username} . {val.group_wallet.name}
-              </small>
-              <Link to={`/transactions/${val.id}/edit`} className="my-auto text-right" style={{width: "25%"}}>
-                <small className={`${val.direction_type === "income" ? "text-primary" : "text-danger"}`}>
-                  {utils.FormatNumber(val.amount)}
-                </small>
-              </Link>
-            </div>
-          ))}
-        </div>
       </div>
     )
   }

@@ -50,7 +50,7 @@ function Sidebar() {
               <img src="/default_avatar.png" className="img-circle elevation-2" alt="User" />
             </div>
             <div className="info">
-              <Link to="/dashboard" className="">Hello, <b className="text-teal">{activeName}</b> !</Link>
+              <Link to={activeName === "Guest" ? "/login" : "/dashboard"} className="">Hello, <b className="text-teal">{activeName}</b> !</Link>
               {
                 (activeUser.account_type === "vip") ? <span className="ml-4 float-right text-warning"><span className="fa fa-star"></span> vip</span> : ''
               }
@@ -124,9 +124,9 @@ function Sidebar() {
   function OnPublic() {
     return(
       <ul className="nav nav-pills nav-sidebar flex-column nav-compact" data-widget="treeview" role="menu" data-accordion="false">
-        <li className="nav-item">
-          <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
-        </li>
+        {/* <li className="nav-item">
+          <Link to="/home" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
+        </li> */}
         <li className="nav-item">
           <Link to="/gold_price" className={`nav-link ${sideBarItems["gold_price"] || ""}`}><i className="nav-icon fa fa-coins"></i> <p>Harga Emas</p></Link>
         </li>

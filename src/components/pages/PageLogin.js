@@ -29,7 +29,7 @@ function PageLogin() {
         alert.info("Login success!")
         localStorage.setItem("DEXPENSE_SESSION_TOKEN", body.data.session)
         localStorage.setItem("DEXPENSE_SESSION_USERNAME", body.data.username)
-        history.push("/")
+        history.push("/home")
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
@@ -57,7 +57,7 @@ function PageLogin() {
         </div>
 
         <section className="content">
-          <div className="card card-outline card-primary mx-auto" style={{"max-width": "480px", "margin-top": "100px"}}>
+          <div className="card card-outline card-primary mx-auto" style={{"maxWidth": "480px", "marginTop": "100px"}}>
             <div className="card-header text-center">
               <a href="/#" className="h1"><b>BUKUKAS</b>KITA</a>
             </div>
