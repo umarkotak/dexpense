@@ -70,8 +70,10 @@ function PageHome() {
 
   function HomeRightSide() {
     return(<div className="w-full flex justify-center">
-      <div className="w-full rounded-xl bg-white p-2 max-w-md">
-        <span>Welcome!</span>
+      <div className="w-full">
+        <div className="w-full rounded-xl bg-white p-2 max-w-md">
+          <span>Welcome!</span>
+        </div>
       </div>
     </div>)
   }
