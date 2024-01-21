@@ -86,7 +86,7 @@ function PageWealthAsset() {
         backgroundColor: "#E3EDF2",
       }}>
         <div className="content-header">
-          {/* <div className="container-fluid">
+          <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Asset</h1>
@@ -97,7 +97,7 @@ function PageWealthAsset() {
                 </ol>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
 
         <section className="content">

@@ -123,70 +123,63 @@ function Navbar() {
   function OnLoggedIn() {
     return(
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <span className="nav-link px-0" disabled><i className="fa fa-users"></i> group:</span>
-        </li>
+        <li className="nav-item dropdown">
+          <a className="nav-link" data-toggle="dropdown" href="." aria-expanded="false">
+            Hello, <b>{activeName}</b> <i className="fa-solid fa-angle-down"></i>
+          </a>
 
-        <li className="nav-item dropdown show">
-          <a className="nav-link px-1 text-teal" data-toggle="dropdown" href="." aria-expanded="false" id="nav-items-2-1">{groupsActive.name} <i className="fa fa-angle-down"></i></a>
           <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right" style={{left: "inherit", right: "0px"}}>
-            {groups.map((v, k) => (
-              <div key={k}>
-                <button className="dropdown-item" onClick={(e) => {handleSelectActiveGroups(v.id); window.location.reload();}}>
-                  <div className="media">
-                    <div className="media-body">
-                      <h3 className="dropdown-item-title"><i className="fa fa-angle-double-right"></i> {v.name}</h3>
-                      <p className="text-sm">ID: {v.id}</p>
+            <Link to="#">
+                <span className="dropdown-item">
+                    <div className="flex items-center">
+                        <img src="/default_avatar.png" className="img-size-50 py-1 img-circle mr-3" alt="User" />
+                        <div className="media-body">
+                            <h3 className="dropdown-item-title">Hello, <b>{activeName}</b>!</h3>
+                            <p className="text-sm">Aktif Grup: <b>{groupsActive.name} ({groupsActive.id})</b></p>
+                        </div>
                     </div>
-                  </div>
-                </button>
-                <div className="dropdown-divider"></div>
+                </span>
+            </Link>
+            <div className="dropdown-divider"></div>
+
+            <Link to="/dashboard">
+              <span className="dropdown-item dropdown-footer">
+                <h3 className="dropdown-item-title">Profile</h3>
+              </span>
+            </Link>
+            <div className="dropdown-divider"></div>
+
+            <Link to="/groups">
+              <span className="dropdown-item dropdown-footer">
+                  <h3 className="dropdown-item-title">Atur Grup</h3>
+              </span>
+            </Link>
+            <div className="dropdown-divider"></div>
+
+            <div>
+              <span className="dropdown-item dropdown-footer">
+                  <h3 className="dropdown-item-title">Pilih Grup:</h3>
+              </span>
+            </div>
+            {groups.map((v, k) => (
+              <div
+                key={k}
+                className={`flex dropdown-item dropdown-footer justify-center items-center ${`${v.id}` === `${groupsActive.id}` ? "bg-green-100" : ""}`}
+                onClick={(e) => {handleSelectActiveGroups(v.id); window.location.reload();}}
+              >
+                <i className="fa fa-angle-double-right mr-2"></i> {v.name} ({v.id})
               </div>
             ))}
-              <div key={"manage-on-last"}>
-                <Link to="/groups">
-                  <button className="dropdown-item">
-                    <div className="media">
-                      <div className="media-body">
-                        <h3 className="dropdown-item-title text-info"><i className="fa fa-angle-double-right"></i> <b>Manage</b></h3>
-                      </div>
-                    </div>
-                  </button>
-                </Link>
-                <div className="dropdown-divider"></div>
-              </div>
-          </div>
-        </li>
+            <div className="dropdown-divider"></div>
 
-        {/* <li className="nav-item" id="nav-items-3">
-          <button className="btn btn-sm btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
-        </li> */}
+            <Link to="/daily_ibadah">
+                <span className="dropdown-item dropdown-footer">
+                    <h3 className="dropdown-item-title">Ibadah Harian</h3>
+                </span>
+            </Link>
+            <div className="dropdown-divider"></div>
 
-        <li className="nav-item dropdown">
-          <a className="nav-link" data-toggle="dropdown" href="." aria-expanded="false"><i className="far fa-user"></i></a>
-
-          <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right" style={{left: "inherit", right: "0px"}}>
-              <Link to="/dashboard">
-                  <span className="dropdown-item">
-                      <div className="media">
-                          <img src="/default_avatar.png" className="img-size-50 py-1 img-circle mr-3" alt="User" />
-                          <div className="media-body">
-                              <h3 className="dropdown-item-title">Hello, <b>{activeName}</b>!</h3>
-                              <p className="text-sm">profile</p>
-                          </div>
-                      </div>
-                  </span>
-              </Link>
-
-              <div className="dropdown-divider"></div>
-              <Link to="/daily_ibadah">
-                  <span className="dropdown-item dropdown-footer">
-                      <h3 className="dropdown-item-title"><i className="nav-icon fas fa-mosque"></i> Ibadah Harian</h3>
-                  </span>
-              </Link>
-
-              <div className="dropdown-divider"></div>
-              <button className="dropdown-item dropdown-footer bg-danger text-white" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
+            <button className="dropdown-item dropdown-footer bg-danger text-white" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
           </div>
         </li>
       </ul>

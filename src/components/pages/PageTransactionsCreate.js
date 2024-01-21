@@ -61,6 +61,9 @@ function PageTransactionsCreate() {
         var tempWalletOptions = body.data.group_wallets.map((v, k) => {
           return { name: 'group_wallet_id', value: v.id, label: v.name, balance: v.amount }
         })
+        if (tempWalletOptions.length === 1) {
+          setSelectedWalletBalance(tempWalletOptions[0].balance)
+        }
         setWalletOptions(tempWalletOptions)
       } else {
         alert.error(`There is some error: ${body.error}`)
@@ -215,12 +218,12 @@ function PageTransactionsCreate() {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1>New Transaction</h1>
+                <h1>Transaksi Baru</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item active"><Link to="/transactions/daily">Transaction</Link></li>
-                  <li className="breadcrumb-item active"><Link to="/transactions/create">New</Link></li>
+                  <li className="breadcrumb-item active"><Link to="/transactions/create">Create</Link></li>
                 </ol>
               </div>
             </div>
@@ -229,28 +232,28 @@ function PageTransactionsCreate() {
 
         <section className="content">
           <div className="row">
-            <div className="col-12 col-lg-6">
-              <div className="card card-primary card-outline">
+            <div className="col-12 col-xl-9 flex justify-center">
+              <div className="card card-primary card-outline w-full max-w-md">
                 <div className="card-header">
                   <div className="card-tools">
                     <Link to="/transactions/transfer" className="btn btn-primary btn-sm mx-1">
                       <i className="fas fa-exchange-alt"></i> Transfer
                     </Link>
-                    <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
+                    {/* <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
                       <i className="fas fa-minus"></i>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
                 <div className="card-body">
                   <div className="form-group">
                     <label>Voice Input</label>
                     <div>
-                      <button className='btn btn-outline-primary p-2' onClick={()=>SpeechRecognition.startListening({ language: 'id' })} disabled={listening}>
+                      <button className='btn rounded-xl btn-outline-primary p-2' onClick={()=>SpeechRecognition.startListening({ language: 'id' })} disabled={listening}>
                         {listening ? 'Mendegarkan. . .' : 'Bicara'}
                       </button>
                       <p>{transcript}</p>
-                      <small>format: pengeluaran [category] berupa [nama] sejumlah [biaya] rupiah<br/></small>
-                      <code>contoh: pengeluaran <b>makanan</b> berupa <b>sate ayam</b> sejumlah <b>lima puluh ribu</b> rupiah</code>
+                      <p className="w-full text-justify text-xs mt-1">format: pengeluaran <b>[category]</b> berupa <b>[nama]</b> sejumlah <b>[biaya]</b> rupiah<br/></p>
+                      <p className="w-full text-justify text-xs mt-1 text-red-600">contoh: pengeluaran <b>makanan</b> berupa <b>sate ayam</b> sejumlah <b>lima puluh ribu</b> rupiah</p>
                     </div>
                   </div>
                   <div className="form-group">
@@ -303,11 +306,11 @@ function PageTransactionsCreate() {
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                       value={walletOptions.length === 1 ? walletOptions[0] : null }
                     />
-                    <small><Link to="/groups">+ tambah dompet</Link></small>
+                    <small className="p-1 shadow-sm rounded-lg mt-2 border"><Link to="/groups">+ tambah dompet</Link></small>
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                      <span className="input-group-text"><i className="fas fa-wallet"></i></span>
+                      <span className="input-group-text"><i className="fas fa-wallet mr-1"></i> Saldo</span>
                     </div>
                     <input type="text" className="form-control" value={selectedWalletBalance} readOnly />
                     <div className="input-group-append">
@@ -332,7 +335,7 @@ function PageTransactionsCreate() {
                   </div>
                   <div className="form-group">
                     <label>Waktu Transaksi</label> <small className="text-danger"><b>*</b></small>
-                    <input type="datetime-local" className="form-control form-control-sm" name="transaction_at"
+                    <input type="datetime-local" className="form-control form-control-sm" name="transaction_at" step="60"
                       onChange={(e) => handleTransactionsParamsChanges(e)} defaultValue={now.toISOString().slice(0, -1)}
                     />
                   </div>
@@ -352,7 +355,7 @@ function PageTransactionsCreate() {
                 </div>
               </div>
             </div>
-            <div className="col-12 col-lg-4">
+            <div className="col-12 col-xl-3">
 
             </div>
           </div>

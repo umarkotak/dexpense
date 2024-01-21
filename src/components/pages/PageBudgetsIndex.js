@@ -7,6 +7,7 @@ import { uid } from 'react-uid'
 
 import dexpenseApi from "../apis/DexpenseApi"
 import utils from "../helper/Utils"
+import MiniTips from "../components/MiniTips"
 
 var timeNow = new Date()
 var beginOfMonth, endOfMonth
@@ -149,99 +150,106 @@ function PageBudgetsIndex() {
         </div>
 
         <section className="content">
-          <div className="mx-auto w-full max-w-md">
-            <div className="row mb-2">
-              <div className="col-12">
-                <div className="d-flex justify-content-between">
-                  <span style={{fontSize: "14px"}}>Hi <b>{localStorage.getItem("DEXPENSE_SESSION_USERNAME") || "Guest"}!</b></span>
-                  {/* <span style={{fontSize: "14px"}}>{`${utils.months[timeNow.getMonth()]}`} sisa <b>{monthlyBudgets.days_left} Hari Lagi</b></span> */}
-                  <span style={{fontSize: "14px"}}>Gajian <b>{monthlyBudgets.days_left} Hari Lagi</b></span>
-                </div>
-              </div>
-            </div>
-            <div className="flex mb-2">
-              <div className="w-full">
-                <div className="flex justify-between items-center mb-2">
-                  <span>Tanggal Gajian</span>
-                  <Select
-                    className="w-36 text-sm"
-                    name="payout_date"
-                    options={payrollDateList}
-                    value={payrollDateList[utils.GetArrOptsIndexByValue(payrollDateList, sallaryInfoParams.payout_date)]}
-                    onChange={(e) => setSallaryInfoParams({...sallaryInfoParams, "payout_date": e.value})}
-                  />
-                </div>
-                <div className="flex justify-between items-center mb-2">
-                  <span>Gaji Bulanan</span>
-                  <NumberFormat
-                    name="total_budget"
-                    className="form-control-sm w-36"
-                    value={sallaryInfoParams.monthly_sallary}
-                    thousandSeparator={true}
-                    prefix={'Rp.'}
-                    onValueChange={(values) => setSallaryInfoParams({...sallaryInfoParams, "monthly_sallary": values.value})}
-                  />
-                </div>
-                <div className="flex justify-end items-center">
-                  <button className="btn btn-success btn-xs" onClick={()=>saveSallaryInfo()}><i className="fa-solid fa-save mr-2"></i>Save</button>
-                </div>
-              </div>
-            </div>
-            <div className="row mb-2">
-              <div className="col-12">
-                <div className="flex justify-between items-center">
-                  <span style={{fontSize: "14px"}}>
-                    <b>Pengeluaran</b> <span className="text-xs">({`${utils.FormatDate(activeMinDate)}`} - {`${utils.FormatDate(activeMaxDate)}`})</span>
-                  </span>
-                  <span style={{fontSize: "10px"}}>{utils.CompactNumberRound(monthlyBudgets.monthly_sallary-monthlyBudgets.total_expense)} ({utils.CompactNumberRound((monthlyBudgets.monthly_sallary-monthlyBudgets.total_expense)/sallaryInfoParams.payout_date)}/hari)</span>
-                </div>
-              </div>
-            </div>
-            <div className="mb-2">
-              <div className="progress rounded" style={{height: "26px", backgroundColor: "#EDCBCE"}}>
-                <div className="progress-bar rounded" style={{width: `${monthlyBudgets.total_expense/monthlyBudgets.monthly_sallary*100}%`, backgroundColor: "#BD0039"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div className="text-white" style={{textAlign: "center", marginTop: "-26px"}}><small><b>{utils.CompactNumberRound(monthlyBudgets.total_expense)} / {utils.CompactNumberRound(monthlyBudgets.monthly_sallary)}</b></small></div>
-              <div className="text-white" style={{textAlign: "left", marginTop: "-24px", marginLeft: "4px"}}><small><i className={"fa-solid fa-circle"} /></small></div>
-              <div className="text-white" style={{textAlign: "right", marginTop: "-24px", marginRight: "4px"}}><small>{`${(monthlyBudgets.total_expense/monthlyBudgets.monthly_sallary*100).toFixed(0)}%`}</small></div>
-            </div>
-            <div className="row mb-2">
-              <div className="col-12">
-                <div className="d-flex justify-content-between">
-                  <span style={{fontSize: "14px"}}><b>Detail Budgetmu:</b></span>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12">
-                {monthlyBudgets.breakdowns.map((categoryBudget) => (
-                  <div style={{marginBottom: "24px"}} key={uid(categoryBudget)}>
-                    <div className="flex justify-between items-center">
-                      <span className="" style={{fontSize: "14px"}}>
-                        <span className="mr-2">
-                          {
-                            categoryBudget.mode === "generic" ?
-                            <b>{categoryBudget.category_label}</b> :
-                            <span>
-                              <b>{categoryBudget.name}</b> <span className="text-xs">- {categoryBudget.category_label}</span>
-                            </span>
-                          }
-                        </span>
-                        <Link to={`/budgets/${categoryBudget.id}/edit`}><small>edit</small></Link>
-                      </span>
-                      <span style={{fontSize: "10px"}}>Sisa {utils.CompactNumber(categoryBudget.remaining_budget)} ({utils.CompactNumberRound(categoryBudget.average_daily_remaining_budget)}/hari)</span>
-                    </div>
-                    <div className="">
-                      <div className="progress rounded" style={{height: "26px", backgroundColor: "#EDCBCE"}}>
-                        <div className="progress-bar rounded" style={{width: `${categoryBudget.used_percentage*100}%`, backgroundColor: "#BD0039"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <div className="text-white" style={{textAlign: "center", marginTop: "-26px"}}><small><b>{utils.CompactNumberRound(categoryBudget.used_budget)} / {utils.CompactNumberRound(categoryBudget.total_budget)}</b></small></div>
-                      <div className="text-white" style={{textAlign: "left", marginTop: "-24px", marginLeft: "4px"}}><small><i className={categoryBudget.fa_icon} /></small></div>
-                      <div className="text-white" style={{textAlign: "right", marginTop: "-24px", marginRight: "4px"}}><small>{`${(categoryBudget.used_percentage*100).toFixed(0)}%`}</small></div>
+          <div className="row">
+            <div className="col-12 col-xl-9 mb-4">
+              <div className="mx-auto w-full max-w-md">
+                <div className="row mb-2">
+                  <div className="col-12">
+                    <div className="d-flex justify-content-between">
+                      <span style={{fontSize: "14px"}}>Hi <b>{localStorage.getItem("DEXPENSE_SESSION_USERNAME") || "Guest"}!</b></span>
+                      {/* <span style={{fontSize: "14px"}}>{`${utils.months[timeNow.getMonth()]}`} sisa <b>{monthlyBudgets.days_left} Hari Lagi</b></span> */}
+                      <span style={{fontSize: "14px"}}>Gajian <b>{monthlyBudgets.days_left} Hari Lagi</b></span>
                     </div>
                   </div>
-                ))}
+                </div>
+                <div className="flex mb-2">
+                  <div className="w-full">
+                    <div className="flex justify-between items-center mb-2">
+                      <span>Tanggal Gajian</span>
+                      <Select
+                        className="w-36 text-sm"
+                        name="payout_date"
+                        options={payrollDateList}
+                        value={payrollDateList[utils.GetArrOptsIndexByValue(payrollDateList, sallaryInfoParams.payout_date)]}
+                        onChange={(e) => setSallaryInfoParams({...sallaryInfoParams, "payout_date": e.value})}
+                      />
+                    </div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span>Gaji Bulanan</span>
+                      <NumberFormat
+                        name="total_budget"
+                        className="form-control-sm w-36"
+                        value={sallaryInfoParams.monthly_sallary}
+                        thousandSeparator={true}
+                        prefix={'Rp.'}
+                        onValueChange={(values) => setSallaryInfoParams({...sallaryInfoParams, "monthly_sallary": values.value})}
+                      />
+                    </div>
+                    <div className="flex justify-end items-center">
+                      <button className="btn btn-success btn-xs" onClick={()=>saveSallaryInfo()}><i className="fa-solid fa-save mr-2"></i>Save</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="row mb-2">
+                  <div className="col-12">
+                    <div className="flex justify-between items-center">
+                      <span style={{fontSize: "14px"}}>
+                        <b>Pengeluaran</b> <span className="text-xs">({`${utils.FormatDate(activeMinDate)}`} - {`${utils.FormatDate(activeMaxDate)}`})</span>
+                      </span>
+                      <span style={{fontSize: "10px"}}>{utils.CompactNumberRound(monthlyBudgets.monthly_sallary-monthlyBudgets.total_expense)} ({utils.CompactNumberRound((monthlyBudgets.monthly_sallary-monthlyBudgets.total_expense)/sallaryInfoParams.payout_date)}/hari)</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="mb-2">
+                  <div className="progress rounded" style={{height: "26px", backgroundColor: "#EDCBCE"}}>
+                    <div className="progress-bar rounded" style={{width: `${monthlyBudgets.total_expense/monthlyBudgets.monthly_sallary*100}%`, backgroundColor: "#BD0039"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div className="text-white" style={{textAlign: "center", marginTop: "-26px"}}><small><b>{utils.CompactNumberRound(monthlyBudgets.total_expense)} / {utils.CompactNumberRound(monthlyBudgets.monthly_sallary)}</b></small></div>
+                  <div className="text-white" style={{textAlign: "left", marginTop: "-24px", marginLeft: "4px"}}><small><i className={"fa-solid fa-circle"} /></small></div>
+                  <div className="text-white" style={{textAlign: "right", marginTop: "-24px", marginRight: "4px"}}><small>{`${(monthlyBudgets.total_expense/monthlyBudgets.monthly_sallary*100).toFixed(0)}%`}</small></div>
+                </div>
+                <div className="row mb-2">
+                  <div className="col-12">
+                    <div className="d-flex justify-content-between">
+                      <span style={{fontSize: "14px"}}><b>Detail Budgetmu:</b></span>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    {monthlyBudgets.breakdowns.map((categoryBudget) => (
+                      <div style={{marginBottom: "24px"}} key={uid(categoryBudget)}>
+                        <div className="flex justify-between items-center">
+                          <span className="" style={{fontSize: "14px"}}>
+                            <span className="mr-2">
+                              {
+                                categoryBudget.mode === "generic" ?
+                                <b>{categoryBudget.category_label}</b> :
+                                <span>
+                                  <b>{categoryBudget.name}</b> <span className="text-xs">- {categoryBudget.category_label}</span>
+                                </span>
+                              }
+                            </span>
+                            <Link to={`/budgets/${categoryBudget.id}/edit`}><small>edit</small></Link>
+                          </span>
+                          <span style={{fontSize: "10px"}}>Sisa {utils.CompactNumber(categoryBudget.remaining_budget)} ({utils.CompactNumberRound(categoryBudget.average_daily_remaining_budget)}/hari)</span>
+                        </div>
+                        <div className="">
+                          <div className="progress rounded" style={{height: "26px", backgroundColor: "#EDCBCE"}}>
+                            <div className="progress-bar rounded" style={{width: `${categoryBudget.used_percentage*100}%`, backgroundColor: "#BD0039"}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <div className="text-white" style={{textAlign: "center", marginTop: "-26px"}}><small><b>{utils.CompactNumberRound(categoryBudget.used_budget)} / {utils.CompactNumberRound(categoryBudget.total_budget)}</b></small></div>
+                          <div className="text-white" style={{textAlign: "left", marginTop: "-24px", marginLeft: "4px"}}><small><i className={categoryBudget.fa_icon} /></small></div>
+                          <div className="text-white" style={{textAlign: "right", marginTop: "-24px", marginRight: "4px"}}><small>{`${(categoryBudget.used_percentage*100).toFixed(0)}%`}</small></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
+            </div>
+            <div className="col-12 col-xl-3 mb-4">
+              <MiniTips />
             </div>
           </div>
 

@@ -50,7 +50,7 @@ function Sidebar() {
               <img src="/default_avatar.png" className="img-circle elevation-2" alt="User" />
             </div>
             <div className="info">
-              <Link to="/dashboard" className="">Hello, <b className="text-teal">{activeName}</b> !</Link>
+              <Link to={activeName === "Guest" ? "/login" : "/dashboard"} className="">Hello, <b className="text-teal">{activeName}</b> !</Link>
               {
                 (activeUser.account_type === "vip") ? <span className="ml-4 float-right text-warning"><span className="fa fa-star"></span> vip</span> : ''
               }
