@@ -33,21 +33,30 @@ function PageTransactionsEdit() {
     }
   }
 
+  var onTransactionDetailFetch = false
   async function fetchTransactionDetail() {
+    if (onTransactionDetailFetch) { return }
+    onTransactionDetailFetch = true
+
     try {
       const response = await dexpenseApi.TransactionsDetail(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), {id: transactionID})
       const status = response.status
       const body = await response.json()
 
       if (status === 200) {
-        console.log("DETAIL", body)
-        setTransactionsEditParams(body.data)
+        var transactionDetail = body.data
+        console.log("DETAIL", transactionDetail)
+
+        transactionDetail["transaction_at"] = transactionDetail["transaction_at"].split(".")[0]
+        setTransactionsEditParams(transactionDetail)
       } else {
         alert.error(`There is some error: ${body.error}`)
       }
     } catch (e) {
       alert.error(`There is some error: ${e.message}`)
     }
+
+    onTransactionDetailFetch = false
   }
 
   const [walletOptions, setWalletOptions] = useState([])
@@ -80,7 +89,14 @@ function PageTransactionsEdit() {
 
   async function handleTransactionSubmit() {
     try {
-      transactionsEditParams.id = transactionID
+      var tempTransactionsEditParams = transactionsEditParams
+      tempTransactionsEditParams.id = transactionID
+      tempTransactionsEditParams["transaction_at"] = utils.FormatDateInputWithTz(
+        utils.ConvertLocalTime(tempTransactionsEditParams["transaction_at"])
+      )
+
+      console.log("DEBUGGING", tempTransactionsEditParams)
+
       const response = await dexpenseApi.TransactionsEdit(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), transactionsEditParams)
       const status = response.status
       const body = await response.json()
@@ -236,7 +252,11 @@ function PageTransactionsEdit() {
                     <Select
                       name="monthly_budget_id"
                       options={specificBudgetList}
-                      value={specificBudgetList[utils.GetArrOptsIndexByValue(specificBudgetList, transactionsEditParams.monthly_budget_id)]}
+                      value={
+                        transactionsEditParams.monthly_budget_id ?
+                        specificBudgetList[utils.GetArrOptsIndexByValue(specificBudgetList, transactionsEditParams.monthly_budget_id)] :
+                        undefined
+                      }
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     />
                   </div>
@@ -268,7 +288,7 @@ function PageTransactionsEdit() {
                       className="form-control form-control-sm"
                       name="transaction_at"
                       onChange={(e) => handleTransactionsParamsChanges(e)}
-                      value={(transactionsEditParams.transaction_at || "").split(".")[0]}
+                      value={transactionsEditParams.transaction_at}
                     />
                   </div>
                   <div className="form-group">

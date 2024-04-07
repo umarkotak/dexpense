@@ -14,13 +14,12 @@ function HomeTransactionBar(props) {
         <small className="my-auto text-danger">{utils.FormatNumber(props.grouppedTransaction.outcome)}</small>
       </div>
       <div className="px-1">
-        {props.grouppedTransaction.transactions.map((val, k) => (
-          <HomeTransactionBarElem val={val} key={`2-${k}`} />
+        {props.grouppedTransaction.transactions.map((val) => (
+          <HomeTransactionBarElem val={val} key={`2-${val.id}`} />
         ))}
       </div>
     </div>
   )
 }
-
 
 export default HomeTransactionBar

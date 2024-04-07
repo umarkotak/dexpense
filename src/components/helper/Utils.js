@@ -60,7 +60,16 @@ class Utils {
   }
 
   FormatDateInput(timeObj) {
-    return `${timeObj.getFullYear()}-${timeObj.getMonth()+1}-${timeObj.getDate()}T${timeObj.getHours()}:${timeObj.getMinutes()}`
+    return `${timeObj.getFullYear()}-${('0' + (timeObj.getMonth()+1)).slice(-2)}-${('0' + timeObj.getDate()).slice(-2)}T${timeObj.getHours()}:${timeObj.getMinutes()}`
+  }
+
+  FormatDateInputWithTz(timeObj) {
+    var tz = -new Date().getTimezoneOffset()/60
+    var tzs = `+${tz}`
+    if (tz < 0) {
+      tzs = `${tz}`
+    }
+    return `${timeObj.getFullYear()}-${('0' + (timeObj.getMonth()+1)).slice(-2)}-${('0' + timeObj.getDate()).slice(-2)}T${timeObj.getHours()}:${timeObj.getMinutes()}:00${tzs}`
   }
 
   FormatDate(timeObj) {
@@ -91,6 +100,14 @@ class Utils {
     return localTimeUTC
   }
 
+  ConvertLocalTime(localTimeString) {
+    console.log("DEBUG_T_IN", localTimeString)
+    var localTime = new Date()
+    if (localTimeString && localTimeString !== "") { localTime = new Date(localTimeString) }
+    console.log("DEBUG_T_OUT", localTime)
+    return localTime
+  }
+
   Global() { return GLOBAL }
 
   GlobalFilter() { return GLOBAL_FILTER }
@@ -107,7 +124,7 @@ class Utils {
   }
 
   GetArrOptsIndexByValue(arrOptsSource, value) {
-    var selectedIdx
+    var selectedIdx = null
     arrOptsSource.forEach((val, index) => {
       // eslint-disable-next-line
       if (val.value == value) {

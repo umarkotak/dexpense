@@ -158,8 +158,11 @@ function PageTransactionsCreate() {
   async function handleTransactionSubmit() {
     try {
       var tempTransactionsCreateParams = transactionsCreateParams
-      var transactionAtUTC = utils.ConvertLocalTimeToUTC(tempTransactionsCreateParams["transaction_at"])
-      tempTransactionsCreateParams["transaction_at"] = utils.FormatDateInput(transactionAtUTC)
+      tempTransactionsCreateParams["transaction_at"] = utils.FormatDateInputWithTz(
+        utils.ConvertLocalTime(tempTransactionsCreateParams["transaction_at"])
+      )
+
+      console.log("DEBUGGING", tempTransactionsCreateParams)
 
       const response = await dexpenseApi.TransactionsCreate(localStorage.getItem("DEXPENSE_SESSION_TOKEN"), tempTransactionsCreateParams)
       const status = response.status
