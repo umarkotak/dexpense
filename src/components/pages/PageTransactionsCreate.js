@@ -214,11 +214,46 @@ function PageTransactionsCreate() {
     console.log(`Browser doesn't support speech recognition.`)
   }
 
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null); // For image preview
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.type.startsWith('image/')) {
+      setFile(selectedFile);
+      setPreview(URL.createObjectURL(selectedFile)); // Create preview URL
+    } else {
+      setFile(null);
+      setPreview(null);
+      // setMessage('Please select an image file.');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      // const response = await fetch('/upload', { // Replace '/upload' with your endpoint
+      //   method: 'POST',
+      //   body: formData,
+      // });
+
+      // const data = await response.text(); // or response.json() if expecting JSON response
+      // setMessage(data);
+    } catch (error) {
+      console.error(error);
+      // setMessage('An error occurred during upload.');
+    }
+  };
+
   return (
     <div>
       <div className="content-wrapper">
         <div className="content-header">
-          <div className="container-fluid">
+          {/* <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
                 <h1>Transaksi Baru</h1>
@@ -230,34 +265,57 @@ function PageTransactionsCreate() {
                 </ol>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <section className="content">
           <div className="row">
             <div className="col-12 col-xl-9 flex justify-center">
               <div className="card card-primary card-outline w-full max-w-md">
-                <div className="card-header">
+                {/* <div className="card-header">
                   <div className="card-tools">
                     <Link to="/transactions/transfer" className="btn btn-primary btn-sm mx-1">
                       <i className="fas fa-exchange-alt"></i> Transfer
                     </Link>
-                    {/* <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
+                    <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse">
                       <i className="fas fa-minus"></i>
-                    </button> */}
+                    </button>
                   </div>
-                </div>
+                </div> */}
                 <div className="card-body">
                   <div className="form-group">
                     <label>Voice Input</label>
                     <div>
-                      <button className='btn rounded-xl btn-outline-primary p-2' onClick={()=>SpeechRecognition.startListening({ language: 'id' })} disabled={listening}>
-                        {listening ? 'Mendegarkan. . .' : 'Bicara'}
+                      <button className='btn btn-xs rounded btn-outline-primary p-2' onClick={()=>SpeechRecognition.startListening({ language: 'id' })} disabled={listening}>
+                        {listening ? 'Mendegarkan. . .' : <span><i className="fa-solid fa-microphone mr-1"></i> Bicara</span>}
                       </button>
                       <p>{transcript}</p>
                       <p className="w-full text-justify text-xs mt-1">format: pengeluaran <b>[category]</b> berupa <b>[nama]</b> sejumlah <b>[biaya]</b> rupiah<br/></p>
                       <p className="w-full text-justify text-xs mt-1 text-red-600">contoh: pengeluaran <b>makanan</b> berupa <b>sate ayam</b> sejumlah <b>lima puluh ribu</b> rupiah</p>
                     </div>
+                  </div>
+                  <div className="form-group">
+                    <label>Upload Receipt</label>
+                    <div>
+                      <form onSubmit={handleSubmit}>
+                        <div className="input-group">
+                          <div className="custom-file">
+                            <input type="file" className="custom-file-input" id="exampleInputFile" onChange={handleFileChange} />
+                            <label className="custom-file-label" for="exampleInputFile">Choose receipt</label>
+                          </div>
+                          <div className="input-group-append">
+                            <button type="submit" className="input-group-text">Upload</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    {preview && (
+                      <div className="flex justify-center mt-2">
+                        <div className="rounded overflow-hidden">
+                          <img src={preview} alt="Preview" className="object-contain h-48" />
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="form-group">
                     <label>Jenis</label> <small className="text-danger"><b>*</b></small>
@@ -266,59 +324,63 @@ function PageTransactionsCreate() {
                       options={utils.Global()["TRANSACTION_DIRECTION_OPTS"]}
                       onChange={(e) => handleTransactionsParamsChanges(e)}
                     /> */}
-                    <div>
+                    <div className="flex gap-2">
                       <button
-                        className={`btn btn-outline-primary p-2 rounded-xl mr-2 ${transactionsCreateParams["direction_type"] === "outcome" ? "active" : ""}`}
+                        className={`btn btn-xs btn-outline-primary p-2 rounded w-full ${transactionsCreateParams["direction_type"] === "outcome" ? "active" : ""}`}
                         onClick={()=>setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, "direction_type": "outcome"}))}
-                      >Pengeluaran</button>
+                      ><i className="fa-solid fa-arrow-right mr-1"></i> Pengeluaran</button>
                       <button
-                        className={`btn btn-outline-primary p-2 rounded-xl mr-2 ${transactionsCreateParams["direction_type"] === "income" ? "active" : ""}`}
+                        className={`btn btn-xs btn-outline-primary p-2 rounded w-full ${transactionsCreateParams["direction_type"] === "income" ? "active" : ""}`}
                         onClick={()=>setTransactionsCreateParams(transactionsCreateParams => ({...transactionsCreateParams, "direction_type": "income"}))}
-                      >Pemasukan</button>
+                      ><i className="fa-solid fa-arrow-left mr-1"></i> Pemasukan</button>
                     </div>
                   </div>
-                  <div className="form-group" data-select2-id="29">
-                    <label>Kategori</label> <small className="text-danger"><b>*</b></small>
-                    <Select
-                      name="category"
-                      options={categoryOptions}
-                      onChange={(e) => handleTransactionsParamsChanges(e)}
-                      value={selectedCategoryIdx === null ? null : categoryOptions[selectedCategoryIdx]}
-                      formatOptionLabel={oneCategory => (
-                        <div className="flex items-center">
-                          <img src={oneCategory.icon_url} height="30px" width="30px" alt="category-icon" />
-                          <span className="ml-2">{oneCategory.label}</span>
+                  <div className="flex gap-2 mb-2">
+                    <div className="w-full">
+                      <label>Kategori</label> <small className="text-danger"><b>*</b></small>
+                      <Select
+                        name="category"
+                        options={categoryOptions}
+                        onChange={(e) => handleTransactionsParamsChanges(e)}
+                        value={selectedCategoryIdx === null ? null : categoryOptions[selectedCategoryIdx]}
+                        formatOptionLabel={oneCategory => (
+                          <div className="flex items-center">
+                            <img src={oneCategory.icon_url} height="30px" width="30px" alt="category-icon" />
+                            <span className="ml-2">{oneCategory.label}</span>
+                          </div>
+                        )}
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label>Untuk Budget?</label>
+                      <Select
+                        name="monthly_budget_id"
+                        options={specificBudgetList}
+                        onChange={(e) => handleTransactionsParamsChanges(e)}
+                      />
+                      <div className="text-xs mt-1">apabila sudah memilih budget, tidak perlu lagi memilih kategori</div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 mb-2">
+                    <div className="w-full">
+                      <label>Wallet</label> <small className="text-danger"><b>*</b></small>
+                      <Select
+                        name="group_wallet_id"
+                        options={walletOptions}
+                        onChange={(e) => handleTransactionsParamsChanges(e)}
+                        value={walletOptions.length === 1 ? walletOptions[0] : null }
+                      />
+                      <small className="p-1 shadow-sm rounded-lg mt-2 border"><Link to="/groups">+ tambah dompet</Link></small>
+                    </div>
+                    <div className="w-full">
+                      <label>Saldo</label>
+                      <div className="input-group">
+                        <input type="text" className="form-control" value={utils.FormatMoney(selectedWalletBalance)} readOnly />
+                        <div className="input-group-append">
+                          <div className="input-group-text">
+                            <Link to={`/transactions/adjust?group_wallet_id=${transactionsCreateParams["group_wallet_id"]}`}><i className="fas fa-edit"></i></Link>
+                          </div>
                         </div>
-                      )}
-                    />
-                  </div>
-                  <div className="form-group" data-select2-id="29">
-                    <label>Untuk Budget?</label>
-                    <Select
-                      name="monthly_budget_id"
-                      options={specificBudgetList}
-                      onChange={(e) => handleTransactionsParamsChanges(e)}
-                    />
-                    <div className="text-xs mt-1">apabila sudah memilih budget, tidak perlu lagi memilih kategori</div>
-                  </div>
-                  <div className="form-group">
-                    <label>Wallet</label> <small className="text-danger"><b>*</b></small>
-                    <Select
-                      name="group_wallet_id"
-                      options={walletOptions}
-                      onChange={(e) => handleTransactionsParamsChanges(e)}
-                      value={walletOptions.length === 1 ? walletOptions[0] : null }
-                    />
-                    <small className="p-1 shadow-sm rounded-lg mt-2 border"><Link to="/groups">+ tambah dompet</Link></small>
-                  </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text"><i className="fas fa-wallet mr-1"></i> Saldo</span>
-                    </div>
-                    <input type="text" className="form-control" value={selectedWalletBalance} readOnly />
-                    <div className="input-group-append">
-                      <div className="input-group-text">
-                        <Link to={`/transactions/adjust?group_wallet_id=${transactionsCreateParams["group_wallet_id"]}`}><i className="fas fa-edit"></i></Link>
                       </div>
                     </div>
                   </div>
@@ -351,10 +413,10 @@ function PageTransactionsCreate() {
                     <label>Deskripsi</label>
                     <textarea className="form-control" rows="3" name="description" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
                   </div>
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label>Catatan</label>
                     <textarea className="form-control" rows="2" name="note" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

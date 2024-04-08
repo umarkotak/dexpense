@@ -207,6 +207,20 @@ class Utils {
 
     return `${minus?"-":""}${newNumber.toFixed(0)}${suffix}`
   }
+
+  FormatMoney(number) {
+    // Ensure number is a valid number
+    number = Number(number);
+
+    // Use Intl.NumberFormat for locale-aware formatting
+    const formatter = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0, // No decimal places by default
+    });
+
+    return formatter.format(number);
+  }
 }
 
 const utils = new Utils()
