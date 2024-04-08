@@ -16,6 +16,14 @@ function PageTransactionsCreate() {
   var now = new Date()
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
 
+  useEffect(()=>{
+    setTransactionsCreateParams({
+      ...transactionsCreateParams,
+      "transaction_at": now.toISOString().slice(0, -1),
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const [selectedWalletBalance, setSelectedWalletBalance] = useState("")
   const [transactionsCreateParams, setTransactionsCreateParams] = useState({
     "category": "",
@@ -214,44 +222,68 @@ function PageTransactionsCreate() {
     console.log(`Browser doesn't support speech recognition.`)
   }
 
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(null); // For image preview
+  const [receiptFile, setReceiptFile] = useState(null)
+  const [preview, setPreview] = useState(null)
+  const [receiptUploadLoading, setReceiptUploadLoading] = useState(false)
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+  const handleReceiptFileChange = (e) => {
+    const selectedFile = e.target.files[0]
     if (selectedFile && selectedFile.type.startsWith('image/')) {
-      setFile(selectedFile);
-      setPreview(URL.createObjectURL(selectedFile)); // Create preview URL
+      setReceiptFile(selectedFile)
+      setPreview(URL.createObjectURL(selectedFile))
     } else {
-      setFile(null);
-      setPreview(null);
-      // setMessage('Please select an image file.');
+      setReceiptFile(null)
+      setPreview(null)
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const formData = new FormData();
-    formData.append('file', file);
+    const receiptFormData = new FormData()
+    receiptFormData.append('receipt-image', receiptFile)
 
+    setReceiptUploadLoading(true)
     try {
-      // const response = await fetch('/upload', { // Replace '/upload' with your endpoint
-      //   method: 'POST',
-      //   body: formData,
-      // });
+      const response = await dexpenseApi.ExtractReceiptData(receiptFormData)
+      const status = response.status
+      const body = await response.json()
 
-      // const data = await response.text(); // or response.json() if expecting JSON response
-      // setMessage(data);
+      var data = body.data
+
+      console.log(data)
+
+      if (status === 200) {
+        var selectedIdx = varCategoryOptions.length - 1
+        if (selectedIdx < 0) { selectedIdx = 0}
+        varCategoryOptions.forEach((opt, idx)=>{
+          if (opt["value"].toLowerCase().includes(body.data.category)) {
+            selectedIdx = idx
+          }
+        })
+        setSelectedCategoryIdx(selectedIdx)
+
+        var tempTransactionAt = body.data.transaction_at.split("+")[0]
+        setTransactionsCreateParams({
+          ...transactionsCreateParams,
+          "category": body.data.category,
+          "name": body.data.name,
+          "description": body.data.description,
+          "amount": body.data.total_amount,
+          "transaction_at": tempTransactionAt,
+        })
+      }
     } catch (error) {
-      console.error(error);
-      // setMessage('An error occurred during upload.');
+      console.error(error)
     }
-  };
+    setReceiptUploadLoading(false)
+  }
 
   return (
     <div>
-      <div className="content-wrapper">
+      <div className="content-wrapper" style={{
+        backgroundColor: "#E3EDF2",
+      }}>
         <div className="content-header">
           {/* <div className="container-fluid">
             <div className="row mb-2">
@@ -300,22 +332,28 @@ function PageTransactionsCreate() {
                       <form onSubmit={handleSubmit}>
                         <div className="input-group">
                           <div className="custom-file">
-                            <input type="file" className="custom-file-input" id="exampleInputFile" onChange={handleFileChange} />
-                            <label className="custom-file-label" for="exampleInputFile">Choose receipt</label>
+                            <input type="file" className="custom-file-input" onChange={handleReceiptFileChange} />
+                            <label className="custom-file-label">{receiptFile ? receiptFile.name : "Choose receipt"}</label>
                           </div>
                           <div className="input-group-append">
-                            <button type="submit" className="input-group-text">Upload</button>
+                            <button type="submit" className="btn btn-outline-primary" disabled={receiptUploadLoading}>
+                              {
+                                receiptUploadLoading ?
+                                <span><span class="spinner-border spinner-border-sm"></span></span> :
+                                <span>Upload</span>
+                              }
+                            </button>
                           </div>
                         </div>
                       </form>
                     </div>
-                    {preview && (
+                    {preview ? (
                       <div className="flex justify-center mt-2">
                         <div className="rounded overflow-hidden">
                           <img src={preview} alt="Preview" className="object-contain h-48" />
                         </div>
                       </div>
-                    )}
+                    ) : (<span className="text-xs">click upload to extract receipt detail</span>)}
                   </div>
                   <div className="form-group">
                     <label>Jenis</label> <small className="text-danger"><b>*</b></small>
@@ -400,8 +438,13 @@ function PageTransactionsCreate() {
                   </div>
                   <div className="form-group">
                     <label>Waktu Transaksi</label> <small className="text-danger"><b>*</b></small>
-                    <input type="datetime-local" className="form-control form-control-sm" name="transaction_at" step="60"
-                      onChange={(e) => handleTransactionsParamsChanges(e)} defaultValue={now.toISOString().slice(0, -1)}
+                    <input
+                      type="datetime-local"
+                      className="form-control form-control-sm"
+                      name="transaction_at"
+                      step="60"
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                      value={transactionsCreateParams["transaction_at"]}
                     />
                   </div>
                   <div className="form-group">
@@ -411,7 +454,13 @@ function PageTransactionsCreate() {
                   </div>
                   <div className="form-group">
                     <label>Deskripsi</label>
-                    <textarea className="form-control" rows="3" name="description" onChange={(e) => handleTransactionsParamsChanges(e)}></textarea>
+                    <textarea
+                      className="form-control"
+                      rows="3"
+                      name="description"
+                      onChange={(e) => handleTransactionsParamsChanges(e)}
+                      value={transactionsCreateParams["description"]}
+                    ></textarea>
                   </div>
                   {/* <div className="form-group">
                     <label>Catatan</label>

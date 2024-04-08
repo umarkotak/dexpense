@@ -2,9 +2,12 @@ class DexpenseApi {
   constructor() {
     if (window.location.protocol === "https:") {
       this.DexpenseApiHost = "https://bukukaskita-api.shadow-animapu-1.site/"
+      this.DexpenseUtilsApiHost = ""
     } else {
       this.DexpenseApiHost = "https://bukukaskita-api.shadow-animapu-1.site/"
+      this.DexpenseUtilsApiHost = ""
       this.DexpenseApiHost = "http://localhost:4000"
+      this.DexpenseUtilsApiHost = "http://localhost:26000"
     }
   }
 
@@ -608,6 +611,19 @@ class DexpenseApi {
         'Authorization': token
       },
       body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async ExtractReceiptData(formData) {
+    var uri = new URL(`${this.DexpenseUtilsApiHost}/genai/receipt/extract`)
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'X-Quick-Client-ID': 'quick-auth-client-id',
+        'X-Quick-Client-Secret': 'quick-auth-client-secret',
+      },
+      body: formData,
     })
     return response
   }
