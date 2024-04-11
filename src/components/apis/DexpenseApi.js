@@ -2,7 +2,7 @@ class DexpenseApi {
   constructor() {
     if (window.location.protocol === "https:") {
       this.DexpenseApiHost = "https://bukukaskita-api.shadow-animapu-1.site/"
-      this.DexpenseUtilsApiHost = ""
+      this.DexpenseUtilsApiHost = "https://bukukaskita-utils-api.shadow-animapu-1.site/"
     } else {
       this.DexpenseApiHost = "https://bukukaskita-api.shadow-animapu-1.site/"
       this.DexpenseUtilsApiHost = ""
