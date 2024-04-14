@@ -277,6 +277,8 @@ function PageTransactionsCreate() {
       }
     } catch (error) {
       console.error(error)
+
+      alert.error(`DEBUG: ${error}`)
     }
     setReceiptUploadLoading(false)
   }
