@@ -270,7 +270,7 @@ function PageTransactionsCreate() {
           "name": body.data.name,
           "description": body.data.description,
           "amount": body.data.total_amount,
-          // "transaction_at": tempTransactionAt,
+          "transaction_at": tempTransactionAt,
         })
       } else {
         alert.error(`Maaf, gambar receipt yang kamu kasih tidak dapat diproses, silahkan coba lagi`)
