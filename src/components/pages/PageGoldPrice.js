@@ -157,7 +157,7 @@ function PageGoldPrice() {
                       </div>
 
                       <br/>
-                      <b>Notes:</b> keuntungan beli emas di bukukaskita: harga bersaing, barang asli, cod sesuai syariat, dan gratis ongkir untuk sekitar depok.
+                      {/* <b>Notes:</b> keuntungan beli emas di bukukaskita: harga bersaing, barang asli, cod sesuai syariat, dan gratis ongkir untuk sekitar depok. */}
                     </div>
                   </div>
                 </div>
