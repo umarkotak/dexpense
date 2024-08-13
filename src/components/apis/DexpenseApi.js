@@ -1,11 +1,11 @@
 class DexpenseApi {
   constructor() {
     if (window.location.protocol === "https:") {
-      this.DexpenseApiHost = "https://bukukaskita-api.shadow-animapu-1.site"
-      this.DexpenseUtilsApiHost = "https://bukukaskita-utils-api.shadow-animapu-1.site"
+      this.DexpenseApiHost = "https://bukukaskita-api.shadow-animapu-2.site"
+      this.DexpenseUtilsApiHost = "https://bukukaskita-utils-api.shadow-animapu-2.site"
     } else {
-      this.DexpenseApiHost = "https://bukukaskita-api.shadow-animapu-1.site"
-      this.DexpenseUtilsApiHost = ""
+      this.DexpenseApiHost = "https://bukukaskita-api.shadow-animapu-2.site"
+      // this.DexpenseUtilsApiHost = ""
       this.DexpenseApiHost = "http://localhost:4000"
       this.DexpenseUtilsApiHost = "http://localhost:26000"
     }
